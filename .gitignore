@@ -170,8 +170,20 @@ DerivedData/
 *.xcuserstate
 *.xcuserdata
 
+# Flutter platform generated folders (if/when created)
+**/ios/Pods/
+**/ios/Runner.xcworkspace
+**/android/.gradle/
+**/android/local.properties
+
 # ========================
 # Electron
 # ========================
-out/
 release/
+
+# ========================
+# macOS / IDE
+# ========================
+.DS_Store
+.vscode/
+.idea/
