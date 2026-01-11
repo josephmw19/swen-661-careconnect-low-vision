@@ -33,8 +33,8 @@ This repository is organized to support parallel development across platforms:
 - /docs – Team charter, project proposal, and supporting documentation
 
 ## Documentation
-- Team Charter: (link will be added)
-- Project Proposal: (link will be added)
+- Team Charter: https://docs.google.com/document/d/1riDL0CHCqzBQHlmT1MbEtaSstxID-YmfeH2xdhO5RnY/edit?usp=sharing 
+- Project Proposal: https://docs.google.com/document/d/1hVOEAA2eDMzdwIAVq6Ksn2bCVF_ZXscj2k1p0YFl2N4/edit?usp=sharing
 
 ## Setup Instructions
 Initial setup instructions will be added incrementally as platform implementations begin in subsequent assignments.
