@@ -137,3 +137,41 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+# ========================
+# Flutter / Dart
+# ========================
+.dart_tool/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# ========================
+# Android (Flutter / React Native)
+# ========================
+android/.gradle/
+android/app/build/
+android/local.properties
+*.keystore
+*.jks
+
+# ========================
+# iOS / macOS (Xcode)
+# ========================
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Runner.xcworkspace
+DerivedData/
+*.xcuserstate
+*.xcuserdata
+
+# ========================
+# Electron
+# ========================
+out/
+release/
