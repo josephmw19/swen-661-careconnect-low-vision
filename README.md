@@ -23,9 +23,22 @@ University of Maryland Global Campus
 - Desktop: Electron
 - Accessibility Target: WCAG 2.1 Level AA
 
+Repository Structure
+This repository is organized to support parallel development across platforms:
+
+- /mobile-flutter – Flutter mobile implementation
+- /mobile-react-native – React Native mobile implementation
+- /web-react – Web UI implementation
+- /desktop-electron – Desktop UI implementation
+- /docs – Team charter, project proposal, and supporting documentation
+
 ## Documentation
 - Team Charter: (link will be added)
 - Project Proposal: (link will be added)
 
 ## Setup Instructions
-Initial setup instructions will be added as platform implementations begin.
+Initial setup instructions will be added incrementally as platform implementations begin in subsequent assignments.
+
+AI Usage
+
+This project may leverage approved AI tools (e.g., ChatGPT, GitHub Copilot, Figma AI) for ideation and learning support in accordance with UMGC academic integrity guidelines.
