@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home/medication_card.dart';
 import 'home/refill_reminder_card.dart';
 import 'home/today_card.dart';
+import 'home/upcoming_appointments_card.dart';
 import 'home/bottom_navigation_bar_custom.dart';
 import 'home/app_header.dart';
 import 'medications/medications_page.dart';
@@ -64,6 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 RefillReminderCard(),
                 SizedBox(height: 36),
                 TodayCard(),
+                SizedBox(height: 36),
+                UpcomingAppointmentsCard(),
               ],
             ),
           ),
@@ -93,6 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 RefillReminderCard(),
                 SizedBox(height: 36),
                 TodayCard(),
+                SizedBox(height: 36),
+                UpcomingAppointmentsCard(),
               ],
             ),
           ),
