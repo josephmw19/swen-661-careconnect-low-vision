@@ -6,6 +6,7 @@ import 'home/bottom_navigation_bar_custom.dart';
 import 'home/app_header.dart';
 import 'medications/medications_page.dart';
 import 'tasks/tasks_page.dart';
+import 'settings/settings_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -76,15 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onNavItemTapped: _onNavItemTapped,
         );
       case 3:
-        // Settings page - placeholder
-        return Container(
-          color: const Color(0xFF1A1D24),
-          child: const Center(
-            child: Text(
-              'Settings Page',
-              style: TextStyle(color: Colors.white, fontSize: 24),
-            ),
-          ),
+        return SettingsPage(
+          onNavItemTapped: _onNavItemTapped,
         );
       default:
         return Container(
@@ -108,8 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentIndex == 1 || _currentIndex == 2) {
-      // Medications and Tasks pages have their own Scaffold
+    if (_currentIndex == 1 || _currentIndex == 2 || _currentIndex == 3) {
+      // Medications, Tasks, and Settings pages have their own Scaffold
       return _getCurrentPage();
     }
 
