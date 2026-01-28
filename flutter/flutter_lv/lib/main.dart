@@ -5,6 +5,7 @@ import 'home/today_card.dart';
 import 'home/bottom_navigation_bar_custom.dart';
 import 'home/app_header.dart';
 import 'medications/medications_page.dart';
+import 'tasks/tasks_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -71,15 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onNavItemTapped: _onNavItemTapped,
         );
       case 2:
-        // Tasks page - placeholder
-        return Container(
-          color: const Color(0xFF1A1D24),
-          child: const Center(
-            child: Text(
-              'Tasks Page',
-              style: TextStyle(color: Colors.white, fontSize: 24),
-            ),
-          ),
+        return TasksPage(
+          onNavItemTapped: _onNavItemTapped,
         );
       case 3:
         // Settings page - placeholder
@@ -114,8 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentIndex == 1) {
-      // Medications page has its own Scaffold
+    if (_currentIndex == 1 || _currentIndex == 2) {
+      // Medications and Tasks pages have their own Scaffold
       return _getCurrentPage();
     }
 
