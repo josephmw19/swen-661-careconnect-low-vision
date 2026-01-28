@@ -4,6 +4,7 @@ import 'home/refill_reminder_card.dart';
 import 'home/today_card.dart';
 import 'home/bottom_navigation_bar_custom.dart';
 import 'home/app_header.dart';
+import 'medications/medications_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,26 +47,81 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget _getCurrentPage() {
+    switch (_currentIndex) {
+      case 0:
+        return Container(
+          color: const Color(0xFF1A1D24),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: const [
+                MedicationCard(),
+                SizedBox(height: 36),
+                RefillReminderCard(),
+                SizedBox(height: 36),
+                TodayCard(),
+              ],
+            ),
+          ),
+        );
+      case 1:
+        return MedicationsPage(
+          onNavItemTapped: _onNavItemTapped,
+        );
+      case 2:
+        // Tasks page - placeholder
+        return Container(
+          color: const Color(0xFF1A1D24),
+          child: const Center(
+            child: Text(
+              'Tasks Page',
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          ),
+        );
+      case 3:
+        // Settings page - placeholder
+        return Container(
+          color: const Color(0xFF1A1D24),
+          child: const Center(
+            child: Text(
+              'Settings Page',
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          ),
+        );
+      default:
+        return Container(
+          color: const Color(0xFF1A1D24),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: const [
+                MedicationCard(),
+                SizedBox(height: 36),
+                RefillReminderCard(),
+                SizedBox(height: 36),
+                TodayCard(),
+              ],
+            ),
+          ),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_currentIndex == 1) {
+      // Medications page has its own Scaffold
+      return _getCurrentPage();
+    }
+
     return Scaffold(
       appBar: const AppHeader(),
-      body: Container(
-        color: const Color(0xFF1A1D24), // Dark background for the page
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              MedicationCard(),
-              SizedBox(height: 36),
-              RefillReminderCard(),
-              SizedBox(height: 36),
-              TodayCard(),
-            ],
-          ),
-        ),
-      ),
+      body: _getCurrentPage(),
       bottomNavigationBar: BottomNavigationBarCustom(
         currentIndex: _currentIndex,
         onTap: _onNavItemTapped,
