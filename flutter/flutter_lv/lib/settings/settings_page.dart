@@ -26,7 +26,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
               ),
-              padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 2),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -54,7 +54,7 @@ class SettingsPage extends StatelessWidget {
             // Content area
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+                padding: const EdgeInsets.all(22.5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -203,7 +203,7 @@ class _TextSizeCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,25 +235,28 @@ class _TextSizeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _OptionButton(
-                label: 'Large',
-                isSelected: false,
-                width: 85,
-                height: 109,
+              Expanded(
+                child: _OptionButton(
+                  label: 'Large',
+                  isSelected: false,
+                  height: 109,
+                ),
               ),
               const SizedBox(width: 12),
-              _OptionButton(
-                label: 'Extra Large',
-                isSelected: false,
-                width: 85,
-                height: 109,
+              Expanded(
+                child: _OptionButton(
+                  label: 'Extra Large',
+                  isSelected: false,
+                  height: 109,
+                ),
               ),
               const SizedBox(width: 12),
-              _OptionButton(
-                label: 'Max',
-                isSelected: true,
-                width: 85,
-                height: 109,
+              Expanded(
+                child: _OptionButton(
+                  label: 'Max',
+                  isSelected: true,
+                  height: 109,
+                ),
               ),
             ],
           ),
@@ -277,7 +280,7 @@ class _LineSpacingCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -346,7 +349,7 @@ class _SpacingBetweenItemsCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -415,7 +418,7 @@ class _ReduceVisualClutterCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 27, 27, 2),
+      padding: const EdgeInsets.all(27),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -470,7 +473,7 @@ class _SpeechSpeedCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -502,25 +505,28 @@ class _SpeechSpeedCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _OptionButton(
-                label: 'Slow',
-                isSelected: false,
-                width: 85,
-                height: 77,
+              Expanded(
+                child: _OptionButton(
+                  label: 'Slow',
+                  isSelected: false,
+                  height: 77,
+                ),
               ),
               const SizedBox(width: 12),
-              _OptionButton(
-                label: 'Normal',
-                isSelected: true,
-                width: 85,
-                height: 77,
+              Expanded(
+                child: _OptionButton(
+                  label: 'Normal',
+                  isSelected: true,
+                  height: 77,
+                ),
               ),
               const SizedBox(width: 12),
-              _OptionButton(
-                label: 'Fast',
-                isSelected: false,
-                width: 85,
-                height: 77,
+              Expanded(
+                child: _OptionButton(
+                  label: 'Fast',
+                  isSelected: false,
+                  height: 77,
+                ),
               ),
             ],
           ),
@@ -544,7 +550,7 @@ class _MicrophoneAccessCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -619,7 +625,7 @@ class _ToggleCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -650,20 +656,17 @@ class _ToggleCard extends StatelessWidget {
 class _OptionButton extends StatelessWidget {
   final String label;
   final bool isSelected;
-  final double? width;
   final double height;
 
   const _OptionButton({
     required this.label,
     required this.isSelected,
-    this.width,
     required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
       height: height,
       child: ElevatedButton(
         onPressed: () {

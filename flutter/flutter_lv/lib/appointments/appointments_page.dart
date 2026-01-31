@@ -39,7 +39,7 @@ class AppointmentsPage extends StatelessWidget {
                   ),
                 ),
               ),
-              padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 2),
+              padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 22.5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -86,7 +86,7 @@ class AppointmentsPage extends StatelessWidget {
             // Content area
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+                padding: const EdgeInsets.all(22.5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -177,7 +177,7 @@ class AppointmentCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

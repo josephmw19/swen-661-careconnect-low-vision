@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return Container(
           color: const Color(0xFF1A1D24),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+            padding: const EdgeInsets.all(22.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const [
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return Container(
           color: const Color(0xFF1A1D24),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+            padding: const EdgeInsets.all(22.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const [

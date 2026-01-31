@@ -47,7 +47,7 @@ class TaskListItem extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,7 +59,7 @@ class TaskListItem extends StatelessWidget {
               Container(
                 width: 32,
                 height: 32,
-                margin: const EdgeInsets.only(top: 4.5),
+                // margin: const EdgeInsets.only(top: 4.5),
                 decoration: BoxDecoration(
                   color: status == TaskStatus.completed
                       ? const Color(0xFF81C995) // Green for completed
@@ -84,9 +84,7 @@ class TaskListItem extends StatelessWidget {
                   children: [
                     // Task title
                     SizedBox(
-                      height: description != null && description!.length > 30
-                          ? 114
-                          : 76,
+                      height: 32,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -204,7 +202,7 @@ class TaskListItem extends StatelessWidget {
             // Mark as Complete button
             SizedBox(
               width: double.infinity,
-              height: 126,
+              height: 77,
               child: ElevatedButton(
                 onPressed: onMarkComplete,
                 style: ElevatedButton.styleFrom(

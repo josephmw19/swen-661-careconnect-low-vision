@@ -40,7 +40,7 @@ class TaskDetailsPage extends StatelessWidget {
       body: Container(
         color: const Color(0xFF1A1D24),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 0),
+          padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 22.5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -144,7 +144,7 @@ class _TaskSummarySection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(33.5, 33.5, 33.5, 2),
+      padding: const EdgeInsets.all(33.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -193,30 +193,37 @@ class _TaskSummarySection extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.25),
             ),
             padding: const EdgeInsets.fromLTRB(22.5, 22.5, 22.5, 22.5),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Description',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    letterSpacing: 0.0703,
-                    height: 1.6, // 38.4 / 24
-                  ),
-                ),
-                const SizedBox(height: 9),
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 22,
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFFE8EAED),
-                    letterSpacing: -0.2578,
-                    height: 1.6, // 35.2 / 22
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Description',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          letterSpacing: 0.0703,
+                          height: 1.6, // 38.4 / 24
+                        ),
+                      ),
+                      const SizedBox(height: 9),
+                      Text(
+                        description,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 22,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xFFE8EAED),
+                          letterSpacing: -0.2578,
+                          height: 1.6, // 35.2 / 22
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -283,31 +290,38 @@ class _TaskSummarySection extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(15.25),
             ),
-            padding: const EdgeInsets.fromLTRB(24.5, 24.5, 24.5, 2),
-            child: Column(
+            padding: const EdgeInsets.all(24.5),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Status: Not completed',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    letterSpacing: 0.0703,
-                    height: 1.6, // 38.4 / 24
-                  ),
-                ),
-                const SizedBox(height: 4.5),
-                Text(
-                  statusMessage,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 22,
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFFE8C4A0),
-                    letterSpacing: -0.2578,
-                    height: 1.6, // 35.2 / 22
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Status: Not completed',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          letterSpacing: 0.0703,
+                          height: 1.6, // 38.4 / 24
+                        ),
+                      ),
+                      const SizedBox(height: 4.5),
+                      Text(
+                        statusMessage,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 22,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xFFE8C4A0),
+                          letterSpacing: -0.2578,
+                          height: 1.6, // 35.2 / 22
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -333,7 +347,7 @@ class _CompleteTaskSection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(33.5, 33.5, 33.5, 2),
+      padding: const EdgeInsets.all(33.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -418,7 +432,7 @@ class _OtherActionsSection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(33.5, 33.5, 33.5, 2),
+      padding: const EdgeInsets.all(33.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -567,7 +581,7 @@ class _HistoryNotesSection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(33.5, 33.5, 33.5, 2),
+      padding: const EdgeInsets.all(33.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

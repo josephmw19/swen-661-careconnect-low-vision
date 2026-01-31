@@ -14,7 +14,7 @@ class RefillReminderCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

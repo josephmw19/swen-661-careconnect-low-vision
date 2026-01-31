@@ -14,7 +14,7 @@ class TodayCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

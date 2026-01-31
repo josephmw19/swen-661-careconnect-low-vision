@@ -46,7 +46,7 @@ class AppointmentDetailsPage extends StatelessWidget {
       body: Container(
         color: const Color(0xFF1A1D24),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 0),
+          padding: const EdgeInsets.all(22.5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -152,7 +152,7 @@ class _AppointmentSummarySection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -313,7 +313,7 @@ class _LocationSection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -445,7 +445,7 @@ class _PreparationNotesSection extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
-      padding: const EdgeInsets.fromLTRB(29, 29, 29, 2),
+      padding: const EdgeInsets.all(29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -102,7 +102,7 @@ class _MedicationsPageState extends State<MedicationsPage> {
               child: Container(
                 color: const Color(0xFF1A1D24),
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 0),
+                  padding: const EdgeInsets.fromLTRB(22.5, 36, 22.5, 22.5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
