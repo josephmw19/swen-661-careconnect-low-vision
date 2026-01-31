@@ -1,44 +1,100 @@
-# CareConnect LV – Human First UI
+CareConnect LV – Human First UI
 
-SWEN 661 – User Interface Implementation  
-Team 5 – Human First UI  
-
-This project is an accessibility-first redesign of the CareConnect application
-focused on improving usability for low-vision care recipients. The project
-implements WCAG 2.1 AA–compliant UI variants across mobile, web, and desktop
-platforms without expanding functional scope.
-
-## Team Members
-- Joseph Wojcik
-- Davon Davis
-- Olalekan Ogunsanya
-
-## Course
-SWEN 661 – User Interface Implementation  
+SWEN 661 – User Interface Implementation
+Team 5 – Human First UI
 University of Maryland Global Campus
 
-## Project Scope
-- Mobile: Flutter & React Native
-- Web: React
-- Desktop: Electron
-- Accessibility Target: WCAG 2.1 Level AA
+This project is an accessibility-first redesign of the CareConnect application focused on improving usability for low-vision care recipients. The project implements WCAG 2.1 Level AA–compliant UI variants across mobile, web, and desktop platforms without expanding functional scope.
+
+Team Members
+
+Joseph Wojcik
+Davon Davis
+Olalekan Ogunsanya
 
 Repository Structure
-This repository is organized to support parallel development across platforms:
 
-- /mobile-flutter – Flutter mobile implementation
-- /mobile-react-native – React Native mobile implementation
-- /web-react – Web UI implementation
-- /desktop-electron – Desktop UI implementation
-- /docs – Team charter, project proposal, and supporting documentation
+The repository contains multiple implementations of the CareConnect user interface:
 
-## Documentation
-- Team Charter: https://docs.google.com/document/d/1riDL0CHCqzBQHlmT1MbEtaSstxID-YmfeH2xdhO5RnY/edit?usp=sharing 
-- Project Proposal: https://docs.google.com/document/d/12SI4DSkEVbVtYAltGiWIbpyVAEMFVWMY/edit?usp=sharing&ouid=102180172849357017962&rtpof=true&sd=true 
+flutter – Flutter mobile implementation
+react-native – React Native mobile implementation
+web – Web UI implementation
+electron – Desktop UI implementation
+docs – Project documentation and screenshots
 
-## Setup Instructions
-Initial setup instructions will be added incrementally as platform implementations begin in subsequent assignments.
+How to Run the Application
 
-AI Usage
+Each application version is located in its own folder.
+Only one version needs to be run for demonstration.
 
-This project may leverage approved AI tools (e.g., ChatGPT, GitHub Copilot, Figma AI) for ideation and learning support in accordance with UMGC academic integrity guidelines.
+To run the Flutter version:
+
+Open a terminal
+
+Navigate to the flutter folder
+
+Run the Flutter application using the Flutter run command
+
+To run the React Native version:
+
+Open a terminal
+
+Navigate to the react-native folder
+
+Start the application using npm start
+
+To run the Web version:
+
+Open a terminal
+
+Navigate to the web folder
+
+Start the application using npm start
+
+To run the Desktop (Electron) version:
+
+Open a terminal
+
+Navigate to the electron folder
+
+Start the application using npm start
+
+How to Run Tests
+
+Tests are executed from within each project folder.
+
+Flutter tests:
+
+Navigate to the flutter folder
+
+Run flutter test
+
+React Native tests:
+
+Navigate to the react-native folder
+
+Run npm test
+
+Web tests:
+
+Navigate to the web folder
+
+Run npm test
+
+Desktop (Electron) tests:
+
+Navigate to the electron folder
+
+Run npm test
+
+Screenshots
+
+Screenshots used for assignment submission are stored in the following folder:
+
+docs/screenshots
+
+The screenshots represent the main user interface screens for each platform.
+
+Flutter: Home screen
+Web: Home screen
+Desktop: Home screen
