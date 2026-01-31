@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class TodayCard extends StatelessWidget {
-  const TodayCard({super.key});
+  final bool bloodPressureCheckCompleted;
+  final bool lunchMedicationCompleted;
+  final bool eveningWalkCompleted;
+  final Function(String)? onTaskToggle;
+
+  const TodayCard({
+    super.key,
+    this.bloodPressureCheckCompleted = true,
+    this.lunchMedicationCompleted = false,
+    this.eveningWalkCompleted = false,
+    this.onTaskToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,22 +67,25 @@ class TodayCard extends StatelessWidget {
               _TaskItem(
                 title: 'Blood Pressure Check',
                 time: '9:00 AM',
-                isCompleted: true,
+                isCompleted: bloodPressureCheckCompleted,
                 height: 157.5,
+                onTap: () => onTaskToggle?.call('blood_pressure'),
               ),
               const SizedBox(height: 18),
               _TaskItem(
                 title: 'Lunch Medication',
                 time: '12:30 PM',
-                isCompleted: false,
+                isCompleted: lunchMedicationCompleted,
                 height: 119.5,
+                onTap: () => onTaskToggle?.call('lunch_medication'),
               ),
               const SizedBox(height: 18),
               _TaskItem(
                 title: 'Evening Walk',
                 time: '6:00 PM',
-                isCompleted: false,
+                isCompleted: eveningWalkCompleted,
                 height: 119.5,
+                onTap: () => onTaskToggle?.call('evening_walk'),
               ),
             ],
           ),
@@ -86,77 +100,82 @@ class _TaskItem extends StatelessWidget {
   final String time;
   final bool isCompleted;
   final double height;
+  final VoidCallback? onTap;
 
   const _TaskItem({
     required this.title,
     required this.time,
     required this.isCompleted,
     required this.height,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D333E),
-        borderRadius: BorderRadius.circular(15.25),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 22.5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600, // Semi-bold
-                    color: Colors.white,
-                    letterSpacing: 0.0703,
-                    height: 1.6, // 38.4 / 24
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D333E),
+          borderRadius: BorderRadius.circular(15.25),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 22.5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600, // Semi-bold
+                      color: Colors.white,
+                      letterSpacing: 0.0703,
+                      height: 1.6, // 38.4 / 24
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4.5),
-                Text(
-                  time,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 22,
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFF9AA0A6),
-                    letterSpacing: -0.2578,
-                    height: 1.5, // 33 / 22
+                  const SizedBox(height: 4.5),
+                  Text(
+                    time,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 22,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xFF9AA0A6),
+                      letterSpacing: -0.2578,
+                      height: 1.5, // 33 / 22
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          if (isCompleted)
-            const Icon(
-              Icons.check_circle,
-              color: Color(0xFF81C995),
-              size: 27,
-            )
-          else
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color(0xFF5A6270),
-                  width: 2,
-                ),
-                shape: BoxShape.circle,
+                ],
               ),
             ),
-        ],
+            if (isCompleted)
+              const Icon(
+                Icons.check_circle,
+                color: Color(0xFF81C995),
+                size: 27,
+              )
+            else
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color(0xFF5A6270),
+                    width: 2,
+                  ),
+                  shape: BoxShape.circle,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

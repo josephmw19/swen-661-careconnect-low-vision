@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
-  const AppHeader({super.key});
+  final VoidCallback? onReadTap;
+  final VoidCallback? onVoiceTap;
+  final bool isReading;
+  final bool isListening;
+
+  const AppHeader({
+    super.key,
+    this.onReadTap,
+    this.onVoiceTap,
+    this.isReading = false,
+    this.isListening = false,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(80);
@@ -52,18 +63,16 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                     icon: Icons.volume_up_outlined,
                     label: 'Read',
                     width: 50,
-                    onTap: () {
-                      // Handle read action
-                    },
+                    onTap: onReadTap ?? () {},
+                    isActive: isReading,
                   ),
                   const SizedBox(width: 13.5),
                   _ActionButton(
                     icon: Icons.mic_outlined,
                     label: 'Voice',
                     width: 50, // Will expand
-                    onTap: () {
-                      // Handle voice action
-                    },
+                    onTap: onVoiceTap ?? () {},
+                    isActive: isListening,
                   ),
                 ],
               ),
@@ -80,12 +89,14 @@ class _ActionButton extends StatelessWidget {
   final String label;
   final double? width;
   final VoidCallback onTap;
+  final bool isActive;
 
   const _ActionButton({
     required this.icon,
     required this.label,
     this.width,
     required this.onTap,
+    this.isActive = false,
   });
 
   @override
@@ -100,7 +111,7 @@ class _ActionButton extends StatelessWidget {
             ? const BoxConstraints(minWidth: 64)
             : null,
         decoration: BoxDecoration(
-          color: const Color(0xFF2D333E),
+          color: isActive ? const Color(0xFF4285F4) : const Color(0xFF2D333E),
           borderRadius: BorderRadius.circular(15.25),
         ),
         child: Column(

@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class MedicationCard extends StatelessWidget {
-  const MedicationCard({super.key});
+  final bool isMarkedAsTaken;
+  final bool isSnoozed;
+  final VoidCallback? onMarkAsTaken;
+  final VoidCallback? onSnooze;
+
+  const MedicationCard({
+    super.key,
+    this.isMarkedAsTaken = false,
+    this.isSnoozed = false,
+    this.onMarkAsTaken,
+    this.onSnooze,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +108,11 @@ class MedicationCard extends StatelessWidget {
             width: double.infinity,
             height: 90,
             child: ElevatedButton(
-              onPressed: () {
-                // Handle mark as taken
-              },
+              onPressed: isMarkedAsTaken ? null : onMarkAsTaken,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4285F4),
+                backgroundColor: isMarkedAsTaken
+                    ? const Color(0xFF34A853)
+                    : const Color(0xFF4285F4),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.25),
                 ),
@@ -126,11 +137,11 @@ class MedicationCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  const Expanded(
+                  Expanded(
                     child: Center(
                       child: Text(
-                        'Mark as Taken',
-                        style: TextStyle(
+                        isMarkedAsTaken ? 'Marked as Taken' : 'Mark as Taken',
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 26,
                           fontWeight: FontWeight.w600,
@@ -152,20 +163,20 @@ class MedicationCard extends StatelessWidget {
             width: double.infinity,
             height: 77,
             child: ElevatedButton(
-              onPressed: () {
-                // Handle snooze
-              },
+              onPressed: isMarkedAsTaken || isSnoozed ? null : onSnooze,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2D333E),
+                backgroundColor: isSnoozed
+                    ? const Color(0xFF4285F4)
+                    : const Color(0xFF2D333E),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.25),
                 ),
                 padding: EdgeInsets.zero,
               ),
               child: Row(
-                children: const [
-                  SizedBox(width: 24),
-                  SizedBox(
+                children: [
+                  const SizedBox(width: 24),
+                  const SizedBox(
                     width: 32,
                     height: 32,
                     child: Center(
@@ -176,12 +187,12 @@ class MedicationCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Center(
                       child: Text(
-                        'Snooze 10 min',
-                        style: TextStyle(
+                        isSnoozed ? 'Snoozed' : 'Snooze 10 min',
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
@@ -191,7 +202,7 @@ class MedicationCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 24),
+                  const SizedBox(width: 24),
                 ],
               ),
             ),

@@ -204,7 +204,7 @@ class TaskListItem extends StatelessWidget {
               width: double.infinity,
               height: 77,
               child: ElevatedButton(
-                onPressed: onMarkComplete,
+                onPressed: onMarkComplete ?? () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4285F4),
                   shape: RoundedRectangleBorder(

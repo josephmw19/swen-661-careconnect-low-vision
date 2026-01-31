@@ -14,6 +14,32 @@ class MedicationsPage extends StatefulWidget {
 }
 
 class _MedicationsPageState extends State<MedicationsPage> {
+  // Track which medications have been marked as taken
+  bool _lisinoprilTaken = false;
+  bool _aspirinTaken = false;
+
+  void _handleMarkAsTaken(String medicationName) {
+    setState(() {
+      switch (medicationName) {
+        case 'Lisinopril 10mg':
+          _lisinoprilTaken = true;
+          break;
+        case 'Aspirin 81mg':
+          _aspirinTaken = true;
+          break;
+      }
+    });
+  }
+
+  String _getTakenTime() {
+    final now = DateTime.now();
+    final hour = now.hour;
+    final minute = now.minute;
+    final period = hour >= 12 ? 'PM' : 'AM';
+    final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
+    final displayMinute = minute.toString().padLeft(2, '0');
+    return 'Taken today at $displayHour:$displayMinute $period';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +137,14 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         name: 'Lisinopril 10mg',
                         instructions: '1 tablet every morning',
                         additionalNotes: 'Take with food',
-                        status: MedicationStatus.dueNow,
-                        statusText: 'Due now (9:00 AM)',
-                        onMarkAsTaken: () {
-                          // Handle mark as taken
-                        },
+                        status: _lisinoprilTaken
+                            ? MedicationStatus.taken
+                            : MedicationStatus.dueNow,
+                        statusText: _lisinoprilTaken ? null : 'Due now (9:00 AM)',
+                        takenTime: _lisinoprilTaken ? _getTakenTime() : null,
+                        onMarkAsTaken: _lisinoprilTaken
+                            ? null
+                            : () => _handleMarkAsTaken('Lisinopril 10mg'),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -124,9 +153,12 @@ class _MedicationsPageState extends State<MedicationsPage> {
                                 medicationName: 'Lisinopril 10mg',
                                 dosage: '1 tablet every morning',
                                 instructions: 'Take with food',
-                                nextDose: 'Today at 9:00 AM (due now)',
-                                statusMessage:
-                                    'Please take this medication now',
+                                nextDose: _lisinoprilTaken
+                                    ? 'Next dose: Tomorrow at 9:00 AM'
+                                    : 'Today at 9:00 AM (due now)',
+                                statusMessage: _lisinoprilTaken
+                                    ? 'Medication taken'
+                                    : 'Please take this medication now',
                                 onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
@@ -187,11 +219,16 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         name: 'Aspirin 81mg',
                         instructions: '1 tablet with lunch',
                         additionalNotes: 'Take with food',
-                        status: MedicationStatus.dueSoon,
-                        statusText: 'Due in 30 minutes (12:30 PM)',
-                        onMarkAsTaken: () {
-                          // Handle mark as taken
-                        },
+                        status: _aspirinTaken
+                            ? MedicationStatus.taken
+                            : MedicationStatus.dueSoon,
+                        statusText: _aspirinTaken
+                            ? null
+                            : 'Due in 30 minutes (12:30 PM)',
+                        takenTime: _aspirinTaken ? _getTakenTime() : null,
+                        onMarkAsTaken: _aspirinTaken
+                            ? null
+                            : () => _handleMarkAsTaken('Aspirin 81mg'),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -200,9 +237,12 @@ class _MedicationsPageState extends State<MedicationsPage> {
                                 medicationName: 'Aspirin 81mg',
                                 dosage: '1 tablet with lunch',
                                 instructions: 'Take with food',
-                                nextDose: 'Today at 12:30 PM (in 30 minutes)',
-                                statusMessage:
-                                    'Please take this medication within the next 30 minutes',
+                                nextDose: _aspirinTaken
+                                    ? 'Next dose: Tomorrow at 12:30 PM'
+                                    : 'Today at 12:30 PM (in 30 minutes)',
+                                statusMessage: _aspirinTaken
+                                    ? 'Medication taken'
+                                    : 'Please take this medication within the next 30 minutes',
                                 onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),

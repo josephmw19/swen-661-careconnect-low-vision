@@ -44,10 +44,71 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
+  // Medication state
+  bool _medicationMarkedAsTaken = false;
+  bool _medicationSnoozed = false;
+
+  // Task completion state
+  bool _bloodPressureCheckCompleted = true;
+  bool _lunchMedicationCompleted = false;
+  bool _eveningWalkCompleted = false;
+
+  // Read/Voice button states
+  bool _isReading = false;
+  bool _isListening = false;
+
   void _onNavItemTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  void _handleMarkAsTaken() {
+    setState(() {
+      _medicationMarkedAsTaken = true;
+      _medicationSnoozed = false;
+    });
+  }
+
+  void _handleSnooze() {
+    setState(() {
+      _medicationSnoozed = true;
+    });
+  }
+
+  void _handleRefillReminderTap() {
+    // Handle refill reminder tap - could navigate to pharmacy or show dialog
+    // For now, just a placeholder
+  }
+
+  void _handleTaskToggle(String taskId) {
+    setState(() {
+      switch (taskId) {
+        case 'blood_pressure':
+          _bloodPressureCheckCompleted = !_bloodPressureCheckCompleted;
+          break;
+        case 'lunch_medication':
+          _lunchMedicationCompleted = !_lunchMedicationCompleted;
+          break;
+        case 'evening_walk':
+          _eveningWalkCompleted = !_eveningWalkCompleted;
+          break;
+      }
+    });
+  }
+
+  void _handleReadAction() {
+    setState(() {
+      _isReading = !_isReading;
+    });
+    // Could add actual read functionality here
+  }
+
+  void _handleVoiceAction() {
+    setState(() {
+      _isListening = !_isListening;
+    });
+    // Could add actual voice command functionality here
   }
 
   Widget _getCurrentPage() {
@@ -59,14 +120,26 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(22.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
-                MedicationCard(),
-                SizedBox(height: 36),
-                RefillReminderCard(),
-                SizedBox(height: 36),
-                TodayCard(),
-                SizedBox(height: 36),
-                UpcomingAppointmentsCard(),
+              children: [
+                MedicationCard(
+                  isMarkedAsTaken: _medicationMarkedAsTaken,
+                  isSnoozed: _medicationSnoozed,
+                  onMarkAsTaken: _handleMarkAsTaken,
+                  onSnooze: _handleSnooze,
+                ),
+                const SizedBox(height: 36),
+                RefillReminderCard(
+                  onTap: _handleRefillReminderTap,
+                ),
+                const SizedBox(height: 36),
+                TodayCard(
+                  bloodPressureCheckCompleted: _bloodPressureCheckCompleted,
+                  lunchMedicationCompleted: _lunchMedicationCompleted,
+                  eveningWalkCompleted: _eveningWalkCompleted,
+                  onTaskToggle: _handleTaskToggle,
+                ),
+                const SizedBox(height: 36),
+                const UpcomingAppointmentsCard(),
               ],
             ),
           ),
@@ -90,14 +163,26 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(22.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
-                MedicationCard(),
-                SizedBox(height: 36),
-                RefillReminderCard(),
-                SizedBox(height: 36),
-                TodayCard(),
-                SizedBox(height: 36),
-                UpcomingAppointmentsCard(),
+              children: [
+                MedicationCard(
+                  isMarkedAsTaken: _medicationMarkedAsTaken,
+                  isSnoozed: _medicationSnoozed,
+                  onMarkAsTaken: _handleMarkAsTaken,
+                  onSnooze: _handleSnooze,
+                ),
+                const SizedBox(height: 36),
+                RefillReminderCard(
+                  onTap: _handleRefillReminderTap,
+                ),
+                const SizedBox(height: 36),
+                TodayCard(
+                  bloodPressureCheckCompleted: _bloodPressureCheckCompleted,
+                  lunchMedicationCompleted: _lunchMedicationCompleted,
+                  eveningWalkCompleted: _eveningWalkCompleted,
+                  onTaskToggle: _handleTaskToggle,
+                ),
+                const SizedBox(height: 36),
+                const UpcomingAppointmentsCard(),
               ],
             ),
           ),
@@ -113,7 +198,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      appBar: const AppHeader(),
+      appBar: AppHeader(
+        onReadTap: _handleReadAction,
+        onVoiceTap: _handleVoiceAction,
+        isReading: _isReading,
+        isListening: _isListening,
+      ),
       body: _getCurrentPage(),
       bottomNavigationBar: BottomNavigationBarCustom(
         currentIndex: _currentIndex,

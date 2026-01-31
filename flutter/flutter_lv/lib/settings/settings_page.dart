@@ -2,10 +2,39 @@ import 'package:flutter/material.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
 
   const SettingsPage({super.key, this.onNavItemTapped});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  // Text Size state
+  String _textSize = 'Max';
+
+  // Line Spacing state
+  String _lineSpacing = 'Maximum';
+
+  // Spacing Between Items state
+  String _spacingBetweenItems = 'Maximum';
+
+  // Speech Speed state
+  String _speechSpeed = 'Normal';
+
+  // Microphone Access state
+  String _microphoneAccess = 'Allowed';
+
+  // Toggle states
+  bool _highContrastDisplay = false;
+  bool _boldText = true;
+  bool _reduceVisualClutter = true;
+  bool _readScreenAloud = true;
+  bool _readNotificationsAloud = true;
+  bool _voiceNavigation = false;
+  bool _voiceFeedbackForActions = true;
 
   @override
   Widget build(BuildContext context) {
@@ -65,28 +94,66 @@ class SettingsPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 27),
                     // Text Size card
-                    _TextSizeCard(),
+                    _TextSizeCard(
+                      selectedSize: _textSize,
+                      onSizeChanged: (size) {
+                        setState(() {
+                          _textSize = size;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 27),
                     // Line Spacing card
-                    _LineSpacingCard(),
+                    _LineSpacingCard(
+                      selectedSpacing: _lineSpacing,
+                      onSpacingChanged: (spacing) {
+                        setState(() {
+                          _lineSpacing = spacing;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 27),
                     // Spacing Between Items card
-                    _SpacingBetweenItemsCard(),
+                    _SpacingBetweenItemsCard(
+                      selectedSpacing: _spacingBetweenItems,
+                      onSpacingChanged: (spacing) {
+                        setState(() {
+                          _spacingBetweenItems = spacing;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 27),
                     // High Contrast Display card
                     _ToggleCard(
                       title: 'High Contrast Display',
-                      isOn: false,
+                      isOn: _highContrastDisplay,
+                      onToggle: (value) {
+                        setState(() {
+                          _highContrastDisplay = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 27),
                     // Bold Text card
                     _ToggleCard(
                       title: 'Bold Text',
-                      isOn: true,
+                      isOn: _boldText,
+                      onToggle: (value) {
+                        setState(() {
+                          _boldText = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 27),
                     // Reduce Visual Clutter card
-                    _ReduceVisualClutterCard(),
+                    _ReduceVisualClutterCard(
+                      isOn: _reduceVisualClutter,
+                      onToggle: (value) {
+                        setState(() {
+                          _reduceVisualClutter = value;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 45),
                     // Read Aloud and Voice section
                     const _SectionHeader(
@@ -97,29 +164,56 @@ class SettingsPage extends StatelessWidget {
                     // Read Screen Aloud card
                     _ToggleCard(
                       title: 'Read Screen Aloud',
-                      isOn: true,
+                      isOn: _readScreenAloud,
+                      onToggle: (value) {
+                        setState(() {
+                          _readScreenAloud = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 27),
                     // Read Notifications Aloud card
                     _ToggleCard(
                       title: 'Read Notifications Aloud',
-                      isOn: true,
+                      isOn: _readNotificationsAloud,
+                      onToggle: (value) {
+                        setState(() {
+                          _readNotificationsAloud = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 27),
                     // Voice Navigation card
                     _ToggleCard(
                       title: 'Voice Navigation',
-                      isOn: false,
+                      isOn: _voiceNavigation,
+                      onToggle: (value) {
+                        setState(() {
+                          _voiceNavigation = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 27),
                     // Voice Feedback for Actions card
                     _ToggleCard(
                       title: 'Voice Feedback for Actions',
-                      isOn: true,
+                      isOn: _voiceFeedbackForActions,
+                      onToggle: (value) {
+                        setState(() {
+                          _voiceFeedbackForActions = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 27),
                     // Speech Speed card
-                    _SpeechSpeedCard(),
+                    _SpeechSpeedCard(
+                      selectedSpeed: _speechSpeed,
+                      onSpeedChanged: (speed) {
+                        setState(() {
+                          _speechSpeed = speed;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 45),
                     // Microphone Access section
                     const _SectionHeader(
@@ -128,7 +222,14 @@ class SettingsPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 27),
                     // Microphone Access card
-                    _MicrophoneAccessCard(),
+                    _MicrophoneAccessCard(
+                      selectedAccess: _microphoneAccess,
+                      onAccessChanged: (access) {
+                        setState(() {
+                          _microphoneAccess = access;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 36),
                   ],
                 ),
@@ -139,7 +240,7 @@ class SettingsPage extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBarCustom(
         currentIndex: 3, // Settings is index 3
-        onTap: onNavItemTapped ?? (index) {},
+        onTap: widget.onNavItemTapped ?? (index) {},
       ),
     );
   }
@@ -190,7 +291,26 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _TextSizeCard extends StatelessWidget {
-  const _TextSizeCard();
+  final String selectedSize;
+  final Function(String) onSizeChanged;
+
+  const _TextSizeCard({
+    required this.selectedSize,
+    required this.onSizeChanged,
+  });
+
+  String _getCurrentSettingLabel() {
+    switch (selectedSize) {
+      case 'Large':
+        return 'Large';
+      case 'Extra Large':
+        return 'Extra Large';
+      case 'Max':
+        return 'Maximum';
+      default:
+        return 'Maximum';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,9 +339,9 @@ class _TextSizeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 9),
-          const Text(
-            'Current setting: Maximum',
-            style: TextStyle(
+          Text(
+            'Current setting: ${_getCurrentSettingLabel()}',
+            style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 22,
               fontWeight: FontWeight.normal,
@@ -238,24 +358,27 @@ class _TextSizeCard extends StatelessWidget {
               Expanded(
                 child: _OptionButton(
                   label: 'Large',
-                  isSelected: false,
+                  isSelected: selectedSize == 'Large',
                   height: 109,
+                  onPressed: () => onSizeChanged('Large'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Extra Large',
-                  isSelected: false,
+                  isSelected: selectedSize == 'Extra Large',
                   height: 109,
+                  onPressed: () => onSizeChanged('Extra Large'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Max',
-                  isSelected: true,
+                  isSelected: selectedSize == 'Max',
                   height: 109,
+                  onPressed: () => onSizeChanged('Max'),
                 ),
               ),
             ],
@@ -267,7 +390,13 @@ class _TextSizeCard extends StatelessWidget {
 }
 
 class _LineSpacingCard extends StatelessWidget {
-  const _LineSpacingCard();
+  final String selectedSpacing;
+  final Function(String) onSpacingChanged;
+
+  const _LineSpacingCard({
+    required this.selectedSpacing,
+    required this.onSpacingChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -296,9 +425,9 @@ class _LineSpacingCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 9),
-          const Text(
-            'Current setting: Maximum',
-            style: TextStyle(
+          Text(
+            'Current setting: $selectedSpacing',
+            style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 22,
               fontWeight: FontWeight.normal,
@@ -315,16 +444,18 @@ class _LineSpacingCard extends StatelessWidget {
               Expanded(
                 child: _OptionButton(
                   label: 'Increased',
-                  isSelected: false,
+                  isSelected: selectedSpacing == 'Increased',
                   height: 77,
+                  onPressed: () => onSpacingChanged('Increased'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Maximum',
-                  isSelected: true,
+                  isSelected: selectedSpacing == 'Maximum',
                   height: 77,
+                  onPressed: () => onSpacingChanged('Maximum'),
                 ),
               ),
             ],
@@ -336,7 +467,13 @@ class _LineSpacingCard extends StatelessWidget {
 }
 
 class _SpacingBetweenItemsCard extends StatelessWidget {
-  const _SpacingBetweenItemsCard();
+  final String selectedSpacing;
+  final Function(String) onSpacingChanged;
+
+  const _SpacingBetweenItemsCard({
+    required this.selectedSpacing,
+    required this.onSpacingChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -365,9 +502,9 @@ class _SpacingBetweenItemsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 9),
-          const Text(
-            'Current setting: Maximum',
-            style: TextStyle(
+          Text(
+            'Current setting: $selectedSpacing',
+            style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 22,
               fontWeight: FontWeight.normal,
@@ -384,16 +521,18 @@ class _SpacingBetweenItemsCard extends StatelessWidget {
               Expanded(
                 child: _OptionButton(
                   label: 'Increased',
-                  isSelected: false,
+                  isSelected: selectedSpacing == 'Increased',
                   height: 77,
+                  onPressed: () => onSpacingChanged('Increased'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Maximum',
-                  isSelected: true,
+                  isSelected: selectedSpacing == 'Maximum',
                   height: 77,
+                  onPressed: () => onSpacingChanged('Maximum'),
                 ),
               ),
             ],
@@ -405,7 +544,13 @@ class _SpacingBetweenItemsCard extends StatelessWidget {
 }
 
 class _ReduceVisualClutterCard extends StatelessWidget {
-  const _ReduceVisualClutterCard();
+  final bool isOn;
+  final Function(bool) onToggle;
+
+  const _ReduceVisualClutterCard({
+    required this.isOn,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -450,7 +595,10 @@ class _ReduceVisualClutterCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _ToggleButton(isOn: true),
+              _ToggleButton(
+                isOn: isOn,
+                onToggle: onToggle,
+              ),
             ],
           ),
         ],
@@ -460,7 +608,13 @@ class _ReduceVisualClutterCard extends StatelessWidget {
 }
 
 class _SpeechSpeedCard extends StatelessWidget {
-  const _SpeechSpeedCard();
+  final String selectedSpeed;
+  final Function(String) onSpeedChanged;
+
+  const _SpeechSpeedCard({
+    required this.selectedSpeed,
+    required this.onSpeedChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -489,9 +643,9 @@ class _SpeechSpeedCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 9),
-          const Text(
-            'Current setting: Normal',
-            style: TextStyle(
+          Text(
+            'Current setting: $selectedSpeed',
+            style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 22,
               fontWeight: FontWeight.normal,
@@ -508,24 +662,27 @@ class _SpeechSpeedCard extends StatelessWidget {
               Expanded(
                 child: _OptionButton(
                   label: 'Slow',
-                  isSelected: false,
+                  isSelected: selectedSpeed == 'Slow',
                   height: 77,
+                  onPressed: () => onSpeedChanged('Slow'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Normal',
-                  isSelected: true,
+                  isSelected: selectedSpeed == 'Normal',
                   height: 77,
+                  onPressed: () => onSpeedChanged('Normal'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Fast',
-                  isSelected: false,
+                  isSelected: selectedSpeed == 'Fast',
                   height: 77,
+                  onPressed: () => onSpeedChanged('Fast'),
                 ),
               ),
             ],
@@ -537,7 +694,13 @@ class _SpeechSpeedCard extends StatelessWidget {
 }
 
 class _MicrophoneAccessCard extends StatelessWidget {
-  const _MicrophoneAccessCard();
+  final String selectedAccess;
+  final Function(String) onAccessChanged;
+
+  const _MicrophoneAccessCard({
+    required this.selectedAccess,
+    required this.onAccessChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -585,16 +748,18 @@ class _MicrophoneAccessCard extends StatelessWidget {
               Expanded(
                 child: _OptionButton(
                   label: 'Allowed',
-                  isSelected: true,
+                  isSelected: selectedAccess == 'Allowed',
                   height: 109,
+                  onPressed: () => onAccessChanged('Allowed'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _OptionButton(
                   label: 'Not Allowed',
-                  isSelected: false,
+                  isSelected: selectedAccess == 'Not Allowed',
                   height: 109,
+                  onPressed: () => onAccessChanged('Not Allowed'),
                 ),
               ),
             ],
@@ -608,10 +773,12 @@ class _MicrophoneAccessCard extends StatelessWidget {
 class _ToggleCard extends StatelessWidget {
   final String title;
   final bool isOn;
+  final Function(bool) onToggle;
 
   const _ToggleCard({
     required this.title,
     required this.isOn,
+    required this.onToggle,
   });
 
   @override
@@ -646,7 +813,10 @@ class _ToggleCard extends StatelessWidget {
               ),
             ),
           ),
-          _ToggleButton(isOn: isOn),
+          _ToggleButton(
+            isOn: isOn,
+            onToggle: onToggle,
+          ),
         ],
       ),
     );
@@ -657,11 +827,13 @@ class _OptionButton extends StatelessWidget {
   final String label;
   final bool isSelected;
   final double height;
+  final VoidCallback? onPressed;
 
   const _OptionButton({
     required this.label,
     required this.isSelected,
     required this.height,
+    this.onPressed,
   });
 
   @override
@@ -669,9 +841,7 @@ class _OptionButton extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ElevatedButton(
-        onPressed: () {
-          // Handle option selection
-        },
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected
               ? const Color(0xFF4285F4)
@@ -704,8 +874,12 @@ class _OptionButton extends StatelessWidget {
 
 class _ToggleButton extends StatelessWidget {
   final bool isOn;
+  final Function(bool)? onToggle;
 
-  const _ToggleButton({required this.isOn});
+  const _ToggleButton({
+    required this.isOn,
+    this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -713,9 +887,7 @@ class _ToggleButton extends StatelessWidget {
       width: 120,
       height: 68,
       child: ElevatedButton(
-        onPressed: () {
-          // Handle toggle
-        },
+        onPressed: onToggle != null ? () => onToggle!(!isOn) : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: isOn ? const Color(0xFF34A853) : const Color(0xFF2D333E),
           shape: RoundedRectangleBorder(

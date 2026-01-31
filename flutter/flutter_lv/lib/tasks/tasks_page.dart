@@ -4,10 +4,42 @@ import '../home/bottom_navigation_bar_custom.dart';
 import 'task_list_item.dart';
 import 'task_details_page.dart';
 
-class TasksPage extends StatelessWidget {
+class TasksPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
 
   const TasksPage({super.key, this.onNavItemTapped});
+
+  @override
+  State<TasksPage> createState() => _TasksPageState();
+}
+
+class _TasksPageState extends State<TasksPage> {
+  // Track which tasks have been marked as complete
+  bool _morningVitaminsCompleted = false;
+  bool _drinkWaterCompleted = false;
+
+  void _handleMarkComplete(String taskTitle) {
+    setState(() {
+      switch (taskTitle) {
+        case 'Take morning vitamins':
+          _morningVitaminsCompleted = true;
+          break;
+        case 'Drink 8 glasses of water':
+          _drinkWaterCompleted = true;
+          break;
+      }
+    });
+  }
+
+  String _getCompletionTime() {
+    final now = DateTime.now();
+    final hour = now.hour;
+    final minute = now.minute;
+    final period = hour >= 12 ? 'PM' : 'AM';
+    final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
+    final displayMinute = minute.toString().padLeft(2, '0');
+    return 'Completed at $displayHour:$displayMinute $period';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +102,19 @@ class TasksPage extends StatelessWidget {
                       // Take morning vitamins
                       TaskListItem(
                         title: 'Take morning vitamins',
-                        status: TaskStatus.notCompleted,
-                        statusText: 'Status: Not completed',
-                        hasActionButton: true,
-                        onMarkComplete: () {
-                          // Handle mark as complete
-                        },
+                        status: _morningVitaminsCompleted
+                            ? TaskStatus.completed
+                            : TaskStatus.notCompleted,
+                        statusText: _morningVitaminsCompleted
+                            ? null
+                            : 'Status: Not completed',
+                        completionText: _morningVitaminsCompleted
+                            ? _getCompletionTime()
+                            : null,
+                        hasActionButton: !_morningVitaminsCompleted,
+                        onMarkComplete: _morningVitaminsCompleted
+                            ? null
+                            : () => _handleMarkComplete('Take morning vitamins'),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -83,9 +122,13 @@ class TasksPage extends StatelessWidget {
                               builder: (context) => TaskDetailsPage(
                                 taskTitle: 'Take morning vitamins',
                                 description: 'Take your daily vitamins',
-                                dueTime: 'Today at 8:00 AM',
-                                statusMessage: 'This task is still pending',
-                                onNavItemTapped: onNavItemTapped,
+                                dueTime: _morningVitaminsCompleted
+                                    ? 'Completed'
+                                    : 'Today at 8:00 AM',
+                                statusMessage: _morningVitaminsCompleted
+                                    ? 'Completed'
+                                    : 'This task is still pending',
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -107,7 +150,7 @@ class TasksPage extends StatelessWidget {
                                     'Measure blood pressure using home monitor and record the result.',
                                 dueTime: 'Today at 10:00 AM',
                                 statusMessage: 'This task is still pending',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -118,12 +161,19 @@ class TasksPage extends StatelessWidget {
                       TaskListItem(
                         title: 'Drink 8 glasses of water',
                         description: 'Stay hydrated throughout the day',
-                        status: TaskStatus.notCompleted,
-                        statusText: 'Status: Not completed',
-                        hasActionButton: true,
-                        onMarkComplete: () {
-                          // Handle mark as complete
-                        },
+                        status: _drinkWaterCompleted
+                            ? TaskStatus.completed
+                            : TaskStatus.notCompleted,
+                        statusText: _drinkWaterCompleted
+                            ? null
+                            : 'Status: Not completed',
+                        completionText: _drinkWaterCompleted
+                            ? _getCompletionTime()
+                            : null,
+                        hasActionButton: !_drinkWaterCompleted,
+                        onMarkComplete: _drinkWaterCompleted
+                            ? null
+                            : () => _handleMarkComplete('Drink 8 glasses of water'),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -131,9 +181,13 @@ class TasksPage extends StatelessWidget {
                               builder: (context) => TaskDetailsPage(
                                 taskTitle: 'Drink 8 glasses of water',
                                 description: 'Stay hydrated throughout the day',
-                                dueTime: 'Today',
-                                statusMessage: 'This task is still pending',
-                                onNavItemTapped: onNavItemTapped,
+                                dueTime: _drinkWaterCompleted
+                                    ? 'Completed'
+                                    : 'Today',
+                                statusMessage: _drinkWaterCompleted
+                                    ? 'Completed'
+                                    : 'This task is still pending',
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -154,7 +208,7 @@ class TasksPage extends StatelessWidget {
                                 description: 'Take a 30-minute walk in the morning',
                                 dueTime: 'Today at 6:30 AM',
                                 statusMessage: 'Completed',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -177,7 +231,7 @@ class TasksPage extends StatelessWidget {
                                 taskTitle: 'Call pharmacy for refill',
                                 description: 'Call pharmacy to request medication refill',
                                 dueTime: 'Due February 2, 2026',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -197,7 +251,7 @@ class TasksPage extends StatelessWidget {
                                 taskTitle: 'Schedule annual physical',
                                 description: 'Schedule your annual physical examination',
                                 dueTime: 'Due February 10, 2026',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -218,7 +272,7 @@ class TasksPage extends StatelessWidget {
                                 taskTitle: 'Order blood pressure monitor batteries',
                                 description: 'Current batteries running low',
                                 dueTime: 'Due February 5, 2026',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -242,7 +296,7 @@ class TasksPage extends StatelessWidget {
                                 description: 'Review current medications with your doctor',
                                 dueTime: 'Completed January 25, 2026',
                                 statusMessage: 'Completed',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -263,7 +317,7 @@ class TasksPage extends StatelessWidget {
                                 description: 'Update your emergency contact information',
                                 dueTime: 'Completed January 24, 2026',
                                 statusMessage: 'Completed',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -285,7 +339,7 @@ class TasksPage extends StatelessWidget {
                                 description: 'Collected from Pharmacy',
                                 dueTime: 'Completed January 23, 2026',
                                 statusMessage: 'Completed',
-                                onNavItemTapped: onNavItemTapped,
+                                onNavItemTapped: widget.onNavItemTapped,
                               ),
                             ),
                           );
@@ -301,7 +355,7 @@ class TasksPage extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBarCustom(
         currentIndex: 2, // Tasks is index 2
-        onTap: onNavItemTapped ?? (index) {},
+        onTap: widget.onNavItemTapped ?? (index) {},
       ),
     );
   }

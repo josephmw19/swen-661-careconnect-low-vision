@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 class RefillReminderCard extends StatelessWidget {
-  const RefillReminderCard({super.key});
+  final VoidCallback? onTap;
+
+  const RefillReminderCard({
+    super.key,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
       decoration: BoxDecoration(
         color: const Color(0xFF3D2A1F),
         border: Border.all(
@@ -67,6 +74,7 @@ class RefillReminderCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

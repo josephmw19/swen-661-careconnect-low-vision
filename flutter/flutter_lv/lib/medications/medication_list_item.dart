@@ -227,7 +227,7 @@ class MedicationListItem extends StatelessWidget {
       width: double.infinity,
       height: 90,
       child: ElevatedButton(
-        onPressed: onMarkAsTaken,
+        onPressed: onMarkAsTaken ?? () {},
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF4285F4),
           shape: RoundedRectangleBorder(
