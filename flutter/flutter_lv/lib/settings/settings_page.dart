@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 
@@ -38,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: const AppHeader(),
       body: Container(
         color: const Color(0xFF1A1D24),
@@ -49,10 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
               decoration: BoxDecoration(
                 color: const Color(0xFF252932),
                 border: Border(
-                  bottom: BorderSide(
-                    color: const Color(0xFF3A3F4A),
-                    width: 2,
-                  ),
+                  bottom: BorderSide(color: const Color(0xFF3A3F4A), width: 2),
                 ),
               ),
               padding: const EdgeInsets.all(10),
@@ -250,21 +248,14 @@ class _SectionHeader extends StatelessWidget {
   final IconData icon;
   final String title;
 
-  const _SectionHeader({
-    required this.icon,
-    required this.title,
-  });
+  const _SectionHeader({required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         const SizedBox(width: 6),
-        Icon(
-          icon,
-          color: Colors.white,
-          size: 32,
-        ),
+        Icon(icon, color: Colors.white, size: 32),
         const SizedBox(width: 13.5),
         Expanded(
           child: SizedBox(
@@ -317,10 +308,7 @@ class _TextSizeCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(29),
@@ -403,10 +391,7 @@ class _LineSpacingCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(29),
@@ -480,10 +465,7 @@ class _SpacingBetweenItemsCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(29),
@@ -547,20 +529,14 @@ class _ReduceVisualClutterCard extends StatelessWidget {
   final bool isOn;
   final Function(bool) onToggle;
 
-  const _ReduceVisualClutterCard({
-    required this.isOn,
-    required this.onToggle,
-  });
+  const _ReduceVisualClutterCard({required this.isOn, required this.onToggle});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(27),
@@ -594,12 +570,7 @@ class _ReduceVisualClutterCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _ToggleButton(
-                isOn: isOn,
-                onToggle: onToggle,
-              ),
-            ],
+            children: [_ToggleButton(isOn: isOn, onToggle: onToggle)],
           ),
         ],
       ),
@@ -621,10 +592,7 @@ class _SpeechSpeedCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(29),
@@ -707,10 +675,7 @@ class _MicrophoneAccessCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(29),
@@ -786,10 +751,7 @@ class _ToggleCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(29),
@@ -813,10 +775,7 @@ class _ToggleCard extends StatelessWidget {
               ),
             ),
           ),
-          _ToggleButton(
-            isOn: isOn,
-            onToggle: onToggle,
-          ),
+          _ToggleButton(isOn: isOn, onToggle: onToggle),
         ],
       ),
     );
@@ -876,10 +835,7 @@ class _ToggleButton extends StatelessWidget {
   final bool isOn;
   final Function(bool)? onToggle;
 
-  const _ToggleButton({
-    required this.isOn,
-    this.onToggle,
-  });
+  const _ToggleButton({required this.isOn, this.onToggle});
 
   @override
   Widget build(BuildContext context) {
@@ -889,7 +845,9 @@ class _ToggleButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onToggle != null ? () => onToggle!(!isOn) : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isOn ? const Color(0xFF34A853) : const Color(0xFF2D333E),
+          backgroundColor: isOn
+              ? const Color(0xFF34A853)
+              : const Color(0xFF2D333E),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.25),
           ),

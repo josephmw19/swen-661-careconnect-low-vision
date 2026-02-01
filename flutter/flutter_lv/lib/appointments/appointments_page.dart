@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 import 'appointment_details_page.dart';
@@ -22,7 +23,7 @@ class AppointmentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: const AppHeader(),
       body: Container(
         color: const Color(0xFF1A1D24),
@@ -33,10 +34,7 @@ class AppointmentsPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFF252932),
                 border: Border(
-                  bottom: BorderSide(
-                    color: const Color(0xFF3A3F4A),
-                    width: 2,
-                  ),
+                  bottom: BorderSide(color: const Color(0xFF3A3F4A), width: 2),
                 ),
               ),
               padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 22.5),

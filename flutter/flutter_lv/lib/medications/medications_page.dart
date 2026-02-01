@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 import 'medication_list_item.dart';
@@ -43,7 +44,7 @@ class _MedicationsPageState extends State<MedicationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: const AppHeader(),
       body: Container(
         color: const Color(0xFF1A1D24),
@@ -54,10 +55,7 @@ class _MedicationsPageState extends State<MedicationsPage> {
               decoration: BoxDecoration(
                 color: const Color(0xFF252932),
                 border: Border(
-                  bottom: BorderSide(
-                    color: const Color(0xFF3A3F4A),
-                    width: 2,
-                  ),
+                  bottom: BorderSide(color: const Color(0xFF3A3F4A), width: 2),
                 ),
               ),
               padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 2),
@@ -140,7 +138,9 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         status: _lisinoprilTaken
                             ? MedicationStatus.taken
                             : MedicationStatus.dueNow,
-                        statusText: _lisinoprilTaken ? null : 'Due now (9:00 AM)',
+                        statusText: _lisinoprilTaken
+                            ? null
+                            : 'Due now (9:00 AM)',
                         takenTime: _lisinoprilTaken ? _getTakenTime() : null,
                         onMarkAsTaken: _lisinoprilTaken
                             ? null
@@ -296,7 +296,7 @@ class _MedicationsPageState extends State<MedicationsPage> {
       'Thursday',
       'Friday',
       'Saturday',
-      'Sunday'
+      'Sunday',
     ];
     final months = [
       'Jan',
@@ -310,7 +310,7 @@ class _MedicationsPageState extends State<MedicationsPage> {
       'Sep',
       'Oct',
       'Nov',
-      'Dec'
+      'Dec',
     ];
     return '${weekdays[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}, ${now.year}';
   }

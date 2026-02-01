@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 import 'task_list_item.dart';
@@ -43,7 +44,7 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: const AppHeader(),
       body: Container(
         color: const Color(0xFF1A1D24),
@@ -54,10 +55,7 @@ class _TasksPageState extends State<TasksPage> {
               decoration: BoxDecoration(
                 color: const Color(0xFF252932),
                 border: Border(
-                  bottom: BorderSide(
-                    color: const Color(0xFF3A3F4A),
-                    width: 2,
-                  ),
+                  bottom: BorderSide(color: const Color(0xFF3A3F4A), width: 2),
                 ),
               ),
               padding: const EdgeInsets.fromLTRB(22.5, 27, 22.5, 2),
@@ -114,7 +112,8 @@ class _TasksPageState extends State<TasksPage> {
                         hasActionButton: !_morningVitaminsCompleted,
                         onMarkComplete: _morningVitaminsCompleted
                             ? null
-                            : () => _handleMarkComplete('Take morning vitamins'),
+                            : () =>
+                                  _handleMarkComplete('Take morning vitamins'),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -173,7 +172,9 @@ class _TasksPageState extends State<TasksPage> {
                         hasActionButton: !_drinkWaterCompleted,
                         onMarkComplete: _drinkWaterCompleted
                             ? null
-                            : () => _handleMarkComplete('Drink 8 glasses of water'),
+                            : () => _handleMarkComplete(
+                                'Drink 8 glasses of water',
+                              ),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -205,7 +206,8 @@ class _TasksPageState extends State<TasksPage> {
                             MaterialPageRoute(
                               builder: (context) => TaskDetailsPage(
                                 taskTitle: '30-minute morning walk',
-                                description: 'Take a 30-minute walk in the morning',
+                                description:
+                                    'Take a 30-minute walk in the morning',
                                 dueTime: 'Today at 6:30 AM',
                                 statusMessage: 'Completed',
                                 onNavItemTapped: widget.onNavItemTapped,
@@ -229,7 +231,8 @@ class _TasksPageState extends State<TasksPage> {
                             MaterialPageRoute(
                               builder: (context) => TaskDetailsPage(
                                 taskTitle: 'Call pharmacy for refill',
-                                description: 'Call pharmacy to request medication refill',
+                                description:
+                                    'Call pharmacy to request medication refill',
                                 dueTime: 'Due February 2, 2026',
                                 onNavItemTapped: widget.onNavItemTapped,
                               ),
@@ -249,7 +252,8 @@ class _TasksPageState extends State<TasksPage> {
                             MaterialPageRoute(
                               builder: (context) => TaskDetailsPage(
                                 taskTitle: 'Schedule annual physical',
-                                description: 'Schedule your annual physical examination',
+                                description:
+                                    'Schedule your annual physical examination',
                                 dueTime: 'Due February 10, 2026',
                                 onNavItemTapped: widget.onNavItemTapped,
                               ),
@@ -269,7 +273,8 @@ class _TasksPageState extends State<TasksPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Order blood pressure monitor batteries',
+                                taskTitle:
+                                    'Order blood pressure monitor batteries',
                                 description: 'Current batteries running low',
                                 dueTime: 'Due February 5, 2026',
                                 onNavItemTapped: widget.onNavItemTapped,
@@ -293,7 +298,8 @@ class _TasksPageState extends State<TasksPage> {
                             MaterialPageRoute(
                               builder: (context) => TaskDetailsPage(
                                 taskTitle: 'Review medication list with doctor',
-                                description: 'Review current medications with your doctor',
+                                description:
+                                    'Review current medications with your doctor',
                                 dueTime: 'Completed January 25, 2026',
                                 statusMessage: 'Completed',
                                 onNavItemTapped: widget.onNavItemTapped,
@@ -313,8 +319,10 @@ class _TasksPageState extends State<TasksPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Update emergency contact information',
-                                description: 'Update your emergency contact information',
+                                taskTitle:
+                                    'Update emergency contact information',
+                                description:
+                                    'Update your emergency contact information',
                                 dueTime: 'Completed January 24, 2026',
                                 statusMessage: 'Completed',
                                 onNavItemTapped: widget.onNavItemTapped,
