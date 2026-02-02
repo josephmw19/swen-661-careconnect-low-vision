@@ -43,3 +43,23 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# CocoaPods (iOS / macOS)
+ios/Podfile
+ios/Podfile.lock
+ios/Pods/
+
+macos/Podfile
+macos/Podfile.lock
+macos/Pods/
+
+# Xcode generated
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+
+macos/Flutter/Flutter-Debug.xcconfig
+macos/Flutter/Flutter-Release.xcconfig
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+macos/Runner.xcodeproj/
+macos/Runner.xcworkspace/
