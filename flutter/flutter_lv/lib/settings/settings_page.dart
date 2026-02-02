@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
+import 'package:flutter_lv/settings/settings_prefs.dart';
 
 class SettingsPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
@@ -36,6 +37,57 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _readNotificationsAloud = true;
   bool _voiceNavigation = false;
   bool _voiceFeedbackForActions = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPersistedSettings();
+  }
+
+  Future<void> _loadPersistedSettings() async {
+    final data = await SettingsPrefs.load();
+
+    if (!mounted) return;
+
+    setState(() {
+      _textSize = (data['settings.textSize'] as String?) ?? 'Max';
+      _lineSpacing = (data['settings.lineSpacing'] as String?) ?? 'Maximum';
+      _spacingBetweenItems =
+          (data['settings.spacingBetweenItems'] as String?) ?? 'Maximum';
+      _speechSpeed = (data['settings.speechSpeed'] as String?) ?? 'Normal';
+      _microphoneAccess =
+          (data['settings.microphoneAccess'] as String?) ?? 'Allowed';
+
+      _highContrastDisplay =
+          (data['settings.highContrastDisplay'] as bool?) ?? false;
+      _boldText = (data['settings.boldText'] as bool?) ?? true;
+      _reduceVisualClutter =
+          (data['settings.reduceVisualClutter'] as bool?) ?? true;
+      _readScreenAloud = (data['settings.readScreenAloud'] as bool?) ?? true;
+      _readNotificationsAloud =
+          (data['settings.readNotificationsAloud'] as bool?) ?? true;
+      _voiceNavigation = (data['settings.voiceNavigation'] as bool?) ?? false;
+      _voiceFeedbackForActions =
+          (data['settings.voiceFeedbackForActions'] as bool?) ?? true;
+    });
+  }
+
+  Future<void> _persist() async {
+    await SettingsPrefs.save(
+      textSize: _textSize,
+      lineSpacing: _lineSpacing,
+      spacingBetweenItems: _spacingBetweenItems,
+      speechSpeed: _speechSpeed,
+      microphoneAccess: _microphoneAccess,
+      highContrastDisplay: _highContrastDisplay,
+      boldText: _boldText,
+      reduceVisualClutter: _reduceVisualClutter,
+      readScreenAloud: _readScreenAloud,
+      readNotificationsAloud: _readNotificationsAloud,
+      voiceNavigation: _voiceNavigation,
+      voiceFeedbackForActions: _voiceFeedbackForActions,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +150,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _textSize = size;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -108,6 +161,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _lineSpacing = spacing;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -118,6 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _spacingBetweenItems = spacing;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -129,6 +184,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _highContrastDisplay = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -140,6 +196,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _boldText = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -150,6 +207,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _reduceVisualClutter = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 45),
@@ -167,6 +225,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _readScreenAloud = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -178,6 +237,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _readNotificationsAloud = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -189,6 +249,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _voiceNavigation = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -200,6 +261,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _voiceFeedbackForActions = value;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 27),
@@ -210,6 +272,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _speechSpeed = speed;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 45),
@@ -226,6 +289,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           _microphoneAccess = access;
                         });
+                        _persist();
                       },
                     ),
                     const SizedBox(height: 36),
