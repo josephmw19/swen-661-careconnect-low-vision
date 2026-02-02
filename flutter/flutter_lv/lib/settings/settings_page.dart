@@ -4,6 +4,9 @@ import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 import 'package:flutter_lv/settings/settings_prefs.dart';
 
+import '../auth/auth_prefs.dart';
+import '../auth/landing_page.dart';
+
 class SettingsPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
 
@@ -292,6 +295,28 @@ class _SettingsPageState extends State<SettingsPage> {
                         _persist();
                       },
                     ),
+                    const SizedBox(height: 45),
+
+                    // Account section
+                    const _SectionHeader(
+                      icon: Icons.person_outline,
+                      title: 'Account',
+                    ),
+                    const SizedBox(height: 27),
+
+                    _SignOutCard(
+                      onSignOut: () async {
+                        await AuthPrefs.signOut();
+                        if (!context.mounted) return;
+
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          LandingPage.routeName,
+                          (route) => false,
+                        );
+                      },
+                    ),
+
                     const SizedBox(height: 36),
                   ],
                 ),
@@ -931,6 +956,129 @@ class _ToggleButton extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _SignOutCard extends StatelessWidget {
+  final Future<void> Function() onSignOut;
+
+  const _SignOutCard({required this.onSignOut});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF252932),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      padding: const EdgeInsets.all(22.5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Sign Out',
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 26,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Returns you to the welcome screen and clears your sign-in status on this device.',
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 22,
+              fontWeight: FontWeight.normal,
+              color: Color(0xFF9AA0A6),
+              height: 1.6,
+            ),
+          ),
+          const SizedBox(height: 18),
+          SizedBox(
+            height: 72,
+            child: OutlinedButton.icon(
+              onPressed: () async {
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    backgroundColor: const Color(0xFF252932),
+                    title: const Text(
+                      'Sign out?',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 26,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                    content: const Text(
+                      'You will be returned to the welcome screen.',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 22,
+                        color: Color(0xFFE8EAED),
+                        height: 1.6,
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 22,
+                            color: Color(0xFFA8C7FA),
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text(
+                          'Sign Out',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 22,
+                            color: Color(0xFFA8C7FA),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirmed == true) {
+                  await onSignOut();
+                }
+              },
+              icon: const Icon(Icons.logout, size: 30),
+              label: const Text(
+                'Sign Out',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                ),
+              ),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: const Color(0xFFE8EAED),
+                backgroundColor: const Color(0xFF2D333E),
+                side: const BorderSide(color: Color(0xFF3A3F4A), width: 2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'home/medication_card.dart';
 import 'home/refill_reminder_card.dart';
 import 'home/today_card.dart';
@@ -9,25 +10,75 @@ import 'medications/medications_page.dart';
 import 'tasks/tasks_page.dart';
 import 'settings/settings_page.dart';
 
+import 'auth/auth_prefs.dart';
+import 'auth/landing_page.dart';
+import 'auth/role_select_page.dart';
+import 'auth/sign_in_page.dart';
+import 'auth/forgot_password_page.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
+// This widget is the root of your application.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CareConnect',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF252932),
           brightness: Brightness.dark,
         ),
       ),
-      home: const MyHomePage(title: 'CareConnect'),
+      routes: {
+        LandingPage.routeName: (_) => const LandingPage(),
+        RoleSelectPage.routeName: (_) => const RoleSelectPage(),
+        SignInPage.routeName: (_) => const SignInPage(),
+        ForgotPasswordPage.routeName: (_) => const ForgotPasswordPage(),
+      },
+      home: const _AppEntry(),
+    );
+  }
+}
+
+class _AppEntry extends StatelessWidget {
+  const _AppEntry();
+
+  static const bool _resetAuth = bool.fromEnvironment(
+    'RESET_AUTH',
+    defaultValue: false,
+  );
+
+  Future<bool> _bootstrap() async {
+    if (_resetAuth) {
+      // Your AuthPrefs has signOut(), not resetAuth()
+      await AuthPrefs.signOut();
+    }
+    return AuthPrefs.isSignedIn();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _bootstrap(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Scaffold(
+            backgroundColor: Color(0xFF1A1D24),
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final signedIn = snapshot.data ?? false;
+        return signedIn
+            ? const MyHomePage(title: 'CareConnect')
+            : const LandingPage();
+      },
     );
   }
 }
@@ -128,9 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onSnooze: _handleSnooze,
                 ),
                 const SizedBox(height: 36),
-                RefillReminderCard(
-                  onTap: _handleRefillReminderTap,
-                ),
+                RefillReminderCard(onTap: _handleRefillReminderTap),
                 const SizedBox(height: 36),
                 TodayCard(
                   bloodPressureCheckCompleted: _bloodPressureCheckCompleted,
@@ -145,17 +194,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       case 1:
-        return MedicationsPage(
-          onNavItemTapped: _onNavItemTapped,
-        );
+        return MedicationsPage(onNavItemTapped: _onNavItemTapped);
       case 2:
-        return TasksPage(
-          onNavItemTapped: _onNavItemTapped,
-        );
+        return TasksPage(onNavItemTapped: _onNavItemTapped);
       case 3:
-        return SettingsPage(
-          onNavItemTapped: _onNavItemTapped,
-        );
+        return SettingsPage(onNavItemTapped: _onNavItemTapped);
       default:
         return Container(
           color: const Color(0xFF1A1D24),
@@ -171,9 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onSnooze: _handleSnooze,
                 ),
                 const SizedBox(height: 36),
-                RefillReminderCard(
-                  onTap: _handleRefillReminderTap,
-                ),
+                RefillReminderCard(onTap: _handleRefillReminderTap),
                 const SizedBox(height: 36),
                 TodayCard(
                   bloodPressureCheckCompleted: _bloodPressureCheckCompleted,
