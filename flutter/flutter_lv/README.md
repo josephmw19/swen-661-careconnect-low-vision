@@ -13,7 +13,18 @@ This project was developed as part of **SWEN 661 – User Interface Implementati
 - Tasks (list and details)
 - Settings
 
-All screens are fully implemented using Flutter widgets and follow a consistent visual and interaction pattern.
+## Authentication & Entry Screens
+The application includes a complete authentication and entry flow implemented to support controlled access and role-based entry:
+
+- Landing / Welcome screen
+- Role selection (Patient / Caregiver)
+- Sign-in screen
+- Credential recovery (username and password)
+
+The authentication flow is linear and predictable:
+Landing → Role Selection → Sign In → Home
+
+All authentication screens follow the same accessibility principles as the rest of the application, including large text, high-contrast UI elements, labeled form inputs, and accessible validation messaging. These screens are implemented in Flutter and reflected in the design documentation and Figma prototypes.
 
 ---
 
@@ -47,6 +58,29 @@ The project includes a comprehensive set of Flutter widget tests focused on:
 - Navigation flows between screens
 - Rendering verification for detail pages
 - UI interaction stability (taps, navigation, state changes)
+
+## Security & Static Analysis Review
+Basic security and static analysis checks were performed to identify potential code quality, dependency, and configuration issues:
+
+### Static Analysis
+```bash
+flutter analyze
+```
+Result: No issues found.
+
+Dependency Review
+```bash
+flutter pub outdated
+```
+Result: All direct and development dependencies are up to date. Some transitive dependencies are locked to older patch versions due to Flutter SDK constraints, with no known security implications.
+
+Automated Fix Review
+```bash
+dart fix --dry-run
+```
+Result: No fixes suggested.
+
+These checks confirm that the project currently has no known static analysis warnings, dependency issues, or required automated code fixes.
 
 ### Test Files Included
 - `widget_test.dart`
