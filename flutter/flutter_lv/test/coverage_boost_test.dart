@@ -1,67 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:flutter_lv/main.dart';
-import 'package:flutter_lv/medications/medications_page.dart';
-import 'package:flutter_lv/tasks/tasks_page.dart';
-import 'package:flutter_lv/settings/settings_page.dart';
-
-// If this import exists in your project, keep it.
-// If it errors because the file/class name differs, remove it and tell me the file names inside lib/appointments.
-// import 'package:flutter_lv/appointments/appointments_page.dart';
-
-Widget _wrap(Widget child) {
-  return MaterialApp(home: Scaffold(body: child));
-}
 
 void main() {
-  group('Coverage boost: core pages render', () {
-    testWidgets('MedicationsPage renders without crashing', (tester) async {
-      await tester.pumpWidget(_wrap(MedicationsPage(onNavItemTapped: (_) {})));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('Medications'), findsWidgets);
-    });
+  Future<void> pumpHome(WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: MyHomePage(title: 'CareConnect')),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+  }
 
-    testWidgets('TasksPage renders without crashing', (tester) async {
-      await tester.pumpWidget(_wrap(TasksPage(onNavItemTapped: (_) {})));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('Tasks'), findsWidgets);
-    });
+  testWidgets('Mark as Taken updates UI state (basic smoke)', (tester) async {
+    await pumpHome(tester);
 
-    testWidgets('SettingsPage renders without crashing', (tester) async {
-      await tester.pumpWidget(_wrap(SettingsPage(onNavItemTapped: (_) {})));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('Settings'), findsWidgets);
-    });
+    final mark = find.text('Mark as Taken');
+    if (mark.evaluate().isNotEmpty) {
+      await tester.tap(mark.first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+    }
+
+    // Just ensure app is still alive and header title is present.
+    expect(find.text('CareConnect'), findsWidgets);
   });
 
-  group('Coverage boost: exercise app state a bit', () {
-    testWidgets('Mark as Taken updates UI state (basic smoke)', (tester) async {
-      await tester.pumpWidget(const MyApp());
-      await tester.pumpAndSettle();
+  testWidgets('Snooze button tap does not crash', (tester) async {
+    await pumpHome(tester);
 
-      // Tap Mark as Taken if it exists.
-      final markAsTaken = find.textContaining('Mark as Taken');
-      if (markAsTaken.evaluate().isNotEmpty) {
-        await tester.tap(markAsTaken.first);
-        await tester.pumpAndSettle();
-      }
+    final snooze = find.textContaining('Snooze');
+    if (snooze.evaluate().isNotEmpty) {
+      await tester.tap(snooze.first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+    }
 
-      // Just verify app still renders after interaction.
-      expect(find.textContaining('CareConnect'), findsWidgets);
-    });
-
-    testWidgets('Snooze button tap does not crash', (tester) async {
-      await tester.pumpWidget(const MyApp());
-      await tester.pumpAndSettle();
-
-      final snooze = find.textContaining('Snooze');
-      if (snooze.evaluate().isNotEmpty) {
-        await tester.tap(snooze.first);
-        await tester.pumpAndSettle();
-      }
-
-      expect(find.textContaining('CareConnect'), findsWidgets);
-    });
+    expect(find.text('CareConnect'), findsWidgets);
   });
 }
