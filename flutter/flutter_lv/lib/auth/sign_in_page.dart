@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'auth_prefs.dart';
-import 'landing_page.dart';
-import 'forgot_password_page.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class SignInPage extends StatefulWidget {
   static const routeName = '/sign-in';
@@ -58,9 +58,18 @@ class _SignInPageState extends State<SignInPage> {
     await AuthPrefs.setLastUsername(username);
     await AuthPrefs.setSignedIn(true);
 
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
 
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    // Navigate to home using router - use static instance as fallback
+    final delegate = AppRouterDelegate.instance;
+    if (delegate != null) {
+      delegate.replaceRoute(AppRoutes.home);
+    } else {
+      // Try using context navigation as fallback
+      context.navigateReplace(AppRoutes.home);
+    }
   }
 
   @override
@@ -170,22 +179,16 @@ class _SignInPageState extends State<SignInPage> {
                 const SizedBox(height: 20),
 
                 _Link('Forgot username?', () {
-                  Navigator.pushNamed(
-                    context,
-                    ForgotPasswordPage.routeName,
-                    arguments: const ForgotPasswordArgs(
-                      mode: ForgotMode.username,
-                    ),
+                  context.navigateTo(
+                    AppRoutes.forgotPassword,
+                    queryParams: {'mode': 'username'},
                   );
                 }),
                 const SizedBox(height: 12),
                 _Link('Forgot password?', () {
-                  Navigator.pushNamed(
-                    context,
-                    ForgotPasswordPage.routeName,
-                    arguments: const ForgotPasswordArgs(
-                      mode: ForgotMode.password,
-                    ),
+                  context.navigateTo(
+                    AppRoutes.forgotPassword,
+                    queryParams: {'mode': 'password'},
                   );
                 }),
 
@@ -196,11 +199,7 @@ class _SignInPageState extends State<SignInPage> {
                   height: 72,
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        LandingPage.routeName,
-                        (route) => false,
-                      );
+                      context.navigateReplace(AppRoutes.landing);
                     },
                     icon: const Icon(Icons.arrow_back, size: 28),
                     label: const Text(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class AppointmentDetailsPage extends StatelessWidget {
   final String doctorName;
@@ -28,14 +30,25 @@ class AppointmentDetailsPage extends StatelessWidget {
 
   void _handleNavigation(int index, BuildContext context) {
     if (index == 0) {
-      // If tapping Home, pop back to appointments page
-      Navigator.of(context).pop();
+      // If tapping Home, navigate to home
+      context.navigateReplace(AppRoutes.home);
     } else {
-      // If tapping other nav items, pop back to main page and navigate
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      if (onNavItemTapped != null) {
-        onNavItemTapped!(index);
+      // If tapping other nav items, navigate to the appropriate route
+      String route;
+      switch (index) {
+        case 1:
+          route = AppRoutes.medications;
+          break;
+        case 2:
+          route = AppRoutes.tasks;
+          break;
+        case 3:
+          route = AppRoutes.settings;
+          break;
+        default:
+          route = AppRoutes.home;
       }
+      context.navigateReplace(route);
     }
   }
 
@@ -63,7 +76,7 @@ class AppointmentDetailsPage extends StatelessWidget {
                         size: 24,
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        context.navigateBack();
                       },
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

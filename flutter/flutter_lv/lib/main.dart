@@ -11,10 +11,7 @@ import 'tasks/tasks_page.dart';
 import 'settings/settings_page.dart';
 
 import 'auth/auth_prefs.dart';
-import 'auth/landing_page.dart';
-import 'auth/role_select_page.dart';
-import 'auth/sign_in_page.dart';
-import 'auth/forgot_password_page.dart';
+import 'navigation/app_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,12 +19,81 @@ void main() {
 }
 
 // This widget is the root of your application.
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late AppRouterDelegate _routerDelegate;
+  late AppRouteInformationParser _routeInformationParser;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _routeInformationParser = AppRouteInformationParser();
+    // Initialize router delegate with a default route immediately
+    _routerDelegate = AppRouterDelegate(
+      initialRoute: AppRouteConfig(path: AppRoutes.landing),
+      onNavItemTapped: _handleNavItemTapped,
+    );
+    _checkAuthAndInitRouter();
+  }
+
+  Future<void> _checkAuthAndInitRouter() async {
+    final signedIn = await AuthPrefs.isSignedIn();
+    setState(() {
+      _isLoading = false;
+      // Update the router delegate with the correct initial route
+      _routerDelegate.replaceRoute(
+        signedIn ? AppRoutes.home : AppRoutes.landing,
+      );
+    });
+  }
+
+  void _handleNavItemTapped(int index) {
+    String route;
+    switch (index) {
+      case 0:
+        route = AppRoutes.home;
+        break;
+      case 1:
+        route = AppRoutes.medications;
+        break;
+      case 2:
+        route = AppRoutes.tasks;
+        break;
+      case 3:
+        route = AppRoutes.settings;
+        break;
+      default:
+        route = AppRoutes.home;
+    }
+    _routerDelegate.replaceRoute(route);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    if (_isLoading) {
+      return MaterialApp(
+        title: 'CareConnect',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF252932),
+            brightness: Brightness.dark,
+          ),
+        ),
+        home: const Scaffold(
+          backgroundColor: Color(0xFF1A1D24),
+          body: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+
+    return MaterialApp.router(
       title: 'CareConnect',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -35,53 +101,13 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      routes: {
-        LandingPage.routeName: (_) => const LandingPage(),
-        RoleSelectPage.routeName: (_) => const RoleSelectPage(),
-        SignInPage.routeName: (_) => const SignInPage(),
-        ForgotPasswordPage.routeName: (_) => const ForgotPasswordPage(),
-      },
-      home: const _AppEntry(),
+      routerDelegate: _routerDelegate,
+      routeInformationParser: _routeInformationParser,
     );
   }
 }
 
-class _AppEntry extends StatelessWidget {
-  const _AppEntry();
-
-  static const bool _resetAuth = bool.fromEnvironment(
-    'RESET_AUTH',
-    defaultValue: false,
-  );
-
-  Future<bool> _bootstrap() async {
-    if (_resetAuth) {
-      // Your AuthPrefs has signOut(), not resetAuth()
-      await AuthPrefs.signOut();
-    }
-    return AuthPrefs.isSignedIn();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: _bootstrap(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const Scaffold(
-            backgroundColor: Color(0xFF1A1D24),
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final signedIn = snapshot.data ?? false;
-        return signedIn
-            ? const MyHomePage(title: 'CareConnect')
-            : const LandingPage();
-      },
-    );
-  }
-}
+// Auth check is now handled in the router delegate
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'role_select_page.dart';
-import 'forgot_password_page.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class LandingPage extends StatelessWidget {
   static const routeName = '/landing';
@@ -86,7 +86,7 @@ class LandingPage extends StatelessWidget {
                   height: 72,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, RoleSelectPage.routeName);
+                      context.navigateTo(AppRoutes.roleSelect);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
@@ -149,12 +149,9 @@ class LandingPage extends StatelessWidget {
                 _LinkButton(
                   label: 'Forgot username?',
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      ForgotPasswordPage.routeName,
-                      arguments: const ForgotPasswordArgs(
-                        mode: ForgotMode.username,
-                      ),
+                    context.navigateTo(
+                      AppRoutes.forgotPassword,
+                      queryParams: {'mode': 'username'},
                     );
                   },
                 ),
@@ -162,12 +159,9 @@ class LandingPage extends StatelessWidget {
                 _LinkButton(
                   label: 'Forgot password?',
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      ForgotPasswordPage.routeName,
-                      arguments: const ForgotPasswordArgs(
-                        mode: ForgotMode.password,
-                      ),
+                    context.navigateTo(
+                      AppRoutes.forgotPassword,
+                      queryParams: {'mode': 'password'},
                     );
                   },
                 ),

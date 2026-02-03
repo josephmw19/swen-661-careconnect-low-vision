@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../appointments/appointments_page.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class UpcomingAppointmentsCard extends StatelessWidget {
   const UpcomingAppointmentsCard({super.key});
@@ -82,12 +83,7 @@ class UpcomingAppointmentsCard extends StatelessWidget {
             height: 77,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AppointmentsPage(),
-                  ),
-                );
+                context.navigateTo(AppRoutes.appointments);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4285F4),

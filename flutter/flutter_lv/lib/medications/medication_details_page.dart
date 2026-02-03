@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class MedicationDetailsPage extends StatelessWidget {
   final String medicationName;
@@ -23,16 +25,24 @@ class MedicationDetailsPage extends StatelessWidget {
   void _handleNavigation(int index, BuildContext context) {
     if (index == 1) {
       // If tapping Medications, just go back to medications page
-      Navigator.of(context).pop();
+      context.navigateBack();
     } else {
-      // If tapping other nav items, pop back to main page and navigate
-      // Pop until we're back at the first route (main page)
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      
-      // Then trigger navigation on main page
-      if (onNavItemTapped != null) {
-        onNavItemTapped!(index);
+      // If tapping other nav items, navigate to the appropriate route
+      String route;
+      switch (index) {
+        case 0:
+          route = AppRoutes.home;
+          break;
+        case 2:
+          route = AppRoutes.tasks;
+          break;
+        case 3:
+          route = AppRoutes.settings;
+          break;
+        default:
+          route = AppRoutes.home;
       }
+      context.navigateReplace(route);
     }
   }
 
@@ -60,7 +70,7 @@ class MedicationDetailsPage extends StatelessWidget {
                         size: 24,
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        context.navigateBack();
                       },
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

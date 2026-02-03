@@ -5,7 +5,8 @@ import '../home/bottom_navigation_bar_custom.dart';
 import 'package:flutter_lv/settings/settings_prefs.dart';
 
 import '../auth/auth_prefs.dart';
-import '../auth/landing_page.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class SettingsPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
@@ -309,11 +310,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         await AuthPrefs.signOut();
                         if (!context.mounted) return;
 
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          LandingPage.routeName,
-                          (route) => false,
-                        );
+                        // Sign out and navigate to landing page using Navigator 2.0
+                        context.navigateReplace(AppRoutes.landing);
                       },
                     ),
 

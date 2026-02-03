@@ -3,7 +3,8 @@ import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 import 'medication_list_item.dart';
-import 'medication_details_page.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class MedicationsPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
@@ -146,22 +147,19 @@ class _MedicationsPageState extends State<MedicationsPage> {
                             ? null
                             : () => _handleMarkAsTaken('Lisinopril 10mg'),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MedicationDetailsPage(
-                                medicationName: 'Lisinopril 10mg',
-                                dosage: '1 tablet every morning',
-                                instructions: 'Take with food',
-                                nextDose: _lisinoprilTaken
-                                    ? 'Next dose: Tomorrow at 9:00 AM'
-                                    : 'Today at 9:00 AM (due now)',
-                                statusMessage: _lisinoprilTaken
-                                    ? 'Medication taken'
-                                    : 'Please take this medication now',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.medicationDetails,
+                            params: {'id': 'Lisinopril 10mg'},
+                            queryParams: {
+                              'dosage': '1 tablet every morning',
+                              'instructions': 'Take with food',
+                              'nextDose': _lisinoprilTaken
+                                  ? 'Next dose: Tomorrow at 9:00 AM'
+                                  : 'Today at 9:00 AM (due now)',
+                              'statusMessage': _lisinoprilTaken
+                                  ? 'Medication taken'
+                                  : 'Please take this medication now',
+                            },
                           );
                         },
                       ),
@@ -174,19 +172,15 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         status: MedicationStatus.taken,
                         takenTime: 'Taken today at 8:15 AM',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MedicationDetailsPage(
-                                medicationName: 'Metformin 500mg',
-                                dosage: '1 tablet with breakfast',
-                                instructions: 'Take with food and water',
-                                nextDose: 'Today at 2:00 PM (in 15 minutes)',
-                                statusMessage:
-                                    'Please take this medication within the next 15 minutes',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(AppRoutes.medicationDetails,
+                            params: {'id': 'Metformin 500mg'},
+                            queryParams: {
+                              'dosage': '1 tablet with breakfast',
+                              'instructions': 'Take with food and water',
+                              'nextDose': 'Today at 2:00 PM (in 15 minutes)',
+                              'statusMessage':
+                                  'Please take this medication within the next 15 minutes',
+                            },
                           );
                         },
                       ),
@@ -199,17 +193,14 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         status: MedicationStatus.scheduled,
                         statusText: 'Scheduled for 9:00 PM',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MedicationDetailsPage(
-                                medicationName: 'Atorvastatin 20mg',
-                                dosage: '1 tablet every evening',
-                                instructions: 'Take before bedtime',
-                                nextDose: 'Today at 9:00 PM',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.medicationDetails,
+                            params: {'id': 'Atorvastatin 20mg'},
+                            queryParams: {
+                              'dosage': '1 tablet every evening',
+                              'instructions': 'Take before bedtime',
+                              'nextDose': 'Today at 9:00 PM',
+                            },
                           );
                         },
                       ),
@@ -230,22 +221,19 @@ class _MedicationsPageState extends State<MedicationsPage> {
                             ? null
                             : () => _handleMarkAsTaken('Aspirin 81mg'),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MedicationDetailsPage(
-                                medicationName: 'Aspirin 81mg',
-                                dosage: '1 tablet with lunch',
-                                instructions: 'Take with food',
-                                nextDose: _aspirinTaken
-                                    ? 'Next dose: Tomorrow at 12:30 PM'
-                                    : 'Today at 12:30 PM (in 30 minutes)',
-                                statusMessage: _aspirinTaken
-                                    ? 'Medication taken'
-                                    : 'Please take this medication within the next 30 minutes',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.medicationDetails,
+                            params: {'id': 'Aspirin 81mg'},
+                            queryParams: {
+                              'dosage': '1 tablet with lunch',
+                              'instructions': 'Take with food',
+                              'nextDose': _aspirinTaken
+                                  ? 'Next dose: Tomorrow at 12:30 PM'
+                                  : 'Today at 12:30 PM (in 30 minutes)',
+                              'statusMessage': _aspirinTaken
+                                  ? 'Medication taken'
+                                  : 'Please take this medication within the next 30 minutes',
+                            },
                           );
                         },
                       ),
@@ -258,17 +246,14 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         status: MedicationStatus.taken,
                         takenTime: 'Taken today at 8:20 AM',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MedicationDetailsPage(
-                                medicationName: 'Vitamin D 2000 IU',
-                                dosage: '1 capsule every morning',
-                                instructions: 'Take with breakfast',
-                                nextDose: 'Tomorrow at 8:00 AM',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.medicationDetails,
+                            params: {'id': 'Vitamin D 2000 IU'},
+                            queryParams: {
+                              'dosage': '1 capsule every morning',
+                              'instructions': 'Take with breakfast',
+                              'nextDose': 'Tomorrow at 8:00 AM',
+                            },
                           );
                         },
                       ),

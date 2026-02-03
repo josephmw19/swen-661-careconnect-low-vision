@@ -3,7 +3,8 @@ import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
 import 'task_list_item.dart';
-import 'task_details_page.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class TasksPage extends StatefulWidget {
   final Function(int)? onNavItemTapped;
@@ -115,21 +116,18 @@ class _TasksPageState extends State<TasksPage> {
                             : () =>
                                   _handleMarkComplete('Take morning vitamins'),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Take morning vitamins',
-                                description: 'Take your daily vitamins',
-                                dueTime: _morningVitaminsCompleted
-                                    ? 'Completed'
-                                    : 'Today at 8:00 AM',
-                                statusMessage: _morningVitaminsCompleted
-                                    ? 'Completed'
-                                    : 'This task is still pending',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Take morning vitamins'},
+                            queryParams: {
+                              'description': 'Take your daily vitamins',
+                              'dueTime': _morningVitaminsCompleted
+                                  ? 'Completed'
+                                  : 'Today at 8:00 AM',
+                              'statusMessage': _morningVitaminsCompleted
+                                  ? 'Completed'
+                                  : 'This task is still pending',
+                            },
                           );
                         },
                       ),
@@ -140,18 +138,15 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.completed,
                         completionText: 'Completed at 7:45 AM',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Check blood pressure',
-                                description:
-                                    'Measure blood pressure using home monitor and record the result.',
-                                dueTime: 'Today at 10:00 AM',
-                                statusMessage: 'This task is still pending',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Check blood pressure'},
+                            queryParams: {
+                              'description':
+                                  'Measure blood pressure using home monitor and record the result.',
+                              'dueTime': 'Today at 10:00 AM',
+                              'statusMessage': 'This task is still pending',
+                            },
                           );
                         },
                       ),
@@ -176,21 +171,18 @@ class _TasksPageState extends State<TasksPage> {
                                 'Drink 8 glasses of water',
                               ),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Drink 8 glasses of water',
-                                description: 'Stay hydrated throughout the day',
-                                dueTime: _drinkWaterCompleted
-                                    ? 'Completed'
-                                    : 'Today',
-                                statusMessage: _drinkWaterCompleted
-                                    ? 'Completed'
-                                    : 'This task is still pending',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Drink 8 glasses of water'},
+                            queryParams: {
+                              'description': 'Stay hydrated throughout the day',
+                              'dueTime': _drinkWaterCompleted
+                                  ? 'Completed'
+                                  : 'Today',
+                              'statusMessage': _drinkWaterCompleted
+                                  ? 'Completed'
+                                  : 'This task is still pending',
+                            },
                           );
                         },
                       ),
@@ -201,18 +193,15 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.completed,
                         completionText: 'Completed at 6:30 AM',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: '30-minute morning walk',
-                                description:
-                                    'Take a 30-minute walk in the morning',
-                                dueTime: 'Today at 6:30 AM',
-                                statusMessage: 'Completed',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': '30-minute morning walk'},
+                            queryParams: {
+                              'description':
+                                  'Take a 30-minute walk in the morning',
+                              'dueTime': 'Today at 6:30 AM',
+                              'statusMessage': 'Completed',
+                            },
                           );
                         },
                       ),
@@ -226,17 +215,14 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.upcoming,
                         dueDate: 'Due February 2, 2026',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Call pharmacy for refill',
-                                description:
-                                    'Call pharmacy to request medication refill',
-                                dueTime: 'Due February 2, 2026',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Call pharmacy for refill'},
+                            queryParams: {
+                              'description':
+                                  'Call pharmacy to request medication refill',
+                              'dueTime': 'Due February 2, 2026',
+                            },
                           );
                         },
                       ),
@@ -247,17 +233,14 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.upcoming,
                         dueDate: 'Due February 10, 2026',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Schedule annual physical',
-                                description:
-                                    'Schedule your annual physical examination',
-                                dueTime: 'Due February 10, 2026',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Schedule annual physical'},
+                            queryParams: {
+                              'description':
+                                  'Schedule your annual physical examination',
+                              'dueTime': 'Due February 10, 2026',
+                            },
                           );
                         },
                       ),
@@ -269,17 +252,13 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.upcoming,
                         dueDate: 'Due February 5, 2026',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle:
-                                    'Order blood pressure monitor batteries',
-                                description: 'Current batteries running low',
-                                dueTime: 'Due February 5, 2026',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Order blood pressure monitor batteries'},
+                            queryParams: {
+                              'description': 'Current batteries running low',
+                              'dueTime': 'Due February 5, 2026',
+                            },
                           );
                         },
                       ),
@@ -293,18 +272,15 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.completed,
                         completionText: 'Completed January 25, 2026',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Review medication list with doctor',
-                                description:
-                                    'Review current medications with your doctor',
-                                dueTime: 'Completed January 25, 2026',
-                                statusMessage: 'Completed',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Review medication list with doctor'},
+                            queryParams: {
+                              'description':
+                                  'Review current medications with your doctor',
+                              'dueTime': 'Completed January 25, 2026',
+                              'statusMessage': 'Completed',
+                            },
                           );
                         },
                       ),
@@ -315,19 +291,15 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.completed,
                         completionText: 'Completed January 24, 2026',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle:
-                                    'Update emergency contact information',
-                                description:
-                                    'Update your emergency contact information',
-                                dueTime: 'Completed January 24, 2026',
-                                statusMessage: 'Completed',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Update emergency contact information'},
+                            queryParams: {
+                              'description':
+                                  'Update your emergency contact information',
+                              'dueTime': 'Completed January 24, 2026',
+                              'statusMessage': 'Completed',
+                            },
                           );
                         },
                       ),
@@ -339,17 +311,14 @@ class _TasksPageState extends State<TasksPage> {
                         status: TaskStatus.completed,
                         completionText: 'Completed January 23, 2026',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailsPage(
-                                taskTitle: 'Pick up prescription refills',
-                                description: 'Collected from Pharmacy',
-                                dueTime: 'Completed January 23, 2026',
-                                statusMessage: 'Completed',
-                                onNavItemTapped: widget.onNavItemTapped,
-                              ),
-                            ),
+                          context.navigateTo(
+                            AppRoutes.taskDetails,
+                            params: {'id': 'Pick up prescription refills'},
+                            queryParams: {
+                              'description': 'Collected from Pharmacy',
+                              'dueTime': 'Completed January 23, 2026',
+                              'statusMessage': 'Completed',
+                            },
                           );
                         },
                       ),

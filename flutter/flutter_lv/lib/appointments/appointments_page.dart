@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lv/widgets/responsive_scaffold.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
-import 'appointment_details_page.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class AppointmentsPage extends StatelessWidget {
   final Function(int)? onNavItemTapped;
@@ -12,7 +13,7 @@ class AppointmentsPage extends StatelessWidget {
   void _handleNavigation(int index, BuildContext context) {
     if (index == 0) {
       // If tapping Home, just pop back to home page
-      Navigator.of(context).pop();
+      context.navigateBack();
     } else {
       // For other tabs, pop all routes until the first one (MyHomePage)
       // then call the main navigation callback to switch tabs
@@ -289,18 +290,15 @@ class AppointmentCard extends StatelessWidget {
             height: 90,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AppointmentDetailsPage(
-                      doctorName: doctorName,
-                      dateTime: dateTime,
-                      location: location,
-                      appointmentType: appointmentType,
-                      clinicName: location,
-                      onNavItemTapped: onNavItemTapped,
-                    ),
-                  ),
+                context.navigateTo(
+                  AppRoutes.appointmentDetails,
+                  params: {'id': doctorName},
+                  queryParams: {
+                    'dateTime': dateTime,
+                    'location': location,
+                    'appointmentType': appointmentType,
+                    'clinicName': location,
+                  },
                 );
               },
               style: ElevatedButton.styleFrom(

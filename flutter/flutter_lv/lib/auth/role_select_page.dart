@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
 
 import 'auth_prefs.dart';
-import 'landing_page.dart';
-import 'sign_in_page.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class RoleSelectPage extends StatelessWidget {
   static const routeName = '/role-select';
@@ -64,10 +64,7 @@ class RoleSelectPage extends StatelessWidget {
                   onTap: () async {
                     await AuthPrefs.setUserRole(AuthPrefs.roleCaregiver);
                     if (!context.mounted) return;
-                    Navigator.pushReplacementNamed(
-                      context,
-                      SignInPage.routeName,
-                    );
+                    context.navigateReplace(AppRoutes.signIn);
                   },
                 ),
                 const SizedBox(height: 18),
@@ -82,10 +79,7 @@ class RoleSelectPage extends StatelessWidget {
                   onTap: () async {
                     await AuthPrefs.setUserRole(AuthPrefs.rolePatient);
                     if (!context.mounted) return;
-                    Navigator.pushReplacementNamed(
-                      context,
-                      SignInPage.routeName,
-                    );
+                    context.navigateReplace(AppRoutes.signIn);
                   },
                 ),
 
@@ -107,12 +101,7 @@ class RoleSelectPage extends StatelessWidget {
                   height: 76,
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      Navigator.popUntil(
-                        context,
-                        (route) =>
-                            route.settings.name == LandingPage.routeName ||
-                            route.isFirst,
-                      );
+                      context.navigateReplace(AppRoutes.landing);
                     },
                     icon: const Icon(Icons.arrow_back, size: 32),
                     label: const Text(

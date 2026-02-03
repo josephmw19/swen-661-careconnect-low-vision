@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
+import '../navigation/navigation_helper.dart';
 
 enum ForgotMode { username, password }
 
-class ForgotPasswordArgs {
-  final ForgotMode mode;
-  const ForgotPasswordArgs({required this.mode});
-}
-
 class ForgotPasswordPage extends StatefulWidget {
   static const routeName = '/forgot-password';
+  final ForgotMode? mode;
 
-  const ForgotPasswordPage({super.key});
+  const ForgotPasswordPage({super.key, this.mode});
 
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
@@ -26,10 +23,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
-  ForgotPasswordArgs _readArgs(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args is ForgotPasswordArgs) return args;
-    return const ForgotPasswordArgs(mode: ForgotMode.password);
+  ForgotMode _getMode() {
+    return widget.mode ?? ForgotMode.password;
   }
 
   @override
@@ -41,8 +36,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     const muted = Color(0xFF9AA0A6);
     const primary = Color(0xFF4285F4);
 
-    final args = _readArgs(context);
-    final isUsername = args.mode == ForgotMode.username;
+    final mode = _getMode();
+    final isUsername = mode == ForgotMode.username;
 
     final title = isUsername ? 'Forgot Username' : 'Forgot Password';
     final bodyText = isUsername
@@ -196,7 +191,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 SizedBox(
                   height: 72,
                   child: OutlinedButton.icon(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.navigateBack(),
                     icon: const Icon(Icons.arrow_back, size: 28),
                     label: const Text(
                       'Back',

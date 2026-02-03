@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../home/app_header.dart';
 import '../home/bottom_navigation_bar_custom.dart';
+import '../navigation/navigation_helper.dart';
+import '../navigation/app_router.dart';
 
 class TaskDetailsPage extends StatelessWidget {
   final String taskTitle;
@@ -21,15 +23,24 @@ class TaskDetailsPage extends StatelessWidget {
   void _handleNavigation(int index, BuildContext context) {
     if (index == 2) {
       // If tapping Tasks, just go back to tasks page
-      Navigator.of(context).pop();
+      context.navigateBack();
     } else {
-      // If tapping other nav items, pop back to main page and navigate
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      
-      // Then trigger navigation on main page
-      if (onNavItemTapped != null) {
-        onNavItemTapped!(index);
+      // If tapping other nav items, navigate to the appropriate route
+      String route;
+      switch (index) {
+        case 0:
+          route = AppRoutes.home;
+          break;
+        case 1:
+          route = AppRoutes.medications;
+          break;
+        case 3:
+          route = AppRoutes.settings;
+          break;
+        default:
+          route = AppRoutes.home;
       }
+      context.navigateReplace(route);
     }
   }
 
@@ -57,7 +68,7 @@ class TaskDetailsPage extends StatelessWidget {
                         size: 24,
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        context.navigateBack();
                       },
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
