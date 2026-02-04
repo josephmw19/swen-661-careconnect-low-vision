@@ -294,6 +294,7 @@ class AppointmentCard extends StatelessWidget {
                   AppRoutes.appointmentDetails,
                   params: {'id': doctorName},
                   queryParams: {
+                    'doctorName': doctorName,
                     'dateTime': dateTime,
                     'location': location,
                     'appointmentType': appointmentType,

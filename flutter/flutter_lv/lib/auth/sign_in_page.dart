@@ -4,6 +4,7 @@ import 'auth_prefs.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
 import '../navigation/navigation_helper.dart';
 import '../navigation/app_router.dart';
+import 'auth_keys.dart';
 
 class SignInPage extends StatefulWidget {
   static const routeName = '/sign-in';
@@ -122,6 +123,7 @@ class _SignInPageState extends State<SignInPage> {
                 const _FieldLabel('Username'),
                 const SizedBox(height: 8),
                 _InputField(
+                  key: AuthKeys.signInUsernameField,
                   controller: _usernameController,
                   hint: 'Enter your username',
                   obscure: false,
@@ -132,6 +134,7 @@ class _SignInPageState extends State<SignInPage> {
                 const _FieldLabel('Password'),
                 const SizedBox(height: 8),
                 _InputField(
+                  key: AuthKeys.signInPasswordField,
                   controller: _passwordController,
                   hint: 'Enter your password',
                   obscure: _obscurePassword,
@@ -156,6 +159,7 @@ class _SignInPageState extends State<SignInPage> {
                 SizedBox(
                   height: 72,
                   child: ElevatedButton(
+                    key: AuthKeys.signInSubmitBtn,
                     onPressed: _signIn,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
@@ -256,6 +260,7 @@ class _InputField extends StatelessWidget {
   final Widget? suffix;
 
   const _InputField({
+    super.key,
     required this.controller,
     required this.hint,
     required this.obscure,
@@ -265,6 +270,7 @@ class _InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      key: key,
       controller: controller,
       obscureText: obscure,
       style: const TextStyle(

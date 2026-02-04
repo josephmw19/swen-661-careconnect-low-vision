@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
+import 'auth_keys.dart';
+import '../navigation/app_router.dart';
 import '../navigation/navigation_helper.dart';
 
 enum ForgotMode { username, password }
@@ -25,6 +27,29 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   ForgotMode _getMode() {
     return widget.mode ?? ForgotMode.password;
+  }
+
+  void _showMessage(BuildContext context, String message) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text(
+          message,
+          style: const TextStyle(fontFamily: 'Inter', fontSize: 20),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _handleBack() async {
+    final didPop = await Navigator.of(context).maybePop();
+    if (!didPop) {
+      if (!mounted) return;
+      // Router auth pages often have no back stack, so we route explicitly.
+      context.navigateReplace(AppRoutes.signIn);
+    }
   }
 
   @override
@@ -57,7 +82,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 6),
-
                 Text(
                   title,
                   style: const TextStyle(
@@ -68,9 +92,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     color: Colors.white,
                   ),
                 ),
-
                 const SizedBox(height: 18),
-
                 Text(
                   bodyText,
                   style: const TextStyle(
@@ -80,9 +102,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     color: text,
                   ),
                 ),
-
                 const SizedBox(height: 22),
-
                 Container(
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
@@ -105,6 +125,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        key: AuthKeys.forgotInputField,
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
@@ -147,21 +168,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       SizedBox(
                         height: 72,
                         child: ElevatedButton(
+                          key: AuthKeys.forgotSubmitBtn,
                           onPressed: () {
                             final email = _emailController.text.trim();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  email.isEmpty
-                                      ? 'Please enter an email address.'
-                                      : 'Request sent. (Demo mode, no backend)',
-                                  style: const TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            );
+                            if (email.isEmpty) {
+                              _showMessage(
+                                context,
+                                'Please enter an email address.',
+                              );
+                            } else {
+                              _showMessage(
+                                context,
+                                'Request sent. (Demo mode, no backend)',
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primary,
@@ -184,14 +204,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ],
                   ),
                 ),
-
-                // Replace Spacer with a fixed gap (prevents overflow on short screens)
                 const SizedBox(height: 24),
-
                 SizedBox(
                   height: 72,
                   child: OutlinedButton.icon(
-                    onPressed: () => context.navigateBack(),
+                    key: AuthKeys.forgotReturnBtn,
+                    onPressed: _handleBack,
                     icon: const Icon(Icons.arrow_back, size: 28),
                     label: const Text(
                       'Back',

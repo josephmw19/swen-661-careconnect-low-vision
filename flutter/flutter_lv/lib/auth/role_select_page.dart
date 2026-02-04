@@ -4,6 +4,7 @@ import 'package:flutter_lv/widgets/auth_scroll_container.dart';
 import 'auth_prefs.dart';
 import '../navigation/navigation_helper.dart';
 import '../navigation/app_router.dart';
+import 'auth_keys.dart';
 
 class RoleSelectPage extends StatelessWidget {
   static const routeName = '/role-select';
@@ -55,6 +56,7 @@ class RoleSelectPage extends StatelessWidget {
                 const SizedBox(height: 28),
 
                 _RoleCard(
+                  key: AuthKeys.roleCaregiverCard,
                   background: card,
                   borderColor: border,
                   icon: Icons.group_outlined,
@@ -70,6 +72,7 @@ class RoleSelectPage extends StatelessWidget {
                 const SizedBox(height: 18),
 
                 _RoleCard(
+                  key: AuthKeys.rolePatientCard,
                   background: card,
                   borderColor: border,
                   icon: Icons.person_outline,
@@ -100,6 +103,7 @@ class RoleSelectPage extends StatelessWidget {
                 SizedBox(
                   height: 76,
                   child: OutlinedButton.icon(
+                    key: AuthKeys.roleReturnToWelcome,
                     onPressed: () {
                       context.navigateReplace(AppRoutes.landing);
                     },
@@ -142,6 +146,7 @@ class _RoleCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const _RoleCard({
+    super.key,
     required this.background,
     required this.borderColor,
     required this.icon,

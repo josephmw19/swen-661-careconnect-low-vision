@@ -11,6 +11,7 @@ import '../auth/landing_page.dart';
 import '../auth/role_select_page.dart';
 import '../auth/sign_in_page.dart';
 import '../auth/forgot_password_page.dart';
+import '../auth/auth_prefs.dart';
 
 // Route paths
 class AppRoutes {
@@ -34,11 +35,7 @@ class AppRouteConfig {
   final Map<String, String>? params;
   final Map<String, dynamic>? queryParams;
 
-  AppRouteConfig({
-    required this.path,
-    this.params,
-    this.queryParams,
-  });
+  AppRouteConfig({required this.path, this.params, this.queryParams});
 
   static AppRouteConfig fromUri(Uri uri) {
     String path = uri.path;
@@ -64,7 +61,7 @@ class AppRouteConfig {
   static Map<String, String>? _extractParams(String path) {
     final segments = path.split('/');
     final params = <String, String>{};
-    
+
     // Extract IDs from paths like /medications/123 or /tasks/456
     for (int i = 0; i < segments.length; i++) {
       final segment = segments[i];
@@ -72,7 +69,7 @@ class AppRouteConfig {
         params['id'] = segment;
       }
     }
-    
+
     return params.isEmpty ? null : params;
   }
 
@@ -83,11 +80,8 @@ class AppRouteConfig {
         path = path.replaceAll(':$key', value);
       });
     }
-    
-    return Uri(
-      path: path,
-      queryParameters: queryParams,
-    );
+
+    return Uri(path: path, queryParameters: queryParams);
   }
 }
 
@@ -98,19 +92,19 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   final GlobalKey<NavigatorState> navigatorKey;
 
   AppRouteConfig _currentConfiguration;
-  List<Page> _pages = [];
+  final List<Page> _pages = [];
   final Function(int)? onNavItemTapped;
-  
+
   // Static reference for global access (used as fallback)
   static AppRouterDelegate? _instance;
-  
+
   static AppRouterDelegate? get instance => _instance;
 
   AppRouterDelegate({
     required AppRouteConfig initialRoute,
     this.onNavItemTapped,
-  })  : _currentConfiguration = initialRoute,
-        navigatorKey = GlobalKey<NavigatorState>() {
+  }) : _currentConfiguration = initialRoute,
+       navigatorKey = GlobalKey<NavigatorState>() {
     // Initialize pages immediately
     _updatePages();
     // Set static instance for global access
@@ -120,7 +114,11 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   @override
   AppRouteConfig get currentConfiguration => _currentConfiguration;
 
-  void pushRoute(String path, {Map<String, String>? params, Map<String, dynamic>? queryParams}) {
+  void pushRoute(
+    String path, {
+    Map<String, String>? params,
+    Map<String, dynamic>? queryParams,
+  }) {
     _currentConfiguration = AppRouteConfig(
       path: path,
       params: params,
@@ -144,7 +142,11 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     return false;
   }
 
-  void replaceRoute(String path, {Map<String, String>? params, Map<String, dynamic>? queryParams}) {
+  void replaceRoute(
+    String path, {
+    Map<String, String>? params,
+    Map<String, dynamic>? queryParams,
+  }) {
     final newConfig = AppRouteConfig(
       path: path,
       params: params,
@@ -161,13 +163,14 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
 
   List<Page> _buildPages(AppRouteConfig config) {
     final pages = <Page>[];
-    
+
     // Check if we need to show landing/auth pages
-    final isAuthRoute = config.path == AppRoutes.landing ||
+    final isAuthRoute =
+        config.path == AppRoutes.landing ||
         config.path == AppRoutes.roleSelect ||
         config.path == AppRoutes.signIn ||
         config.path == AppRoutes.forgotPassword;
-    
+
     // Build the navigation stack
     if (isAuthRoute) {
       // For auth routes, just show that page
@@ -179,12 +182,12 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         pages.add(_buildPage(config.path, config));
       }
     }
-    
+
     // Ensure we always have at least one page
     if (pages.isEmpty) {
       pages.add(_buildPage(AppRoutes.home, config));
     }
-    
+
     return pages;
   }
 
@@ -195,43 +198,41 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
           key: const ValueKey('home'),
           child: const MyHomePage(title: 'CareConnect'),
         );
-      
+
       case AppRoutes.landing:
         return MaterialPage(
           key: const ValueKey('landing'),
           child: const LandingPage(),
         );
-      
+
       case AppRoutes.roleSelect:
         return MaterialPage(
           key: const ValueKey('role-select'),
           child: const RoleSelectPage(),
         );
-      
+
       case AppRoutes.signIn:
         return MaterialPage(
           key: const ValueKey('sign-in'),
           child: const SignInPage(),
         );
-      
+
       case AppRoutes.forgotPassword:
         final modeStr = config.queryParams?['mode'] ?? 'password';
-        final mode = modeStr == 'username' 
-            ? ForgotMode.username 
+        final mode = modeStr == 'username'
+            ? ForgotMode.username
             : ForgotMode.password;
         return MaterialPage(
           key: const ValueKey('forgot-password'),
           child: ForgotPasswordPage(mode: mode),
         );
-      
+
       case AppRoutes.medications:
         return MaterialPage(
           key: const ValueKey('medications'),
-          child: MedicationsPage(
-            onNavItemTapped: onNavItemTapped,
-          ),
+          child: MedicationsPage(onNavItemTapped: onNavItemTapped),
         );
-      
+
       case AppRoutes.medicationDetails:
         final medicationName = config.params?['id'] ?? '';
         return MaterialPage(
@@ -245,15 +246,13 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
             onNavItemTapped: onNavItemTapped,
           ),
         );
-      
+
       case AppRoutes.tasks:
         return MaterialPage(
           key: const ValueKey('tasks'),
-          child: TasksPage(
-            onNavItemTapped: onNavItemTapped,
-          ),
+          child: TasksPage(onNavItemTapped: onNavItemTapped),
         );
-      
+
       case AppRoutes.taskDetails:
         final taskTitle = config.params?['id'] ?? '';
         return MaterialPage(
@@ -266,36 +265,34 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
             onNavItemTapped: onNavItemTapped,
           ),
         );
-      
+
       case AppRoutes.appointments:
         return MaterialPage(
           key: const ValueKey('appointments'),
-          child: AppointmentsPage(
-            onNavItemTapped: onNavItemTapped,
-          ),
+          child: AppointmentsPage(onNavItemTapped: onNavItemTapped),
         );
-      
+
       case AppRoutes.appointmentDetails:
+        final qp = config.queryParams;
+
         return MaterialPage(
           key: ValueKey('appointment-${config.params?['id']}'),
           child: AppointmentDetailsPage(
-            doctorName: config.queryParams?['doctorName'] ?? '',
-            dateTime: config.queryParams?['dateTime'] ?? '',
-            location: config.queryParams?['location'] ?? '',
-            appointmentType: config.queryParams?['appointmentType'] ?? '',
-            clinicName: config.queryParams?['clinicName'] ?? '',
+            doctorName: (qp?['doctorName'] ?? qp?['provider'] ?? '') as String,
+            dateTime: (qp?['dateTime'] ?? '') as String,
+            location: (qp?['location'] ?? '') as String,
+            appointmentType: (qp?['appointmentType'] ?? '') as String,
+            clinicName: (qp?['clinicName'] ?? '') as String,
             onNavItemTapped: onNavItemTapped,
           ),
         );
-      
+
       case AppRoutes.settings:
         return MaterialPage(
           key: const ValueKey('settings'),
-          child: SettingsPage(
-            onNavItemTapped: onNavItemTapped,
-          ),
+          child: SettingsPage(onNavItemTapped: onNavItemTapped),
         );
-      
+
       default:
         return MaterialPage(
           key: const ValueKey('home'),
@@ -307,7 +304,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   AppRouteConfig _getConfigFromPage(Page page) {
     final key = page.key as ValueKey<String>?;
     if (key == null) return AppRouteConfig(path: AppRoutes.home);
-    
+
     final value = key.value;
     if (value.startsWith('medication-')) {
       return AppRouteConfig(
@@ -325,7 +322,7 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
         params: {'id': value.replaceFirst('appointment-', '')},
       );
     }
-    
+
     // Map page keys to routes
     switch (value) {
       case 'home':
@@ -355,23 +352,45 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
   Widget build(BuildContext context) {
     // Always update pages based on current configuration to ensure they're in sync
     _updatePages();
-    
+
     return Navigator(
       key: navigatorKey,
-      pages: List.unmodifiable(_pages), // Use unmodifiable list to ensure Navigator detects changes
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) {
-          return false;
+      pages: List.unmodifiable(_pages),
+      onDidRemovePage: (page) {
+        // Keep router state in sync when Navigator pops.
+        if (_pages.isNotEmpty) {
+          _pages.remove(page);
+
+          if (_pages.isNotEmpty) {
+            _currentConfiguration = _getConfigFromPage(_pages.last);
+          } else {
+            _currentConfiguration = AppRouteConfig(path: AppRoutes.home);
+          }
+
+          notifyListeners();
         }
-        popRoute();
-        return true;
       },
     );
   }
 
   @override
   Future<void> setNewRoutePath(AppRouteConfig configuration) async {
-    _currentConfiguration = configuration;
+    // If you don't already import AuthPrefs in this file, add the import (see step 2).
+    final signedIn = await AuthPrefs.isSignedIn();
+
+    final isAuthRoute =
+        configuration.path == AppRoutes.landing ||
+        configuration.path == AppRoutes.roleSelect ||
+        configuration.path == AppRoutes.signIn ||
+        configuration.path == AppRoutes.forgotPassword;
+
+    // If signed out, force landing for any non-auth route (including '/')
+    if (!signedIn && !isAuthRoute) {
+      _currentConfiguration = AppRouteConfig(path: AppRoutes.landing);
+    } else {
+      _currentConfiguration = configuration;
+    }
+
     _updatePages();
     notifyListeners();
   }

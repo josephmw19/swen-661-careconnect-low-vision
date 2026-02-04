@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lv/widgets/auth_scroll_container.dart';
 import '../navigation/navigation_helper.dart';
 import '../navigation/app_router.dart';
+import 'auth_keys.dart';
 
 class LandingPage extends StatelessWidget {
   static const routeName = '/landing';
@@ -85,6 +86,7 @@ class LandingPage extends StatelessWidget {
                 SizedBox(
                   height: 72,
                   child: ElevatedButton(
+                    key: AuthKeys.landingSignInBtn,
                     onPressed: () {
                       context.navigateTo(AppRoutes.roleSelect);
                     },
@@ -113,6 +115,7 @@ class LandingPage extends StatelessWidget {
                 SizedBox(
                   height: 72,
                   child: OutlinedButton(
+                    key: AuthKeys.landingCreateAccountBtn,
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -147,6 +150,7 @@ class LandingPage extends StatelessWidget {
 
                 // Links
                 _LinkButton(
+                  key: AuthKeys.landingForgotUsername,
                   label: 'Forgot username?',
                   onTap: () {
                     context.navigateTo(
@@ -157,6 +161,7 @@ class LandingPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 _LinkButton(
+                  key: AuthKeys.landingForgotPassword,
                   label: 'Forgot password?',
                   onTap: () {
                     context.navigateTo(
@@ -166,7 +171,6 @@ class LandingPage extends StatelessWidget {
                   },
                 ),
 
-                // Spacer() causes overflow on short screens, replace with fixed gap
                 const SizedBox(height: 28),
 
                 const Text(
@@ -193,12 +197,13 @@ class _LinkButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
 
-  const _LinkButton({required this.label, required this.onTap});
+  const _LinkButton({super.key, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: TextButton(
+        key: key,
         onPressed: onTap,
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -207,7 +212,7 @@ class _LinkButton extends StatelessWidget {
           label,
           style: const TextStyle(
             fontFamily: 'Inter',
-            fontSize: 20, // >= 20
+            fontSize: 20,
             fontWeight: FontWeight.w600,
             height: 1.3,
             decoration: TextDecoration.underline,
