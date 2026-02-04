@@ -1,12 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type TabParamList = {
+  Home: undefined;
+  Medications: undefined;
+  Tasks: undefined;
+  Appointments: undefined;
+  Settings: undefined;
+};
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<TabParamList, 'Home'>,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 interface AppointmentItemProps {
   provider: string;
@@ -44,7 +57,10 @@ export function UpcomingAppointmentsCard() {
 
       <TouchableOpacity
         style={styles.viewAllButton}
-        onPress={() => navigation.navigate('Appointments')}
+        onPress={() => {
+          // Navigate to Appointments tab
+          navigation.navigate('Appointments');
+        }}
       >
         <Text style={styles.viewAllButtonText}>View All Appointments</Text>
       </TouchableOpacity>
