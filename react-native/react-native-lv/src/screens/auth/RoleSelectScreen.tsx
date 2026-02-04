@@ -11,16 +11,22 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
-import { authStorage, USER_ROLES } from '../../utils/authStorage';
+import { useAuth } from '../../contexts/AuthContext';
+import { USER_ROLES, UserRole } from '../../utils/authStorage';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export function RoleSelectScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { setUserRole } = useAuth();
 
-  const handleRoleSelect = async (role: typeof USER_ROLES.PATIENT | typeof USER_ROLES.CAREGIVER) => {
-    await authStorage.setUserRole(role);
-    navigation.replace('SignIn');
+  const handleRoleSelect = async (role: UserRole) => {
+    try {
+      await setUserRole(role);
+      navigation.replace('SignIn');
+    } catch (error) {
+      console.error('Error setting user role:', error);
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -13,8 +13,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { AppHeader } from '../../components/AppHeader';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
-import { settingsStorage, SettingsData } from '../../utils/settingsStorage';
-import { authStorage } from '../../utils/authStorage';
+import { useSettings } from '../../contexts/SettingsContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -81,38 +81,8 @@ function SectionHeader({ icon, title }: SectionHeaderProps) {
 
 export function SettingsScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const [settings, setSettings] = useState<SettingsData>({
-    textSize: 'Max',
-    lineSpacing: 'Maximum',
-    spacingBetweenItems: 'Maximum',
-    speechSpeed: 'Normal',
-    microphoneAccess: 'Allowed',
-    highContrastDisplay: false,
-    boldText: true,
-    reduceVisualClutter: true,
-    readScreenAloud: true,
-    readNotificationsAloud: true,
-    voiceNavigation: false,
-    voiceFeedbackForActions: true,
-  });
-
-  useEffect(() => {
-    loadSettings();
-  }, []);
-
-  const loadSettings = async () => {
-    const loaded = await settingsStorage.load();
-    setSettings(loaded);
-  };
-
-  const updateSetting = async <K extends keyof SettingsData>(
-    key: K,
-    value: SettingsData[K]
-  ) => {
-    const updated = { ...settings, [key]: value };
-    setSettings(updated);
-    await settingsStorage.save({ [key]: value });
-  };
+  const { settings, updateSetting } = useSettings();
+  const { signOut } = useAuth();
 
   const handleSignOut = async () => {
     Alert.alert(
@@ -127,11 +97,15 @@ export function SettingsScreen() {
           text: 'Sign Out',
           style: 'destructive',
           onPress: async () => {
-            await authStorage.signOut();
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Landing' }],
-            });
+            try {
+              await signOut();
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Landing' }],
+              });
+            } catch (error) {
+              Alert.alert('Error', 'Failed to sign out. Please try again.');
+            }
           },
         },
       ]

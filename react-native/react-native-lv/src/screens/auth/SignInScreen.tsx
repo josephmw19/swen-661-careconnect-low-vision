@@ -13,26 +13,22 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
-import { authStorage } from '../../utils/authStorage';
+import { useAuth } from '../../contexts/AuthContext';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export function SignInScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { signIn, lastUsername } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [obscurePassword, setObscurePassword] = useState(true);
 
   useEffect(() => {
-    loadLastUsername();
-  }, []);
-
-  const loadLastUsername = async () => {
-    const last = await authStorage.getLastUsername();
-    if (last) {
-      setUsername(last);
+    if (lastUsername) {
+      setUsername(lastUsername);
     }
-  };
+  }, [lastUsername]);
 
   const handleSignIn = async () => {
     const trimmedUsername = username.trim();
@@ -42,15 +38,18 @@ export function SignInScreen() {
       return;
     }
 
-    // Demo-mode sign in (no backend)
-    await authStorage.setLastUsername(trimmedUsername);
-    await authStorage.setSignedIn(true);
+    try {
+      // Demo-mode sign in (no backend)
+      await signIn(trimmedUsername);
 
-    // Navigate to home - need to reset navigation stack
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Main' }],
-    });
+      // Navigate to home - need to reset navigation stack
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Main' }],
+      });
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign in. Please try again.');
+    }
   };
 
   return (

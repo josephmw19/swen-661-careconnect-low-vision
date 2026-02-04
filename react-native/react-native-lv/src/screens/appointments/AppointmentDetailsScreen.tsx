@@ -14,11 +14,11 @@ import { AppHeader } from '../../components/AppHeader';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type RouteProp = RouteProp<RootStackParamList, 'AppointmentDetails'>;
+type AppointmentDetailsRouteProp = RouteProp<RootStackParamList, 'AppointmentDetails'>;
 
 export function AppointmentDetailsScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp>();
+  const route = useRoute<AppointmentDetailsRouteProp>();
 
   const {
     id,

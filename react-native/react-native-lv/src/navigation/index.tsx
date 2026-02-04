@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 
 import { RootStackParamList } from './types';
-import { authStorage } from '../utils/authStorage';
+import { useAuth } from '../contexts/AuthContext';
 
 // Auth screens
 import { LandingScreen } from '../screens/auth/LandingScreen';
@@ -22,23 +22,7 @@ import { AppointmentsScreen } from '../screens/appointments/AppointmentsScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function Navigation({ theme }: { theme: Theme }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSignedIn, setIsSignedIn] = useState(false);
-
-  const checkAuth = useCallback(async () => {
-    try {
-      const signedIn = await authStorage.isSignedIn();
-      setIsSignedIn(signedIn);
-    } catch (error) {
-      console.error('Error checking auth:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+  const { isSignedIn, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -50,29 +34,27 @@ export function Navigation({ theme }: { theme: Theme }) {
 
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!isSignedIn ? (
-          // Auth stack
-          <>
-            <Stack.Screen name="Landing" component={LandingScreen} />
-            <Stack.Screen name="RoleSelect" component={RoleSelectScreen} />
-            <Stack.Screen name="SignIn" component={SignInScreen} />
-            <Stack.Screen 
-              name="ForgotPassword" 
-              component={ForgotPasswordScreen}
-              initialParams={{ mode: 'password' }}
-            />
-          </>
-        ) : (
-          // Main app stack
-          <>
-            <Stack.Screen name="Main" component={MainTabs} />
-            <Stack.Screen name="MedicationDetails" component={MedicationDetailsScreen} />
-            <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
-            <Stack.Screen name="Appointments" component={AppointmentsScreen} />
-            <Stack.Screen name="AppointmentDetails" component={AppointmentDetailsScreen} />
-          </>
-        )}
+      <Stack.Navigator 
+        screenOptions={{ headerShown: false }}
+        initialRouteName={isSignedIn ? "Main" : "Landing"}
+        key={isSignedIn ? "main" : "auth"}
+      >
+        {/* Auth screens */}
+        <Stack.Screen name="Landing" component={LandingScreen} />
+        <Stack.Screen name="RoleSelect" component={RoleSelectScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen 
+          name="ForgotPassword" 
+          component={ForgotPasswordScreen}
+          initialParams={{ mode: 'password' }}
+        />
+        
+        {/* Main app screens */}
+        <Stack.Screen name="Main" component={MainTabs} />
+        <Stack.Screen name="MedicationDetails" component={MedicationDetailsScreen} />
+        <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
+        <Stack.Screen name="Appointments" component={AppointmentsScreen} />
+        <Stack.Screen name="AppointmentDetails" component={AppointmentDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

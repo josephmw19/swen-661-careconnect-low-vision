@@ -7,6 +7,8 @@ import { useColorScheme } from 'react-native';
 
 import { Colors } from './constants/Colors';
 import { Navigation } from './navigation';
+import { AuthProvider } from './contexts/AuthContext';
+import { SettingsProvider } from './contexts/SettingsContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,5 +40,11 @@ export function App() {
           colors: { ...DefaultTheme.colors, primary: Colors[colorScheme ?? 'light'].tint },
         };
 
-  return <Navigation theme={theme} />;
+  return (
+    <AuthProvider>
+      <SettingsProvider>
+        <Navigation theme={theme} />
+      </SettingsProvider>
+    </AuthProvider>
+  );
 }
