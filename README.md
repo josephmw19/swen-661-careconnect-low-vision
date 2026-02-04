@@ -1,100 +1,55 @@
-CareConnect LV – Human First UI
+# CareConnect LV – Human First UI
 
-SWEN 661 – User Interface Implementation
+**SWEN 661 – User Interface Implementation**  
+University of Maryland Global Campus  
 Team 5 – Human First UI
-University of Maryland Global Campus
 
-This project is an accessibility-first redesign of the CareConnect application focused on improving usability for low-vision care recipients. The project implements WCAG 2.1 Level AA–compliant UI variants across mobile, web, and desktop platforms without expanding functional scope.
+This repository contains accessibility-focused user interface implementations of the CareConnect application across multiple platforms. The project emphasizes **low-vision accessibility**, WCAG 2.1 AA–aligned design, and human-centered UI principles.
 
-Team Members
+---
 
-Joseph Wojcik
-Davon Davis
-Olalekan Ogunsanya
+## Assignment 4 – Flutter Mobile Implementation (Primary Submission)
 
-Repository Structure
+**Assignment 4 grading is based on the Flutter implementation.**
 
-The repository contains multiple implementations of the CareConnect user interface:
+**Flutter application location:**  
+`flutter/flutter_lv/`
 
-flutter – Flutter mobile implementation
-react-native – React Native mobile implementation
-web – Web UI implementation
-electron – Desktop UI implementation
-docs – Project documentation and screenshots
+The Flutter subproject includes:
+- Fully implemented UI screens
+- Navigator 2.0–based routing
+- Widget and unit tests
+- 75%+ test coverage with HTML report
+- Android release APK
 
-How to Run the Application
+**Flutter README (detailed setup, testing, coverage):**  
+`flutter/flutter_lv/README.md`
 
-Each application version is located in its own folder.
-Only one version needs to be run for demonstration.
+**Android APK:**  
+`flutter/flutter_lv/build/app/outputs/flutter-apk/app-release.apk`
 
-To run the Flutter version:
+**Coverage Report:**  
+`flutter/flutter_lv/coverage/html/index.html`
 
-Open a terminal
+---
 
-Navigate to the flutter folder
+## Repository Structure
+flutter/        Flutter mobile implementation (Assignment 4)
+react-native/   React Native prototype
+web/            Web UI prototype
+electron/       Desktop UI prototype
+docs/           Screenshots and documentation
 
-Run the Flutter application using the Flutter run command
+---
 
-To run the React Native version:
+## Team Members
+- Joseph Wojcik
+- Davon Davis
+- Olalekan Ogunsanya
 
-Open a terminal
+---
 
-Navigate to the react-native folder
-
-Start the application using npm start
-
-To run the Web version:
-
-Open a terminal
-
-Navigate to the web folder
-
-Start the application using npm start
-
-To run the Desktop (Electron) version:
-
-Open a terminal
-
-Navigate to the electron folder
-
-Start the application using npm start
-
-How to Run Tests
-
-Tests are executed from within each project folder.
-
-Flutter tests:
-
-Navigate to the flutter folder
-
-Run flutter test
-
-React Native tests:
-
-Navigate to the react-native folder
-
-Run npm test
-
-Web tests:
-
-Navigate to the web folder
-
-Run npm test
-
-Desktop (Electron) tests:
-
-Navigate to the electron folder
-
-Run npm test
-
-Screenshots
-
-Screenshots used for assignment submission are stored in the following folder:
-
-docs/screenshots
-
-The screenshots represent the main user interface screens for each platform.
-
-Flutter: Home screen
-Web: Home screen
-Desktop: Home screen
+## Notes for Graders
+- This repository contains **multiple platform prototypes**
+- Only the **Flutter implementation** is required for Assignment 4
+- All deliverables, tests, and coverage artifacts are located in the Flutter folder
