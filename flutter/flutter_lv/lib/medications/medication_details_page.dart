@@ -100,14 +100,14 @@ class MedicationDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 36), // 107 - 27 - 44 = 36
-
               // Medication Summary Section
               _MedicationSummarySection(
                 medicationName: medicationName,
                 dosage: dosage,
                 instructions: instructions,
                 nextDose: nextDose ?? 'Today at 2:00 PM (in 15 minutes)',
-                statusMessage: statusMessage ??
+                statusMessage:
+                    statusMessage ??
                     'Please take this medication within the next 15 minutes',
               ),
               const SizedBox(height: 36),
@@ -150,10 +150,7 @@ class _MedicationSummarySection extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(33.5),
@@ -163,11 +160,7 @@ class _MedicationSummarySection extends StatelessWidget {
           // Medication Summary header
           Row(
             children: [
-              const Icon(
-                Icons.medication,
-                color: Color(0xFF4285F4),
-                size: 27,
-              ),
+              const Icon(Icons.medication, color: Color(0xFF4285F4), size: 27),
               const SizedBox(width: 13.5),
               const Expanded(
                 child: Text(
@@ -306,10 +299,7 @@ class _MedicationSummarySection extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: const Color(0xFF3D2A1F),
-              border: Border.all(
-                color: const Color(0xFFE8A87C),
-                width: 2,
-              ),
+              border: Border.all(color: const Color(0xFFE8A87C), width: 2),
               borderRadius: BorderRadius.circular(15.25),
             ),
             padding: const EdgeInsets.fromLTRB(24.5, 24.5, 24.5, 2),
@@ -356,10 +346,7 @@ class _ActionsSection extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(33.5),
@@ -603,10 +590,7 @@ class _HistorySection extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF252932),
-        border: Border.all(
-          color: const Color(0xFF3A3F4A),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF3A3F4A), width: 2),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(33.5),
@@ -698,11 +682,7 @@ class _HistoryItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: iconColor,
-            size: 28,
-          ),
+          Icon(icon, color: iconColor, size: 28),
           const SizedBox(width: 18.5),
           Expanded(
             child: Column(

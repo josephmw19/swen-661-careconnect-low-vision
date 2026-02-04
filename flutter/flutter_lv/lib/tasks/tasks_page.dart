@@ -19,6 +19,16 @@ class _TasksPageState extends State<TasksPage> {
   // Track which tasks have been marked as complete
   bool _morningVitaminsCompleted = false;
   bool _drinkWaterCompleted = false;
+  bool _isReading = false;
+  bool _isListening = false;
+
+  void _handleReadAction() {
+    setState(() => _isReading = !_isReading);
+  }
+
+  void _handleVoiceAction() {
+    setState(() => _isListening = !_isListening);
+  }
 
   void _handleMarkComplete(String taskTitle) {
     setState(() {
@@ -46,7 +56,12 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
-      appBar: const AppHeader(),
+      appBar: AppHeader(
+        onReadTap: _handleReadAction,
+        onVoiceTap: _handleVoiceAction,
+        isReading: _isReading,
+        isListening: _isListening,
+      ),
       body: Container(
         color: const Color(0xFF1A1D24),
         child: Column(
@@ -254,7 +269,9 @@ class _TasksPageState extends State<TasksPage> {
                         onTap: () {
                           context.navigateTo(
                             AppRoutes.taskDetails,
-                            params: {'id': 'Order blood pressure monitor batteries'},
+                            params: {
+                              'id': 'Order blood pressure monitor batteries',
+                            },
                             queryParams: {
                               'description': 'Current batteries running low',
                               'dueTime': 'Due February 5, 2026',
@@ -274,7 +291,9 @@ class _TasksPageState extends State<TasksPage> {
                         onTap: () {
                           context.navigateTo(
                             AppRoutes.taskDetails,
-                            params: {'id': 'Review medication list with doctor'},
+                            params: {
+                              'id': 'Review medication list with doctor',
+                            },
                             queryParams: {
                               'description':
                                   'Review current medications with your doctor',
@@ -293,7 +312,9 @@ class _TasksPageState extends State<TasksPage> {
                         onTap: () {
                           context.navigateTo(
                             AppRoutes.taskDetails,
-                            params: {'id': 'Update emergency contact information'},
+                            params: {
+                              'id': 'Update emergency contact information',
+                            },
                             queryParams: {
                               'description':
                                   'Update your emergency contact information',

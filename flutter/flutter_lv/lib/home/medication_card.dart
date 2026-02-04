@@ -6,12 +6,15 @@ class MedicationCard extends StatelessWidget {
   final VoidCallback? onMarkAsTaken;
   final VoidCallback? onSnooze;
 
+  final String? takenTimeText;
+
   const MedicationCard({
     super.key,
     this.isMarkedAsTaken = false,
     this.isSnoozed = false,
     this.onMarkAsTaken,
     this.onSnooze,
+    this.takenTimeText,
   });
 
   @override
@@ -78,20 +81,26 @@ class MedicationCard extends StatelessWidget {
               // Time information with clock icon
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.access_time,
-                    color: Color(0xFF81C995),
+                    color: isMarkedAsTaken
+                        ? const Color(0xFF34A853)
+                        : const Color(0xFF81C995),
                     size: 18,
                   ),
                   const SizedBox(width: 13.5),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Due at 2:00 PM (in 15 minutes)',
+                      isMarkedAsTaken
+                          ? (takenTimeText ?? 'Taken today')
+                          : 'Due at 2:00 PM (in 15 minutes)',
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 24,
                         fontWeight: FontWeight.normal,
-                        color: Color(0xFF81C995),
+                        color: isMarkedAsTaken
+                            ? const Color(0xFF34A853)
+                            : const Color(0xFF81C995),
                         letterSpacing: 0.0703,
                         height: 1.6,
                       ),
@@ -140,7 +149,7 @@ class MedicationCard extends StatelessWidget {
                   Expanded(
                     child: Center(
                       child: Text(
-                        isMarkedAsTaken ? 'Marked as Taken' : 'Mark as Taken',
+                        isMarkedAsTaken ? 'Taken' : 'Mark as Taken',
                         style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 26,

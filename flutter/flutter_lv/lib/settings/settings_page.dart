@@ -41,6 +41,16 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _readNotificationsAloud = true;
   bool _voiceNavigation = false;
   bool _voiceFeedbackForActions = true;
+  bool _isReading = false;
+  bool _isListening = false;
+
+  void _handleReadAction() {
+    setState(() => _isReading = !_isReading);
+  }
+
+  void _handleVoiceAction() {
+    setState(() => _isListening = !_isListening);
+  }
 
   @override
   void initState() {
@@ -96,7 +106,12 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
-      appBar: const AppHeader(),
+      appBar: AppHeader(
+        onReadTap: _handleReadAction,
+        onVoiceTap: _handleVoiceAction,
+        isReading: _isReading,
+        isListening: _isListening,
+      ),
       body: Container(
         color: const Color(0xFF1A1D24),
         child: Column(

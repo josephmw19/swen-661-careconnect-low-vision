@@ -19,6 +19,20 @@ class _MedicationsPageState extends State<MedicationsPage> {
   // Track which medications have been marked as taken
   bool _lisinoprilTaken = false;
   bool _aspirinTaken = false;
+  bool _isReading = false;
+  bool _isListening = false;
+
+  void _handleReadAction() {
+    setState(() {
+      _isReading = !_isReading;
+    });
+  }
+
+  void _handleVoiceAction() {
+    setState(() {
+      _isListening = !_isListening;
+    });
+  }
 
   void _handleMarkAsTaken(String medicationName) {
     setState(() {
@@ -46,7 +60,12 @@ class _MedicationsPageState extends State<MedicationsPage> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
-      appBar: const AppHeader(),
+      appBar: AppHeader(
+        onReadTap: _handleReadAction,
+        onVoiceTap: _handleVoiceAction,
+        isReading: _isReading,
+        isListening: _isListening,
+      ),
       body: Container(
         color: const Color(0xFF1A1D24),
         child: Column(
@@ -172,7 +191,8 @@ class _MedicationsPageState extends State<MedicationsPage> {
                         status: MedicationStatus.taken,
                         takenTime: 'Taken today at 8:15 AM',
                         onTap: () {
-                          context.navigateTo(AppRoutes.medicationDetails,
+                          context.navigateTo(
+                            AppRoutes.medicationDetails,
                             params: {'id': 'Metformin 500mg'},
                             queryParams: {
                               'dosage': '1 tablet with breakfast',

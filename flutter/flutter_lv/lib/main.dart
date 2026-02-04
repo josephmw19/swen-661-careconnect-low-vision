@@ -124,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Medication state
   bool _medicationMarkedAsTaken = false;
   bool _medicationSnoozed = false;
+  String? _medicationTakenTimeText;
 
   // Task completion state
   bool _bloodPressureCheckCompleted = true;
@@ -140,16 +141,28 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String _formatTakenTime(DateTime dt) {
+    final hour = dt.hour;
+    final minute = dt.minute.toString().padLeft(2, '0');
+    final period = hour >= 12 ? 'PM' : 'AM';
+    final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+    return 'Taken today at $displayHour:$minute $period';
+  }
+
   void _handleMarkAsTaken() {
+    final now = DateTime.now();
     setState(() {
       _medicationMarkedAsTaken = true;
       _medicationSnoozed = false;
+      _medicationTakenTimeText = _formatTakenTime(now);
     });
   }
 
   void _handleSnooze() {
     setState(() {
       _medicationSnoozed = true;
+      _medicationMarkedAsTaken = false;
+      _medicationTakenTimeText = null;
     });
   }
 
@@ -201,6 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MedicationCard(
                   isMarkedAsTaken: _medicationMarkedAsTaken,
                   isSnoozed: _medicationSnoozed,
+                  takenTimeText: _medicationTakenTimeText,
                   onMarkAsTaken: _handleMarkAsTaken,
                   onSnooze: _handleSnooze,
                 ),
@@ -236,6 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MedicationCard(
                   isMarkedAsTaken: _medicationMarkedAsTaken,
                   isSnoozed: _medicationSnoozed,
+                  takenTimeText: _medicationTakenTimeText,
                   onMarkAsTaken: _handleMarkAsTaken,
                   onSnooze: _handleSnooze,
                 ),
