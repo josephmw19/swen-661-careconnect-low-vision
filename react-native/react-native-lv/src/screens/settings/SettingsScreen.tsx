@@ -225,7 +225,9 @@ export function SettingsScreen() {
         {/* High Contrast Display */}
         <View style={styles.card}>
           <View style={styles.toggleCardContent}>
-            <Text style={styles.cardTitle}>High Contrast Display</Text>
+            <View style={styles.toggleCardTitle}>
+              <Text style={styles.cardTitle}>High Contrast Display</Text>
+            </View>
             <ToggleButton
               isOn={settings.highContrastDisplay}
               onToggle={(value) => updateSetting('highContrastDisplay', value)}
@@ -238,7 +240,9 @@ export function SettingsScreen() {
         {/* Bold Text */}
         <View style={styles.card}>
           <View style={styles.toggleCardContent}>
-            <Text style={styles.cardTitle}>Bold Text</Text>
+            <View style={styles.toggleCardTitle}>
+              <Text style={styles.cardTitle}>Bold Text</Text>
+            </View>
             <ToggleButton
               isOn={settings.boldText}
               onToggle={(value) => updateSetting('boldText', value)}
@@ -270,7 +274,9 @@ export function SettingsScreen() {
         {/* Read Screen Aloud */}
         <View style={styles.card}>
           <View style={styles.toggleCardContent}>
-            <Text style={styles.cardTitle}>Read Screen Aloud</Text>
+            <View style={styles.toggleCardTitle}>
+              <Text style={styles.cardTitle}>Read Screen Aloud</Text>
+            </View>
             <ToggleButton
               isOn={settings.readScreenAloud}
               onToggle={(value) => updateSetting('readScreenAloud', value)}
@@ -283,7 +289,9 @@ export function SettingsScreen() {
         {/* Read Notifications Aloud */}
         <View style={styles.card}>
           <View style={styles.toggleCardContent}>
-            <Text style={styles.cardTitle}>Read Notifications Aloud</Text>
+            <View style={styles.toggleCardTitle}>
+              <Text style={styles.cardTitle}>Read Notifications Aloud</Text>
+            </View>
             <ToggleButton
               isOn={settings.readNotificationsAloud}
               onToggle={(value) =>
@@ -298,7 +306,9 @@ export function SettingsScreen() {
         {/* Voice Navigation */}
         <View style={styles.card}>
           <View style={styles.toggleCardContent}>
-            <Text style={styles.cardTitle}>Voice Navigation</Text>
+            <View style={styles.toggleCardTitle}>
+              <Text style={styles.cardTitle}>Voice Navigation</Text>
+            </View>
             <ToggleButton
               isOn={settings.voiceNavigation}
               onToggle={(value) => updateSetting('voiceNavigation', value)}
@@ -311,7 +321,9 @@ export function SettingsScreen() {
         {/* Voice Feedback for Actions */}
         <View style={styles.card}>
           <View style={styles.toggleCardContent}>
-            <Text style={styles.cardTitle}>Voice Feedback for Actions</Text>
+            <View style={styles.toggleCardTitle}>
+              <Text style={styles.cardTitle}>Voice Feedback for Actions</Text>
+            </View>
             <ToggleButton
               isOn={settings.voiceFeedbackForActions}
               onToggle={(value) =>
@@ -417,7 +429,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     borderBottomWidth: 2,
     borderBottomColor: Colors.border,
-    padding: 10,
+    paddingHorizontal: Spacing.xl,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   title: {
     fontFamily: 'Inter',
@@ -426,7 +440,6 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 0.3901,
     lineHeight: 44.2,
-    height: 88,
   },
   scrollView: {
     flex: 1,
@@ -500,7 +513,7 @@ const styles = StyleSheet.create({
   },
   optionButtonText: {
     fontFamily: 'Inter',
-    fontSize: FontSizes['2xl'],
+    fontSize: FontSizes['xl'],
     fontWeight: '500',
     color: Colors.text,
     letterSpacing: 0.0703,
@@ -514,6 +527,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  toggleCardTitle: {
+    flex: 1,
+    marginRight: Spacing.md,
   },
   toggleRow: {
     flexDirection: 'row',

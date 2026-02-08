@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: Colors.border,
     paddingHorizontal: 22.5,
-    paddingTop: 0,
+    paddingTop: 60,
     paddingBottom: 2,
   },
   content: {

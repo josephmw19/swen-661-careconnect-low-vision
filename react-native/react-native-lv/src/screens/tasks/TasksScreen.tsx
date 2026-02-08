@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: Colors.border,
     paddingHorizontal: Spacing.xl,
-    paddingTop: 27,
-    paddingBottom: 2,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   title: {
     fontFamily: 'Inter',
@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 0.3901,
     lineHeight: 44.2,
-    marginBottom: 13.5,
   },
   scrollView: {
     flex: 1,
