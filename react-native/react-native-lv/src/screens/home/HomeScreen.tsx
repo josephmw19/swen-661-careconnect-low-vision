@@ -4,14 +4,22 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import { AppHeader } from '../../components/AppHeader';
 import { MedicationCard } from '../../components/home/MedicationCard';
 import { RefillReminderCard } from '../../components/home/RefillReminderCard';
 import { TodayCard } from '../../components/home/TodayCard';
 import { UpcomingAppointmentsCard } from '../../components/home/UpcomingAppointmentsCard';
 import { Colors, Spacing } from '../../constants/Theme';
+import { RootStackParamList } from '../../navigation/types';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export function HomeScreen() {
+  const navigation = useNavigation<NavigationProp>();
+
   const [medicationMarkedAsTaken, setMedicationMarkedAsTaken] = useState(false);
   const [medicationSnoozed, setMedicationSnoozed] = useState(false);
   const [isReading, setIsReading] = useState(false);
@@ -49,6 +57,10 @@ export function HomeScreen() {
 
   const handleVoiceAction = () => {
     setIsListening(!isListening);
+  };
+
+  const handleViewAllAppointments = () => {
+    navigation.navigate('Appointments');
   };
 
   return (

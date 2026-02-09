@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
+import type { NavigatorScreenParams } from '@react-navigation/native';
 
 type TabParamList = {
   Home: undefined;

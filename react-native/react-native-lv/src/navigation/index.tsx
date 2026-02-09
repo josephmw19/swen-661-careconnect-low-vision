@@ -51,10 +51,7 @@ export function Navigation({ theme }: { theme: Theme }) {
         
         {/* Main app screens */}
         <Stack.Screen name="Main" component={MainTabs} />
-        <Stack.Screen name="MedicationDetails" component={MedicationDetailsScreen} />
-        <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
-        <Stack.Screen name="Appointments" component={AppointmentsScreen} />
-        <Stack.Screen name="AppointmentDetails" component={AppointmentDetailsScreen} />
+    
       </Stack.Navigator>
     </NavigationContainer>
   );
