@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, FontSizes } from '../constants/Theme';
+import { useHeaderControls } from '../contexts/HeaderControlsContext';
 
 interface AppHeaderProps {
   onReadTap?: () => void;
@@ -13,9 +14,19 @@ interface AppHeaderProps {
 export function AppHeader({
   onReadTap,
   onVoiceTap,
-  isReading = false,
-  isListening = false,
+  isReading,
+  isListening,
 }: AppHeaderProps) {
+  const header = useHeaderControls();
+
+  // fallback to global if props not passed
+  const reading = typeof isReading === 'boolean' ? isReading : header.isReading;
+  const listening =
+    typeof isListening === 'boolean' ? isListening : header.isListening;
+
+  const onRead = onReadTap ?? header.toggleReading;
+  const onVoice = onVoiceTap ?? header.toggleListening;
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -23,14 +34,10 @@ export function AppHeader({
 
         <View style={styles.actions}>
           <TouchableOpacity
-            style={[styles.actionButton, isReading && styles.actionButtonActive]}
-            onPress={onReadTap}
+            style={[styles.actionButton, reading && styles.actionButtonActive]}
+            onPress={onRead}
           >
-            <Ionicons
-              name="volume-high-outline"
-              size={28}
-              color={Colors.primaryLight}
-            />
+            <Ionicons name="volume-high-outline" size={28} color={Colors.primaryLight} />
             <Text style={styles.actionLabel}>Read</Text>
           </TouchableOpacity>
 
@@ -38,15 +45,11 @@ export function AppHeader({
             style={[
               styles.actionButton,
               styles.actionButtonSpacing,
-              isListening && styles.actionButtonActive,
+              listening && styles.actionButtonActive,
             ]}
-            onPress={onVoiceTap}
+            onPress={onVoice}
           >
-            <Ionicons
-              name="mic-outline"
-              size={28}
-              color={Colors.primaryLight}
-            />
+            <Ionicons name="mic-outline" size={28} color={Colors.primaryLight} />
             <Text style={styles.actionLabel}>Voice</Text>
           </TouchableOpacity>
         </View>

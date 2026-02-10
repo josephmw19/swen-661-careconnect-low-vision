@@ -9,6 +9,7 @@ import { Colors } from './constants/Colors';
 import { Navigation } from './navigation';
 import { AuthProvider } from './contexts/AuthContext';
 import { SettingsProvider } from './contexts/SettingsContext';
+import { HeaderControlsProvider } from './contexts/HeaderControlsContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,10 +42,12 @@ export function App() {
         };
 
   return (
-    <AuthProvider>
-      <SettingsProvider>
+  <AuthProvider>
+    <SettingsProvider>
+      <HeaderControlsProvider>
         <Navigation theme={theme} />
-      </SettingsProvider>
-    </AuthProvider>
-  );
+      </HeaderControlsProvider>
+    </SettingsProvider>
+  </AuthProvider>
+);
 }

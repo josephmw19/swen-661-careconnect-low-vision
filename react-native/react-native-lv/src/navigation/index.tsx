@@ -19,6 +19,8 @@ import { TaskDetailsScreen } from '../screens/tasks/TaskDetailsScreen';
 import { AppointmentDetailsScreen } from '../screens/appointments/AppointmentDetailsScreen';
 import { AppointmentsScreen } from '../screens/appointments/AppointmentsScreen';
 
+import { HeaderControlsProvider } from '../contexts/HeaderControlsContext';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AuthStack() {
@@ -61,7 +63,9 @@ export function Navigation({ theme }: { theme: Theme }) {
 
   return (
   <NavigationContainer theme={theme}>
-    {isSignedIn ? <AppStack /> : <AuthStack />}
+    <HeaderControlsProvider>
+      {isSignedIn ? <AppStack /> : <AuthStack />}
+    </HeaderControlsProvider>
   </NavigationContainer>
 );
 }

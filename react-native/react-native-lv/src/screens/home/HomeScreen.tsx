@@ -22,8 +22,6 @@ export function HomeScreen() {
 
   const [medicationMarkedAsTaken, setMedicationMarkedAsTaken] = useState(false);
   const [medicationSnoozed, setMedicationSnoozed] = useState(false);
-  const [isReading, setIsReading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [bloodPressureCheckCompleted, setBloodPressureCheckCompleted] = useState(true);
   const [lunchMedicationCompleted, setLunchMedicationCompleted] = useState(false);
   const [eveningWalkCompleted, setEveningWalkCompleted] = useState(false);
@@ -51,26 +49,13 @@ export function HomeScreen() {
     }
   };
 
-  const handleReadAction = () => {
-    setIsReading(!isReading);
-  };
-
-  const handleVoiceAction = () => {
-    setIsListening(!isListening);
-  };
-
   const handleViewAllAppointments = () => {
     navigation.navigate('Appointments');
   };
 
   return (
     <View style={styles.container}>
-      <AppHeader
-        onReadTap={handleReadAction}
-        onVoiceTap={handleVoiceAction}
-        isReading={isReading}
-        isListening={isListening}
-      />
+      <AppHeader />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.content}
