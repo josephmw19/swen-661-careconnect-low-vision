@@ -3,7 +3,6 @@
 
 **Course:** SWEN 661 – User Interface Implementation  
 **Assignment:** Assignment 5 – React Native Mobile Implementation & Testing  
-**Student:** Joseph Wojcik  
 
 ## Overview
 
