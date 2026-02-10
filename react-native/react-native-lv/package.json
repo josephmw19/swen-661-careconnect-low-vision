@@ -13,18 +13,29 @@
     "test:coverage": "jest --coverage",
     "reset-project": "node ./src/scripts/reset-project.js"
   },
- "jest": {
-  "preset": "jest-expo",
-  "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
-  "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
-  "moduleNameMapper": {
-    "^@/(.*)$": "<rootDir>/src/$1"
-  }
-},
-
-  "testMatch": ["**/?(*.)+(test|spec).[tj]s?(x)"],
-
+  "jest": {
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    }
+  },
+  "testMatch": [
+    "**/?(*.)+(test|spec).[tj]s?(x)"
+  ],
   "dependencies": {
     "@expo/metro-runtime": "~6.1.0",
     "@expo/vector-icons": "^15.0.2",
@@ -33,6 +44,7 @@
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
     "@react-navigation/native-stack": "^7.3.16",
+    "@types/jest": "29.5.14",
     "expo": "^54.0.1",
     "expo-asset": "~12.0.3",
     "expo-blur": "~15.0.2",
@@ -57,7 +69,6 @@
   },
   "devDependencies": {
     "@testing-library/react-native": "^13.3.3",
-    "@types/jest": "^30.0.0",
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",

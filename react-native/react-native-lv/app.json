@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.josephmw19.reactnativelv"
     },
     "web": {
       "favicon": "src/assets/images/favicon.png"
@@ -29,6 +30,11 @@
           "image": "src/assets/images/splash-icon.png"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4f94ab1c-7518-4364-8c41-ed3475c124fe"
+      }
+    }
   }
 }
