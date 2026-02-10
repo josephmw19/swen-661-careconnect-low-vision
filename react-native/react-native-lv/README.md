@@ -46,7 +46,7 @@ To install:
 - Or scan the QR code shown on the Expo build page
 
 ## iOS Build
-The build was generated using the EAS “preview” profile and produces an installable Android APK suitable for testing and demonstration.
+Due to the cost of an Apple Developer account ($99/yr) this was skipped as it was optional but local instructions are below:
 
 To run locally via iOS
 ```bash
