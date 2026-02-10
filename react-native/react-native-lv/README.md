@@ -34,6 +34,17 @@ State management is implemented using the **React Context API**, and navigation 
 
 ## Running the Application
 
+## Android Build (Expo EAS)
+
+A production Android build was created using Expo EAS.
+
+Expo build link:
+https://expo.dev/accounts/josephmw19/projects/react-native-lv/builds/d710eb5a-4018-4a6c-8014-4d6941f02213
+
+To install:
+- Open the link on an Android device
+- Or scan the QR code shown on the Expo build page
+
 ### Install Dependencies
 ```bash
 npm install
