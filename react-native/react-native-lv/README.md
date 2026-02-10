@@ -1,61 +1,123 @@
-# Starter Template with React Navigation
 
-This is a minimal starter template for React Native apps using Expo and React Navigation.
+# CareConnect – React Native Mobile Application
 
-## Launch your own
+**Course:** SWEN 661 – User Interface Implementation  
+**Assignment:** Assignment 5 – React Native Mobile Implementation & Testing  
+**Student:** Joseph Wojcik  
 
-[![Launch with Expo](https://github.com/expo/examples/blob/master/.gh-assets/launch.svg?raw=true)](https://launch.expo.dev/?github=https://github.com/expo/examples/tree/master/with-react-navigation)
+## Overview
 
-It includes the following:
+CareConnect is a mobile health management application implemented in **React Native using Expo**.  
+This project is a feature-parity reimplementation of a previously developed **Flutter application**, created to evaluate framework trade-offs between Flutter and React Native.
 
-- Example [Native Stack](https://reactnavigation.org/docs/native-stack-navigator) with a nested [Bottom Tab](https://reactnavigation.org/docs/bottom-tab-navigator)
-- Web support with [React Native for Web](https://necolas.github.io/react-native-web/)
-- TypeScript support and configured for React Navigation
-- Automatic [deep link](https://reactnavigation.org/docs/deep-linking) and [URL handling configuration](https://reactnavigation.org/docs/configuring-links)
-- Theme support [based on system appearance](https://reactnavigation.org/docs/themes/#using-the-operating-system-preferences)
-- Expo [Development Build](https://docs.expo.dev/develop/development-builds/introduction/) with [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)
-- Edge-to-edge configured on Android with [`react-native-edge-to-edge`](https://www.npmjs.com/package/react-native-edge-to-edge)
+The application supports:
+- User authentication (demo mode)
+- Appointments management
+- Medication tracking
+- Task management
+- User settings and preferences
 
-## Getting Started
-
-1. Create a new project using this template:
-
-   ```sh
-   npx create-expo-app --example with-react-navigation
-   yarn create expo-app --example with-react-navigation
-   pnpm create expo-app --example with-react-navigation
-   bun create expo-app --example with-react-navigation
-   ```
-
-## Running the app
-
-- Install the dependencies:
-
-  ```sh
-  npx expo install
-  ```
-
-- Start the development server:
-
-  ```sh
-  npx expo start
-  ```
-
-- Build and run iOS and Android development builds:
-
-  ```sh
-  npm run ios
-  # or
-  npm run android
-  ```
-
-- In the terminal running the development server, press `i` to open the iOS simulator, `a` to open the Android device or emulator, or `w` to open the web browser.
-
-## Resources
-
-- [React Navigation documentation](https://reactnavigation.org/)
-- [Expo documentation](https://docs.expo.dev/)
+State management is implemented using the **React Context API**, and navigation is handled with **React Navigation**.
 
 ---
 
-Demo assets are from [lucide.dev](https://lucide.dev/)
+## Technology Stack
+
+- **React Native**
+- **Expo**
+- **TypeScript**
+- **React Navigation**
+- **Jest**
+- **React Native Testing Library**
+- **Context API**
+
+---
+
+## Running the Application
+
+### Install Dependencies
+```bash
+npm install
+```
+
+Start the Development Server
+```bash
+npx expo start
+```
+From the Expo CLI:
+	•	Press a to open Android emulator/device
+	•	Press i to open iOS simulator (macOS only)
+	•	Press w to open web version
+
+⸻
+
+Running Tests & Coverage
+
+Run All Tests
+```bash
+npm test
+```
+
+Generate Coverage Report
+
+```bash
+npm test -- --coverage
+```
+
+Coverage results are generated in:
+```bash
+coverage/lcov-report/index.html
+```
+Open in web browser:
+```bash
+open coverage/lcov-report/index.html
+```
+This project exceeds the minimum 60% coverage requirement defined in the assignment (78.46%).
+
+⸻
+
+Platform Build Instructions
+
+Android Build (Expo / EAS)
+```bash
+npx eas build --platform android
+```
+The generated APK is included with the assignment submission.
+
+(iOS build optional depending on environment availability)
+
+⸻
+
+Feature Parity with Flutter Version
+
+This React Native implementation mirrors the functionality of the original Flutter application, including:
+	•	Screen structure and navigation flow
+	•	State-driven UI updates
+	•	Task and medication workflows
+	•	Accessibility-aware UI components
+
+A detailed framework comparison is provided in the accompanying Flutter vs React Native Analysis document.
+
+⸻
+
+Testing Approach
+	•	Unit tests validate business logic and utility behavior
+	•	Component tests verify UI rendering and user interactions
+	•	Navigation tests ensure correct routing behavior
+	•	Deterministic tests using mocked timers and providers
+
+⸻
+
+Notes
+
+This project was developed using an Expo starter template with React Navigation, which was extended and customized to meet all assignment requirements.
+
+⸻
+
+Resources
+	•	https://reactnative.dev/
+	•	https://docs.expo.dev/
+	•	https://reactnavigation.org/
+	•	https://jestjs.io/
+	•	https://callstack.github.io/react-native-testing-library/
+
