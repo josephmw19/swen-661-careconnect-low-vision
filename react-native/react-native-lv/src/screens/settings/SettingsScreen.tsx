@@ -408,6 +408,7 @@ export function SettingsScreen() {
             this device.
           </Text>
           <TouchableOpacity
+            testID="signOutButton"
             style={styles.signOutButton}
             onPress={handleSignOut}
           >

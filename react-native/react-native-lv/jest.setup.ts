@@ -26,3 +26,15 @@ jest.mock('expo-font', () => ({
   loadAsync: async () => true,
   useFonts: () => [true],
 }));
+
+jest.mock('@react-navigation/native', () => {
+  const actual = jest.requireActual('@react-navigation/native');
+  return {
+    ...actual,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      reset: jest.fn(),
+      goBack: jest.fn(),
+    }),
+  };
+});

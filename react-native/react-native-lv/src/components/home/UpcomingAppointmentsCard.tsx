@@ -7,7 +7,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
-import type { NavigatorScreenParams } from '@react-navigation/native';
 
 type TabParamList = {
   Home: undefined;
@@ -57,11 +56,10 @@ export function UpcomingAppointmentsCard() {
       </View>
 
       <TouchableOpacity
+        testID="viewAllAppointmentsButton"
+        accessibilityRole="button"
         style={styles.viewAllButton}
-        onPress={() => {
-          // Navigate to Appointments tab
-          navigation.navigate('Appointments');
-        }}
+        onPress={() => navigation.navigate('Appointments')}
       >
         <Text style={styles.viewAllButtonText}>View All Appointments</Text>
       </TouchableOpacity>
