@@ -9,7 +9,11 @@
     "newArchEnabled": true,
     "scheme": "reactnativelv",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.josephmw19.reactnativelv",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

@@ -45,6 +45,13 @@ To install:
 - Open the link on an Android device
 - Or scan the QR code shown on the Expo build page
 
+## iOS Build
+The build was generated using the EAS “preview” profile and produces an installable Android APK suitable for testing and demonstration.
+
+To run locally via iOS
+```bash
+npx expo run:ios
+```
 ### Install Dependencies
 ```bash
 npm install
