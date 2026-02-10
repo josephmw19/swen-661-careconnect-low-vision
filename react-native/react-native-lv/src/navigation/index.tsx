@@ -21,6 +21,33 @@ import { AppointmentsScreen } from '../screens/appointments/AppointmentsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+function AuthStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Landing" component={LandingScreen} />
+      <Stack.Screen name="RoleSelect" component={RoleSelectScreen} />
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        initialParams={{ mode: 'password' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AppStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Main" component={MainTabs} />
+      <Stack.Screen name="MedicationDetails" component={MedicationDetailsScreen} />
+      <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
+      <Stack.Screen name="Appointments" component={AppointmentsScreen} />
+      <Stack.Screen name="AppointmentDetails" component={AppointmentDetailsScreen} />
+    </Stack.Navigator>
+  );
+}
+
 export function Navigation({ theme }: { theme: Theme }) {
   const { isSignedIn, isLoading } = useAuth();
 
@@ -33,28 +60,10 @@ export function Navigation({ theme }: { theme: Theme }) {
   }
 
   return (
-    <NavigationContainer theme={theme}>
-      <Stack.Navigator 
-        screenOptions={{ headerShown: false }}
-        initialRouteName={isSignedIn ? "Main" : "Landing"}
-        key={isSignedIn ? "main" : "auth"}
-      >
-        {/* Auth screens */}
-        <Stack.Screen name="Landing" component={LandingScreen} />
-        <Stack.Screen name="RoleSelect" component={RoleSelectScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen 
-          name="ForgotPassword" 
-          component={ForgotPasswordScreen}
-          initialParams={{ mode: 'password' }}
-        />
-        
-        {/* Main app screens */}
-        <Stack.Screen name="Main" component={MainTabs} />
-    
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  <NavigationContainer theme={theme}>
+    {isSignedIn ? <AppStack /> : <AuthStack />}
+  </NavigationContainer>
+);
 }
 
 const styles = StyleSheet.create({

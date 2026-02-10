@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -84,33 +85,34 @@ export function SettingsScreen() {
   const { settings, updateSetting } = useSettings();
   const { signOut } = useAuth();
 
-  const handleSignOut = async () => {
-    Alert.alert(
-      'Sign out?',
-      'You will be returned to the welcome screen.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Sign Out',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await signOut();
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Landing' }],
-              });
-            } catch (error) {
-              Alert.alert('Error', 'Failed to sign out. Please try again.');
-            }
-          },
-        },
-      ]
-    );
+  const handleSignOut = () => {
+  const doSignOut = async () => {
+    try {
+      await signOut();
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Landing' }],
+      });
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign out. Please try again.');
+    }
   };
+
+  // Web: Alert buttons are unreliable, use confirm()
+  if (Platform.OS === 'web') {
+    const ok = globalThis.confirm(
+      'Sign out?\nYou will be returned to the welcome screen.'
+    );
+    if (ok) void doSignOut();
+    return;
+  }
+
+  // Native: keep Alert
+  Alert.alert('Sign out?', 'You will be returned to the welcome screen.', [
+    { text: 'Cancel', style: 'cancel' },
+    { text: 'Sign Out', style: 'destructive', onPress: () => void doSignOut() },
+  ]);
+};
 
   const getCurrentSettingLabel = (size: string) => {
     switch (size) {
