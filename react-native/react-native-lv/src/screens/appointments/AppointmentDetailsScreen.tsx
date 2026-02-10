@@ -38,6 +38,7 @@ export function AppointmentDetailsScreen() {
       >
         <View style={styles.headerRow}>
           <TouchableOpacity
+            testID="back-button"
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >

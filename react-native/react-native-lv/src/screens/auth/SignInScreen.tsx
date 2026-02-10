@@ -80,6 +80,7 @@ export function SignInScreen() {
           <Text style={styles.fieldLabel}>Password</Text>
           <View style={styles.passwordContainer}>
             <TextInput
+              testID="password-input"
               style={styles.passwordInput}
               value={password}
               onChangeText={setPassword}
@@ -89,6 +90,7 @@ export function SignInScreen() {
               autoCapitalize="none"
             />
             <TouchableOpacity
+              testID="toggle-password-visibility"
               style={styles.eyeButton}
               onPress={() => setObscurePassword(!obscurePassword)}
             >

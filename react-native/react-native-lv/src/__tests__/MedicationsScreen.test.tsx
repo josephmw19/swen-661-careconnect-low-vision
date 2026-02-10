@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderWithProviders } from '@/testUtils/testUtils';
-import { LandingScreen } from '@/screens/auth/LandingScreen';
+import { MedicationsScreen } from '@/screens/medications/MedicationsScreen';
 
 jest.mock('@/contexts/SettingsContext', () => ({
   useSettings: () => ({
@@ -36,9 +36,14 @@ jest.mock('@/contexts/AuthContext', () => ({
   AuthProvider: ({ children }: any) => children,
 }));
 
-describe('LandingScreen', () => {
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+}));
+
+describe('MedicationsScreen', () => {
   it('renders without crashing', () => {
-    const { getByText } = renderWithProviders(<LandingScreen />);
-    expect(getByText('CareConnect')).toBeTruthy();
+    const { toJSON } = renderWithProviders(<MedicationsScreen />);
+    expect(toJSON()).toBeTruthy();
   });
 });

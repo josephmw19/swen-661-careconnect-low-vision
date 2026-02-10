@@ -8,18 +8,18 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp as RNRouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../../navigation/types';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type RouteProp = RouteProp<RootStackParamList, 'ForgotPassword'>;
+type ForgotPasswordRouteProp = RNRouteProp<RootStackParamList, 'ForgotPassword'>;
 
 export function ForgotPasswordScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp>();
+  const route = useRoute<ForgotPasswordRouteProp>();
   const [email, setEmail] = useState('');
 
   const mode = route.params?.mode || 'password';
@@ -67,6 +67,7 @@ export function ForgotPasswordScreen() {
         </View>
 
         <TouchableOpacity
+          testID="back-button"
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >

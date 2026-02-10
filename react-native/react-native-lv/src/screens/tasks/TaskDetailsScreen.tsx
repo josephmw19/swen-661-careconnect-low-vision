@@ -14,11 +14,11 @@ import { AppHeader } from '../../components/AppHeader';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type RouteProp = RouteProp<RootStackParamList, 'TaskDetails'>;
+type TaskDetailsRouteProp = RouteProp<RootStackParamList, 'TaskDetails'>;
 
 export function TaskDetailsScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp>();
+  const route = useRoute<TaskDetailsRouteProp>();
 
   const {
     id: taskTitle,
@@ -36,6 +36,7 @@ export function TaskDetailsScreen() {
       >
         <View style={styles.headerRow}>
           <TouchableOpacity
+            testID="back-button"
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
@@ -65,7 +66,11 @@ export function TaskDetailsScreen() {
 
         {statusMessage && (
           <View style={styles.statusCard}>
-            <Ionicons name="information-circle" size={24} color={Colors.warning} />
+            <Ionicons
+              name="information-circle"
+              size={24}
+              color={Colors.warning}
+            />
             <Text style={styles.statusText}>{statusMessage}</Text>
           </View>
         )}

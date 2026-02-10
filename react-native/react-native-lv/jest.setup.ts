@@ -7,6 +7,19 @@ g.window.dispatchEvent = g.window.dispatchEvent ?? (() => true);
 g.window.addEventListener = g.window.addEventListener ?? (() => {});
 g.window.removeEventListener = g.window.removeEventListener ?? (() => {});
 
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  const msg = String(args[0] ?? '');
+  if (
+    msg.includes('ProgressBarAndroid has been extracted') ||
+    msg.includes('SafeAreaView has been deprecated') ||
+    msg.includes('Clipboard has been extracted')
+  ) {
+    return;
+  }
+  originalWarn(...args);
+};
+
 import mockAsyncStorage from
   '@react-native-async-storage/async-storage/jest/async-storage-mock';
 

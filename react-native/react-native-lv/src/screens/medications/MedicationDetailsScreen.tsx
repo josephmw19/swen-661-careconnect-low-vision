@@ -14,11 +14,11 @@ import { AppHeader } from '../../components/AppHeader';
 import { Colors, FontSizes, Spacing } from '../../constants/Theme';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type RouteProp = RouteProp<RootStackParamList, 'MedicationDetails'>;
+type MedicationDetailsRouteProp = RouteProp<RootStackParamList, 'MedicationDetails'>;
 
 export function MedicationDetailsScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp>();
+  const route = useRoute<MedicationDetailsRouteProp>();
 
   const {
     id: medicationName,
@@ -37,6 +37,7 @@ export function MedicationDetailsScreen() {
       >
         <View style={styles.headerRow}>
           <TouchableOpacity
+            testID="back-button"
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
