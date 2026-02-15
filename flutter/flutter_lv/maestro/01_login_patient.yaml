@@ -1,0 +1,78 @@
+appId: com.example.flutter_lv
+---
+- launchApp:
+    clearState: true
+- waitForAnimationToEnd
+
+# LANDING SCREEN
+- extendedWaitUntil:
+    timeout: 20000
+    visible:
+      text: "CareConnect"
+
+# Expo Go popup (first run only)
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    point: "92%,34%"
+    optional: true
+- waitForAnimationToEnd
+
+# LANDING SCREEN
+- assertVisible:
+    text: "CareConnect"
+
+# Tap the correct Sign In (between title and Create Account)
+- tapOn:
+    text: "Sign In"
+    below:
+      text: "CareConnect"
+    above:
+      text: "Create Account"
+
+- waitForAnimationToEnd
+# After tapping Sign In on landing
+# ROLE SELECT (Flutter sometimes doesn't expose "Patient" text to Maestro)
+- extendedWaitUntil:
+    timeout: 20000
+    visible:
+      text: "Choose Your Role"
+
+# Try by text first, then coordinate fallback
+- tapOn:
+    text: "Patient"
+    optional: true
+
+# Fallback: tap where the Patient card/button is (left option)
+- tapOn:
+    point: "30%,65%"
+
+- waitForAnimationToEnd
+
+# SIGN IN FORM
+- tapOn:
+    text: "Enter your username"
+- eraseText: 80
+- inputText: "demo@careconnect.com"
+
+- tapOn:
+    text: "Enter your password"
+- eraseText: 80
+- inputText: "Password123"
+
+# FORM Sign In button (below password field)
+# First tap "wakes" the control, second tap actually clicks
+- tapOn:
+    point: "50%,63%"
+- waitForAnimationToEnd
+- tapOn:
+    point: "50%,63%"
+
+# Now wait for Home evidence, don't assert immediately
+- extendedWaitUntil:
+    timeout: 15000
+    visible:
+      text: "Mark as Taken"
+
+- takeScreenshot: "01_logged_in_home"

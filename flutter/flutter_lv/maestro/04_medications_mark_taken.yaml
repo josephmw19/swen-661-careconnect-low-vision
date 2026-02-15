@@ -1,0 +1,27 @@
+appId: com.example.flutter_lv
+---
+# ASSUMES USER IS LOGGED IN AND ON HOME
+
+- waitForAnimationToEnd
+
+# Navigate to Medications via bottom nav
+- tapOn:
+    text: "Medications"
+
+- waitForAnimationToEnd
+
+# Medications screen sanity check
+- assertVisible:
+    text: "Medications"
+
+# Tap "Mark as Taken"
+- tapOn:
+    text: "Mark as Taken"
+
+- waitForAnimationToEnd
+
+# After tapping Mark as Taken
+- assertNotVisible:
+    text: "Mark as Taken"
+
+- takeScreenshot: "05_medication_marked_taken"

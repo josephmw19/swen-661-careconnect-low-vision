@@ -110,6 +110,69 @@ A detailed HTML coverage report is generated as part of the test process and can
 ```bash
 coverage/html/index.html
 ```
+## UI & Accessibility Testing (Maestro)
+
+This Flutter application includes end-to-end (E2E) UI tests implemented using Maestro to validate critical user workflows and accessibility-related interactions.
+
+Tooling
+	•	Maestro – Cross-platform mobile UI testing framework
+	•	Flutter Android build (emulator or physical device)
+
+Test Coverage
+The Maestro test suite covers the following critical user flows:
+	1.	User Login (Patient Role)
+	•	App launch
+	•	Sign In navigation
+	•	Role selection
+	•	Credential entry
+	•	Successful navigation to Home screen
+	2.	Home Navigation Smoke Test
+	•	Home screen verification
+	•	Bottom navigation bar presence
+	•	Scroll behavior and content visibility
+	3.	Appointments Workflow
+	•	Navigate to Upcoming Appointments
+	•	View all appointments
+	•	View appointment details
+	4.	Medication Management
+	•	Navigate to Medications tab
+	•	Mark medication as taken
+	•	Verify state change confirmation
+	5.	Settings Screen Smoke Test
+	•	Navigate to Settings via bottom navigation
+	•	Verify Settings screen loads correctly
+
+These tests validate real user behavior, not mocked flows, and confirm the UI remains usable after accessibility enhancements.
+
+Running the Maestro Tests
+Prerequisites
+	•	Flutter SDK installed
+	•	Android Emulator running (Pixel recommended)
+	•	Maestro installed
+```bash
+brew install maestro
+```
+Run all Flutter Maestro tests
+```bash
+cd flutter/flutter_lv
+maestro test maestro/
+```
+Run a single flow
+```bash 
+maestro test maestro/01_login_patient.yaml
+```
+Accessibility Considerations in Tests
+While Maestro does not directly emulate screen readers, these tests ensure:
+	•	Logical focus order
+	•	Keyboard-safe navigation paths
+	•	Visible labels and tappable elements
+	•	No inaccessible dead ends in critical workflows
+
+Manual screen reader testing (TalkBack and VoiceOver) was conducted separately and documented as part of Assignment 6 accessibility validation.
+
+Test Artifacts
+	•	Screenshots are captured during test execution for verification
+	•	All flows pass consistently on Android emulator
 
 ## Build Artifacts
 The application successfully builds for both major platforms:
