@@ -1,0 +1,41 @@
+appId: host.exp.exponent
+---
+# ASSUMES USER IS LOGGED IN AND ON HOME
+
+- waitForAnimationToEnd
+
+# Confirm we're actually on Home
+- assertVisible:
+    text: "CareConnect"
+
+# Scroll DOWN until Upcoming Appointments appears
+- scrollUntilVisible:
+    element:
+      text: "Upcoming Appointments"
+    direction: DOWN
+    timeout: 15000
+
+# Now assert safely
+- assertVisible:
+    text: "Upcoming Appointments"
+
+- scrollUntilVisible:
+    element:
+      text: "View All Appointments"
+    direction: DOWN
+    timeout: 15000
+
+- assertVisible:
+    text: "View All Appointments"
+
+# Bottom navigation still visible
+- assertVisible:
+    text: "Home"
+- assertVisible:
+    text: "Medications"
+- assertVisible:
+    text: "Tasks"
+- assertVisible:
+    text: "Settings"
+
+- takeScreenshot: "02_home_nav_smoke"

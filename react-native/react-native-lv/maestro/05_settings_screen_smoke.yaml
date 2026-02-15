@@ -1,0 +1,15 @@
+appId: host.exp.exponent
+---
+# ASSUMES USER IS LOGGED IN
+
+- waitForAnimationToEnd
+
+- tapOn:
+    text: "Settings"
+
+- waitForAnimationToEnd
+
+- assertVisible:
+    text: "Settings"
+
+- takeScreenshot: "06_settings_screen"

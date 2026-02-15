@@ -125,6 +125,29 @@ Testing Approach
 
 ⸻
 
+## Automated UI Testing (Maestro)
+
+This project includes automated end-to-end UI tests written using Maestro.
+The tests focus on critical user workflows and are designed to reflect realistic user behavior.
+
+### Test Coverage
+- Patient login flow
+- Home screen navigation
+- Viewing upcoming appointments and appointment details
+- Marking medications as taken
+- Accessing settings screen
+
+### Running the Tests
+1. Start the Android emulator
+2. Launch the Expo app
+3. Run:
+   maestro test maestro/
+
+### Notes
+- Tests assume a fresh app state and use demo credentials
+- Authentication is mocked at the UI level (no backend dependency)
+- Login is performed once; subsequent tests assume an authenticated session
+
 Notes
 
 This project was developed using an Expo starter template with React Navigation, which was extended and customized to meet all assignment requirements.

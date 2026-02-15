@@ -1,0 +1,54 @@
+appId: host.exp.exponent
+---
+# ASSUMES USER IS LOGGED IN AND ON HOME SCREEN
+
+- waitForAnimationToEnd
+
+# Sanity check
+- assertVisible:
+    text: "CareConnect"
+
+# Scroll to Upcoming Appointments
+- scrollUntilVisible:
+    element:
+      text: "Upcoming Appointments"
+    direction: DOWN
+    timeout: 15000
+
+- assertVisible:
+    text: "Upcoming Appointments"
+
+# Scroll to View All Appointments
+- scrollUntilVisible:
+    element:
+      text: "View All Appointments"
+    direction: DOWN
+    timeout: 15000
+
+- assertVisible:
+    text: "View All Appointments"
+
+# Open Appointments list
+- tapOn:
+    text: "View All Appointments"
+
+- waitForAnimationToEnd
+
+# Appointments list screen
+- assertVisible:
+    text: "Appointments"
+
+- takeScreenshot: "03_appointments_list"
+
+# Tap View Details ONCE
+- tapOn:
+    text: "View Details"
+
+- waitForAnimationToEnd
+
+# Appointment details screen
+# Use a generic but guaranteed header
+- assertVisible:
+    text: "Doctor"
+
+- takeScreenshot: "04_appointment_details"
