@@ -180,4 +180,20 @@ it('has accessible text inputs present for screen readers', () => {
   expect(getByPlaceholderText('Enter your username')).toBeTruthy();
   expect(getByPlaceholderText('Enter your password')).toBeTruthy();
 });
+  it('exposes accessibility metadata for key controls', () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { SignInScreen } = require('@/screens/auth/SignInScreen');
+
+    const { getByText, getByTestId } = render(<SignInScreen />);
+
+    // Sign In button should be present and have a11y props on the pressable container.
+    const signInButton = getByTestId('sign-in-button');
+
+    expect(signInButton.props.accessibilityRole).toBe('button');
+    expect(signInButton.props.accessibilityLabel).toBe('Sign In');
+    expect(signInButton.props.accessibilityHint).toBe('Signs you into CareConnect');
+
+    // Eye icon toggle should remain discoverable via testID (and you can add a11y later if desired)
+    expect(getByTestId('toggle-password-visibility')).toBeTruthy();
+  });
 });

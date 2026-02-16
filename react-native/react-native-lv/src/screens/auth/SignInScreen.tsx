@@ -73,6 +73,8 @@ export function SignInScreen() {
             placeholder="Enter your username"
             placeholderTextColor={Colors.textMuted}
             autoCapitalize="none"
+            accessibilityLabel="Username"
+            accessibilityHint="Enter your CareConnect username"
           />
         </View>
 
@@ -88,11 +90,16 @@ export function SignInScreen() {
               placeholderTextColor={Colors.textMuted}
               secureTextEntry={obscurePassword}
               autoCapitalize="none"
+              accessibilityLabel="Password"
+              accessibilityHint="Enter your password"
             />
             <TouchableOpacity
               testID="toggle-password-visibility"
               style={styles.eyeButton}
               onPress={() => setObscurePassword(!obscurePassword)}
+              accessibilityRole="button"
+              accessibilityLabel={obscurePassword ? 'Show password' : 'Hide password'}
+              accessibilityHint="Toggles whether the password is visible"
             >
               <Ionicons
                 name={obscurePassword ? 'eye-off-outline' : 'eye-outline'}
@@ -103,7 +110,14 @@ export function SignInScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
+        <TouchableOpacity
+          testID="sign-in-button"
+          style={styles.signInButton}
+          onPress={handleSignIn}
+          accessibilityRole="button"
+          accessibilityLabel="Sign In"
+          accessibilityHint="Signs you into CareConnect"
+        >
           <Text style={styles.signInButtonText}>Sign In</Text>
         </TouchableOpacity>
 
