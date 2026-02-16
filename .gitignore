@@ -187,3 +187,7 @@ release/
 .DS_Store
 .vscode/
 .idea/
+# Accidentally generated nested RN project artifacts
+react-native/package.json
+react-native/package-lock.json
+react-native/react-native-lv/android/
