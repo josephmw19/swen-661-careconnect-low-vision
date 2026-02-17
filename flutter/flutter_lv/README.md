@@ -30,7 +30,7 @@ All authentication screens follow the same accessibility principles as the rest 
 
 ## State Management and Navigation
 - **State management:** Local widget state using `setState`
-- **Navigation:** Flutter `Navigator` (imperative navigation using `push` and `pop`)
+- **Navigation:** MaterialApp.router (RouterDelegate (Navigator 2.0))
 
 Navigation supports:
 - Forward navigation to detail screens
@@ -50,6 +50,8 @@ The application was designed with accessibility as a primary concern:
 - Minimal visual clutter and strong visual hierarchy
 
 ---
+### WCAG 2.1 Alignment
+The CareConnect Flutter application was evaluated against WCAG 2.1 Level A and Level AA success criteria relevant to mobile applications. Accessibility validation focused on low-vision and screen-reader users and included both automated guideline checks and manual assistive technology testing.
 
 ## Testing Strategy
 The project includes a comprehensive set of Flutter widget tests focused on:
@@ -58,6 +60,7 @@ The project includes a comprehensive set of Flutter widget tests focused on:
 - Navigation flows between screens
 - Rendering verification for detail pages
 - UI interaction stability (taps, navigation, state changes)
+- - Automated accessibility guideline validation using Flutter’s `meetsGuideline(...)` testing APIs for tap target size and text contrast
 
 ## Security & Static Analysis Review
 Basic security and static analysis checks were performed to identify potential code quality, dependency, and configuration issues:
@@ -142,7 +145,7 @@ The Maestro test suite covers the following critical user flows:
 	•	Navigate to Settings via bottom navigation
 	•	Verify Settings screen loads correctly
 
-These tests validate real user behavior, not mocked flows, and confirm the UI remains usable after accessibility enhancements.
+These tests validate real user behavior, not mocked flows, and confirm that accessibility-aware UI changes do not break critical user workflows.
 
 Running the Maestro Tests
 Prerequisites
@@ -197,6 +200,8 @@ flutter build ios
 flutter pub get
 flutter run
 ```
+
+This Flutter implementation was evaluated alongside a parallel React Native implementation to compare accessibility practices and testing approaches across mobile frameworks.
 
 ## Known Limitations
 - State management uses local widget state (setState) rather than Provider or Riverpod
