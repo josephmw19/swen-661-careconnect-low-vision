@@ -18,6 +18,14 @@ The application supports:
 
 State management is implemented using the **React Context API**, and navigation is handled with **React Navigation**.
 
+## Accessibility Overview
+
+The CareConnect React Native application was designed and tested with accessibility as a primary requirement, with a focus on low-vision users and screen reader compatibility. The implementation leverages React Native accessibility APIs to ensure controls expose correct semantic metadata to assistive technologies.
+
+### WCAG 2.1 Alignment
+
+This application was evaluated against WCAG 2.1 Level A and Level AA success criteria applicable to mobile applications. Validation focused on screen reader usability, accessible touch targets, logical focus order, and proper exposure of control names, roles, and values.
+
 ---
 
 ## Technology Stack
@@ -112,6 +120,8 @@ This React Native implementation mirrors the functionality of the original Flutt
 	•	State-driven UI updates
 	•	Task and medication workflows
 	•	Accessibility-aware UI components
+	•	Comparable accessibility semantics, including labeled controls, consistent focus order, and screen reader compatibility
+	
 
 A detailed framework comparison is provided in the accompanying Flutter vs React Native Analysis document.
 
@@ -125,8 +135,29 @@ Testing Approach
 
 ⸻
 
+## Accessibility Testing
+
+Accessibility validation for the React Native implementation was performed using a combination of automated UI tests and manual inspection.
+
+### Programmatic Accessibility Validation
+- UI tests written with **React Native Testing Library (RNTL)** verify:
+  - Presence of `accessibilityLabel` on interactive controls
+  - Correct `accessibilityRole` values (e.g., button)
+  - Focusable pressable elements
+- Accessibility metadata is asserted directly in component tests to ensure screen readers can correctly announce controls.
+
+### Manual Screen Reader Testing
+- Manual testing was performed using:
+  - **Android TalkBack**
+  - **Apple VoiceOver**
+- Tests verified:
+  - Logical focus traversal
+  - Correct control announcements
+  - No inaccessible dead ends in primary user flows
+
 ## Automated UI Testing (Maestro)
 
+While Maestro does not emulate screen readers directly, these tests ensure that accessibility-aware UI changes do not break critical user workflows and that all interactive elements remain reachable through standard navigation paths.
 This project includes automated end-to-end UI tests written using Maestro.
 The tests focus on critical user workflows and are designed to reflect realistic user behavior.
 
@@ -153,6 +184,10 @@ Notes
 This project was developed using an Expo starter template with React Navigation, which was extended and customized to meet all assignment requirements.
 
 ⸻
+
+## Accessibility Summary
+
+No blocking accessibility issues were identified during testing. All core user flows were verified to be usable with mobile screen readers, and interactive controls expose appropriate accessibility metadata. Minor platform-specific differences may occur due to underlying OS accessibility behavior.
 
 Resources
 	•	https://reactnative.dev/
