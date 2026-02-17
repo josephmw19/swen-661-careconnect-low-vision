@@ -44,7 +44,7 @@ docs/           Screenshots and documentation
 
 ## Team Members
 - Joseph Wojcik
-- Davon Davis
+- Fon Ade
 - Olalekan Ogunsanya
 
 ---
