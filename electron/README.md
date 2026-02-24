@@ -45,7 +45,7 @@ npm run build
 
 ## Figma link
 Add your Figma share link here:
-- Desktop design: https://www.figma.com/design/29RF7XlEZUf7x5WbgsiZJ7/CareConnect-LV---Desktop-Design-System?node-id=0-1&t=eoEa6FR3Uz6UEvtc-1
+- Desktop design: https://www.figma.com/design/29RF7XlEZUf7x5WbgsiZJ7/CareConnect-LV---Desktop-Design-System?node-id=0-1&t=5VxiGeWk3ZNtcHma-1
 
 ## Notes for Week 8
 Week 8 expands this scaffold to implement full features, testing, coverage, window state persistence, and packaging.

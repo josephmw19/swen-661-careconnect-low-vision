@@ -1,9 +1,5 @@
 import { app, BrowserWindow, Menu, dialog, ipcMain } from "electron";
-import * as path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import path from "node:path";
 
 const isDev = !app.isPackaged;
 
@@ -35,7 +31,9 @@ function createMenu() {
         {
           label: "Open Settings",
           accelerator: "CommandOrControl+,",
-          click: () => mainWindow?.webContents.send("cc:navigate", "/settings")
+          click: () => {
+            mainWindow?.webContents.send("cc:navigate", "/settings");
+          }
         },
         { type: "separator" },
         {
@@ -63,12 +61,16 @@ function createMenu() {
         {
           label: "Refresh",
           accelerator: "CommandOrControl+R",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "refresh" })
+          click: () => {
+            mainWindow?.webContents.send("cc:command", { type: "refresh" });
+          }
         },
         {
           label: "Toggle Critical Medical Information",
           accelerator: "CommandOrControl+Shift+C",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "toggleCritical" })
+        click: () => {
+          mainWindow?.webContents.send("cc:command", { type: "toggleCritical" });
+        }
         },
         {
           label: "Toggle Read Aloud",

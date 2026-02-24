@@ -39,15 +39,16 @@ export default function App() {
 
   useEffect(() => {
     // Handle native menu navigation + commands via preload API
-    const offNav = window.careconnect?.onNavigate((path: string) => {
+    const api = cc();
+
+    const offNav = api.onNavigate((path: string) => {
       if (isRoute(path)) setRoute(path);
     });
 
-    const offCmd = window.careconnect?.onCommand(async (cmd: Command) => {
+    const offCmd = api.onCommand(async (cmd: Command) => {
       switch (cmd.type) {
         case "refresh":
-          // Demo: Refresh just triggers a native dialog so you can screenshot proof
-          await cc().showNativeDialog("Refresh requested (demo).");
+          await api.showNativeDialog("Refresh requested (demo).");
           break;
         case "toggleCritical":
           setCriticalOpen((v) => !v);
@@ -59,20 +60,20 @@ export default function App() {
           setVoiceCommands((v) => !v);
           break;
         case "focusSidebar":
-          sidebarRef.current?.querySelector<HTMLElement>("[data-focus-start='sidebar']")?.focus();
+          sidebarRef.current
+            ?.querySelector<HTMLElement>("[data-focus-start='sidebar']")
+            ?.focus();
           break;
         case "skipToMain":
           mainRef.current?.focus();
           break;
         case "about":
-          await cc().showNativeDialog(
+          await api.showNativeDialog(
             "CareConnect Desktop (Week 7)\nElectron + React scaffold with native menus, shortcuts, navigation, and IPC."
           );
           break;
         case "sos":
-          await cc().showNativeDialog("SOS triggered (demo).");
-          break;
-        default:
+          await api.showNativeDialog("SOS triggered (demo).");
           break;
       }
     });
