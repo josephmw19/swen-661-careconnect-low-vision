@@ -16,7 +16,6 @@ import TaskDetailsPage from "./pages/TaskDetailsPage";
 import AppointmentsPage from "./pages/AppointmentsPage";
 import AppointmentDetailsPage from "./pages/AppointmentDetailsPage";
 
-
 type Command =
   | { type: "refresh" }
   | { type: "toggleCritical" }
@@ -31,6 +30,19 @@ export default function App() {
   const [highContrast] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // ✅ FIX 1: define isAuthRoute
+  const isAuthRoute = useMemo(() => {
+    const p = location.pathname;
+    return (
+      p === "/landing" ||
+      p === "/role" ||
+      p === "/login" ||
+      p === "/create-account" ||
+      p === "/reset-password"
+    );
+  }, [location.pathname]);
+
   const [criticalOpen, setCriticalOpen] = useState(true);
   const [readAloud, setReadAloud] = useState(false);
   const [voiceCommands, setVoiceCommands] = useState(false);
@@ -39,6 +51,8 @@ export default function App() {
   const mainRef = useRef<HTMLElement | null>(null);
 
   const lastSync = useMemo(() => "2:34 PM", []);
+
+  const sos = async () => cc().showNativeDialog("SOS triggered (demo).");
 
   useEffect(() => {
     // Handle native menu navigation + commands via preload API
@@ -88,27 +102,34 @@ export default function App() {
   }, [navigate]);
 
   return (
-    <div className={highContrast ? "app hc" : "app"} aria-label="CareConnect Desktop Application">
+    <div
+      className={highContrast ? "app hc" : "app"}
+      aria-label="CareConnect Desktop Application"
+    >
       {/* Skip link for keyboard-only users */}
       <a className="skip-link" href="#main">
         Skip to main content
       </a>
 
-      <TopBar
-        readAloud={readAloud}
-        voiceCommands={voiceCommands}
-        onToggleRead={() => setReadAloud((v) => !v)}
-        onToggleVoice={() => setVoiceCommands((v) => !v)}
-        onRefresh={() => window.location.reload()}
-        onOpenSettings={() => navigate("/settings")}
-      />
+      {!isAuthRoute && (
+        <TopBar
+          readAloud={readAloud}
+          voiceCommands={voiceCommands}
+          onToggleRead={() => setReadAloud((v) => !v)}
+          onToggleVoice={() => setVoiceCommands((v) => !v)}
+          onRefresh={() => window.location.reload()}
+          onOpenSettings={() => navigate("/settings")}
+        />
+      )}
 
       <div className="body">
-        <Sidebar
-          activePath={location.pathname}
-          onNavigate={(path) => navigate(path)}
-          sidebarRef={sidebarRef}
-        />
+        {!isAuthRoute && (
+          <Sidebar
+            activePath={location.pathname}
+            onNavigate={(path) => navigate(path)}
+            sidebarRef={sidebarRef}
+          />
+        )}
 
         <main
           id="main"
@@ -116,38 +137,61 @@ export default function App() {
             mainRef.current = el;
           }}
           tabIndex={-1}
-          className="main"
+          className={isAuthRoute ? "main authMain" : "main"}
           aria-label="Main Content"
         >
           <Routes>
+            {/* Auth flow */}
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/role" element={<RoleSelectPage />} />
+
+            {/* ✅ FIX 2: pass required props */}
+            <Route
+              path="/login"
+              element={
+                <LoginPage
+                  onLogin={() => navigate("/")}
+                  onGoCreate={() => navigate("/create-account")}
+                  onGoReset={() => navigate("/reset-password")}
+                  onSOS={sos}
+                />
+              }
+            />
+            <Route
+              path="/create-account"
+              element={
+                <CreateAccountPage
+                  onCreate={() => navigate("/")}
+                  onBackToLogin={() => navigate("/login")}
+                  onSOS={sos}
+                />
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <ResetPasswordPage
+                  onSend={() => navigate("/login")}
+                  onBack={() => navigate("/login")}
+                  onSOS={sos}
+                />
+              }
+            />
+
+            {/* Main app */}
             <Route
               path="/"
               element={
                 <DashboardPage
                   criticalOpen={criticalOpen}
                   onToggleCritical={() => setCriticalOpen((v) => !v)}
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
+                  onSOS={sos}
                 />
               }
             />
 
-            <Route
-              path="/medications"
-              element={
-                <MedicationsPage
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
-              }
-            />
-
-            <Route
-              path="/medications/:medId"
-              element={
-                <MedicationDetailsPage
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
-              }
-            />
+            <Route path="/medications" element={<MedicationsPage onSOS={sos} />} />
+            <Route path="/medications/:medId" element={<MedicationDetailsPage onSOS={sos} />} />
 
             <Route
               path="/settings"
@@ -157,42 +201,16 @@ export default function App() {
                   voiceCommands={voiceCommands}
                   onToggleRead={() => setReadAloud((v) => !v)}
                   onToggleVoice={() => setVoiceCommands((v) => !v)}
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
+                  onSOS={sos}
                 />
               }
             />
 
-            <Route
-              path="/appointments"
-              element={
-                <AppointmentsPage
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
-              }
-            />
+            <Route path="/appointments" element={<AppointmentsPage onSOS={sos} />} />
+            <Route path="/appointments/:appointmentId" element={<AppointmentDetailsPage onSOS={sos} />} />
 
-            <Route
-              path="/appointments/:appointmentId"
-              element={<AppointmentDetailsPage onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")} />}
-            />
-
-            <Route
-              path="/tasks"
-              element={
-                <TasksPage
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
-              }
-            />
-
-            <Route
-              path="/tasks/:taskId"
-              element={
-                <TaskDetailsPage
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
-              }
-            />
+            <Route path="/tasks" element={<TasksPage onSOS={sos} />} />
+            <Route path="/tasks/:taskId" element={<TaskDetailsPage onSOS={sos} />} />
 
             <Route
               path="*"
@@ -200,11 +218,7 @@ export default function App() {
                 <>
                   <div className="headerrow">
                     <h1 className="title">Not Found</h1>
-                    <button
-                      className="sos"
-                      aria-label="SOS Emergency"
-                      onClick={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                    >
+                    <button className="sos" aria-label="SOS Emergency" onClick={sos}>
                       SOS
                     </button>
                   </div>
@@ -215,12 +229,11 @@ export default function App() {
                 </>
               }
             />
-
           </Routes>
         </main>
       </div>
 
-      <StatusBar lastSync={lastSync} />
+      {!isAuthRoute && <StatusBar lastSync={lastSync} />}
     </div>
   );
 }

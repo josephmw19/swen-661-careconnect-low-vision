@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { HeaderRow } from "../components/uiPieces";
+import React, { useEffect, useId, useRef, useState } from "react";
 
 type Props = {
   onLogin: () => void;
@@ -9,53 +8,116 @@ type Props = {
 };
 
 export default function LoginPage(props: Props) {
-  const [email, setEmail] = useState("patient@example.com");
-  const [pw, setPw] = useState("••••••••");
+  const emailId = useId();
+  const passId = useId();
+  const emailRef = useRef<HTMLInputElement | null>(null);
+
+  const [email, setEmail] = useState("jane.smith@example.com");
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+
+  useEffect(() => {
+    emailRef.current?.focus();
+  }, []);
+
+  const canSubmit = email.trim().length > 3 && password.trim().length > 0;
+
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit) return;
+    props.onLogin();
+  }
 
   return (
-    <>
-      <HeaderRow title="Welcome Back" onSOS={props.onSOS} />
-
-      <section className="card wide" aria-label="Login">
-        <div className="cardhead static">
-          <span>Sign In</span>
+    <section className="authShell" aria-label="Sign in page">
+      {/* Brand */}
+      <div className="authBrand" aria-label="CareConnect brand">
+        <div className="authLogo" aria-hidden="true">
+          ❤
         </div>
-        <div className="cardbody">
-          <div className="settingRow">
-            <label className="settingLabel" htmlFor="email">Email</label>
+        <div className="authBrandName">CareConnect</div>
+      </div>
+
+      {/* Card */}
+      <div className="authCard" role="region" aria-label="Welcome back sign in form">
+        <h1 className="authTitle">Welcome Back</h1>
+        <p className="authSub">Sign in to continue managing your care.</p>
+
+        <form className="authForm" onSubmit={onSubmit}>
+          <div className="authField">
+            <label className="authLabel" htmlFor={emailId}>
+              Email Address
+            </label>
             <input
-              id="email"
-              className="input"
+              ref={emailRef}
+              id={emailId}
+              className="authInput"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              aria-label="Email"
+              aria-required="true"
             />
           </div>
 
-          <div className="settingRow">
-            <label className="settingLabel" htmlFor="pw">Password</label>
-            <input
-              id="pw"
-              className="input"
-              value={pw}
-              onChange={(e) => setPw(e.target.value)}
-              aria-label="Password"
-            />
+          <div className="authField">
+            <label className="authLabel" htmlFor={passId}>
+              Password
+            </label>
+            <div className="authPassWrap">
+              <input
+                id={passId}
+                className="authInput authPass"
+                type={showPass ? "text" : "password"}
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                aria-required="true"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                className="authEye"
+                aria-label={showPass ? "Hide password" : "Show password"}
+                aria-pressed={showPass}
+                onClick={() => setShowPass((v) => !v)}
+              >
+                {showPass ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
-          <div className="actions">
-            <button className="primary" onClick={props.onLogin} aria-label="Sign in">
-              Sign In
-            </button>
-            <button className="secondary" onClick={props.onGoReset} aria-label="Reset password">
-              Forgot Password
-            </button>
-            <button className="secondary" onClick={props.onGoCreate} aria-label="Create account">
-              Create Account
+          <button
+            type="submit"
+            className="authPrimaryBtn"
+            disabled={!canSubmit}
+            aria-disabled={!canSubmit}
+          >
+            <span>Sign In</span>
+            <span aria-hidden="true" className="authArrow">
+              →
+            </span>
+          </button>
+
+          <button type="button" className="authLinkBtn" onClick={props.onGoReset}>
+            Forgot password?
+          </button>
+
+          <div className="authDivider" role="separator" aria-hidden="true" />
+
+          <div className="authFoot">
+            <div className="authMuted">Don&apos;t have an account?</div>
+            <button type="button" className="authLinkBtn strong" onClick={props.onGoCreate}>
+              Create an account
             </button>
           </div>
-        </div>
-      </section>
-    </>
+
+          <button type="button" className="authLinkBtn small" onClick={props.onSOS}>
+            Accessibility Options
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
