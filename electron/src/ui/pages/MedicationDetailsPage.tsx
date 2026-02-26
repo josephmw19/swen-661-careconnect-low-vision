@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { HeaderRow } from "../components/uiPieces";
 
@@ -16,6 +16,10 @@ export default function MedicationDetailsPage(props: Props) {
   const navigate = useNavigate();
   const { medId } = useParams();
 
+  // NEW: local interaction state
+  const [taken, setTaken] = useState(false);
+  const [snoozedUntil, setSnoozedUntil] = useState<number | null>(null);
+
   const history = useMemo<HistoryItem[]>(
     () => [
       { id: "h1", label: "Taken today at 8:15 AM", tone: "ok" },
@@ -26,6 +30,34 @@ export default function MedicationDetailsPage(props: Props) {
     ],
     []
   );
+
+  // NEW: derived UI labels
+  const now = Date.now();
+  const isSnoozed = typeof snoozedUntil === "number" && snoozedUntil > now;
+
+  const nextDoseLabel = taken
+    ? "Taken • just now"
+    : isSnoozed
+      ? `Snoozed • until ${new Date(snoozedUntil!).toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+        })}`
+      : "Due at 2:30 PM";
+
+  const statusToneClass = taken ? "medStatusNew ok" : isSnoozed ? "medStatusNew info" : "medStatusNew warn";
+  const statusText = taken ? "Taken" : isSnoozed ? "Snoozed" : "Due soon";
+
+  const handleMarkTaken = () => {
+    setTaken(true);
+    setSnoozedUntil(null);
+    window.alert("Marked as taken.");
+  };
+
+  const handleSnooze = (minutes = 15) => {
+    setTaken(false);
+    setSnoozedUntil(Date.now() + minutes * 60 * 1000);
+    window.alert(`Snoozed ${minutes} minutes.`);
+  };
 
   return (
     <>
@@ -54,11 +86,11 @@ export default function MedicationDetailsPage(props: Props) {
               <div className="detailsMeta">
                 <div className="detailsMetaRow">
                   <span className="detailsMetaDot">●</span>
-                  <span><strong>Next Dose:</strong> Due at 2:30 PM</span>
+                  <span><strong>Next Dose:</strong> {nextDoseLabel}</span>
                 </div>
                 <div className="detailsMetaRow">
                   <span className="detailsMetaDot">●</span>
-                  <span className="medStatusNew warn">Due soon</span>
+                  <span className={statusToneClass}>{statusText}</span>
                 </div>
               </div>
             </div>
@@ -84,7 +116,15 @@ export default function MedicationDetailsPage(props: Props) {
               <div className="detailsHistory" role="list" aria-label="Medication history list">
                 {history.map((h) => (
                   <div key={h.id} className="medHistoryRow" role="listitem">
-                    <div className={h.tone === "ok" ? "historyDot ok" : h.tone === "warn" ? "historyDot warn" : "historyDot info"} />
+                    <div
+                      className={
+                        h.tone === "ok"
+                          ? "historyDot ok"
+                          : h.tone === "warn"
+                            ? "historyDot warn"
+                            : "historyDot info"
+                      }
+                    />
                     <div className="detailsHistoryValue">{h.label}</div>
                   </div>
                 ))}
@@ -99,10 +139,39 @@ export default function MedicationDetailsPage(props: Props) {
             <div className="detailsCardHead">Actions</div>
             <div className="detailsCardBody">
               <div className="detailsActions">
-                <button className="btnPrimary" aria-label="Mark as Taken">Mark as Taken</button>
-                <button className="btnGhost" aria-label="Snooze 15 minutes">Snooze 15 minutes</button>
-                <button className="btnDark" aria-label="Edit Schedule">Edit Schedule</button>
-                <button className="btnDark" aria-label="Request Refill">Request Refill</button>
+                <button
+                  className="btnPrimary"
+                  aria-label="Mark as Taken"
+                  onClick={handleMarkTaken}
+                  disabled={taken}
+                  title={taken ? "Already taken" : "Mark as taken"}
+                >
+                  {taken ? "Taken" : "Mark as Taken"}
+                </button>
+
+                <button
+                  className="btnGhost"
+                  aria-label="Snooze 15 minutes"
+                  onClick={() => handleSnooze(15)}
+                >
+                  Snooze 15 minutes
+                </button>
+
+                <button
+                  className="btnDark"
+                  aria-label="Edit Schedule"
+                  onClick={() => window.alert("Edit Schedule (demo): not implemented yet.")}
+                >
+                  Edit Schedule
+                </button>
+
+                <button
+                  className="btnDark"
+                  aria-label="Request Refill"
+                  onClick={() => window.alert("Request Refill (demo): not implemented yet.")}
+                >
+                  Request Refill
+                </button>
 
                 <div className="refillNote" aria-label="Refill information">
                   Refill reminder: <strong>Due in 2 days</strong>
