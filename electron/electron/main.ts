@@ -1,3 +1,4 @@
+console.log("MAIN ENTRY RUNNING:", __filename, "BUILD:", new Date().toISOString());
 import { app, BrowserWindow, Menu, dialog, ipcMain } from "electron";
 import path from "node:path";
 
@@ -6,25 +7,26 @@ const isDev = !app.isPackaged;
 let mainWindow: BrowserWindow | null = null;
 
 function createMenu() {
-  // Menu labels align with your Figma desktop header: File, Edit, View, Navigate, Help
-  // Shortcuts follow macOS conventions (Cmd) via CommandOrControl.
   const template: Electron.MenuItemConstructorOptions[] = [
     ...(process.platform === "darwin"
-      ? ([{
-          label: app.name,
-          submenu: [
-            { role: "about" },
-            { type: "separator" },
-            { role: "services" },
-            { type: "separator" },
-            { role: "hide" },
-            { role: "hideOthers" },
-            { role: "unhide" },
-            { type: "separator" },
-            { role: "quit" }
-          ]
-        }] as Electron.MenuItemConstructorOptions[])
+      ? ([
+          {
+            label: app.name,
+            submenu: [
+              { role: "about" },
+              { type: "separator" },
+              { role: "services" },
+              { type: "separator" },
+              { role: "hide" },
+              { role: "hideOthers" },
+              { role: "unhide" },
+              { type: "separator" },
+              { role: "quit" },
+            ],
+          },
+        ] as Electron.MenuItemConstructorOptions[])
       : []),
+
     {
       label: "File",
       submenu: [
@@ -33,16 +35,17 @@ function createMenu() {
           accelerator: "CommandOrControl+,",
           click: () => {
             mainWindow?.webContents.send("cc:navigate", "/settings");
-          }
+          },
         },
         { type: "separator" },
         {
           label: "Quit",
           accelerator: process.platform === "darwin" ? "Command+Q" : "Alt+F4",
-          click: () => app.quit()
-        }
-      ]
+          click: () => app.quit(),
+        },
+      ],
     },
+
     {
       label: "Edit",
       submenu: [
@@ -52,83 +55,103 @@ function createMenu() {
         { role: "cut" },
         { role: "copy" },
         { role: "paste" },
-        { role: "selectAll" }
-      ]
+        { role: "selectAll" },
+      ],
     },
+
     {
       label: "View",
       submenu: [
         {
           label: "Refresh",
           accelerator: "CommandOrControl+R",
-          click: () => {
-            mainWindow?.webContents.reload();
-          }
+          click: () => mainWindow?.webContents.reload(),
         },
         {
           label: "Toggle Critical Medical Information",
           accelerator: "CommandOrControl+Shift+C",
-        click: () => {
-          mainWindow?.webContents.send("cc:command", { type: "toggleCritical" });
-        }
+          click: () => {
+            mainWindow?.webContents.send("cc:command", { type: "toggleCritical" });
+          },
         },
         {
           label: "Toggle Read Aloud",
           accelerator: "CommandOrControl+Shift+R",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "toggleReadAloud" })
+          click: () => {
+            mainWindow?.webContents.send("cc:command", { type: "toggleReadAloud" });
+          },
         },
         {
           label: "Toggle Voice Commands",
           accelerator: "CommandOrControl+Shift+V",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "toggleVoice" })
+          click: () => {
+            mainWindow?.webContents.send("cc:command", { type: "toggleVoice" });
+          },
         },
         { type: "separator" },
         { role: "togglefullscreen" },
-        ...(isDev ? [{ role: "toggleDevTools" as const }] : [])
-      ]
+
+        // DevTools should be visible in dev. Optional in prod.
+        ...(isDev ? [{ role: "toggleDevTools" as const }] : []),
+      ],
     },
+
     {
       label: "Navigate",
       submenu: [
         {
           label: "Home (Dashboard)",
           accelerator: "CommandOrControl+1",
-          click: () => mainWindow?.webContents.send("cc:navigate", "/")
+          click: () => mainWindow?.webContents.send("cc:navigate", "/"),
         },
         {
           label: "Medications",
           accelerator: "CommandOrControl+2",
-          click: () => mainWindow?.webContents.send("cc:navigate", "/medications")
+          click: () => mainWindow?.webContents.send("cc:navigate", "/medications"),
+        },
+        {
+          label: "Tasks",
+          accelerator: "CommandOrControl+3",
+          click: () => mainWindow?.webContents.send("cc:navigate", "/tasks"),
+        },
+        {
+          label: "Appointments",
+          accelerator: "CommandOrControl+4",
+          click: () => mainWindow?.webContents.send("cc:navigate", "/appointments"),
+        },
+        {
+          label: "Settings",
+          accelerator: "CommandOrControl+5",
+          click: () => mainWindow?.webContents.send("cc:navigate", "/settings"),
         },
         { type: "separator" },
         {
           label: "Focus Sidebar",
           accelerator: "CommandOrControl+L",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "focusSidebar" })
+          click: () => mainWindow?.webContents.send("cc:command", { type: "focusSidebar" }),
         },
         {
           label: "Skip to Main Content",
           accelerator: "CommandOrControl+K",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "skipToMain" })
-        }
-      ]
+          click: () => mainWindow?.webContents.send("cc:command", { type: "skipToMain" }),
+        },
+      ],
     },
+
     {
       label: "Help",
       submenu: [
         {
           label: "About CareConnect",
-          click: () => {
-            mainWindow?.webContents.send("cc:command", { type: "about" });
-          }
+          click: () => mainWindow?.webContents.send("cc:command", { type: "about" }),
         },
         {
           label: "Trigger SOS (Demo)",
           accelerator: "CommandOrControl+Alt+S",
-          click: () => mainWindow?.webContents.send("cc:command", { type: "sos" })
-        }
-      ]
-    }
+          click: () => mainWindow?.webContents.send("cc:command", { type: "sos" }),
+        },
+      ],
+    },
   ];
 
   const menu = Menu.buildFromTemplate(template);
@@ -148,8 +171,11 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false
-    }
+
+      // Optional: true is stricter, but can break some setups if you rely on Node APIs in preload incorrectly.
+      // Keep your current behavior for now.
+      sandbox: false,
+    },
   });
 
   createMenu();
@@ -181,12 +207,11 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
 
-// Example IPC from renderer -> main (meets Week 7 "one working IPC")
 ipcMain.handle("cc:showNativeDialog", async (_evt, message: string) => {
   if (!mainWindow) return;
   await dialog.showMessageBox(mainWindow, {
     type: "info",
     title: "CareConnect",
-    message
+    message,
   });
 });
