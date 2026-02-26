@@ -1,9 +1,7 @@
 import React from "react";
-import { HeaderRow, CriticalMedicalInfo } from "../components/uiPieces";
+import { HeaderRow} from "../components/uiPieces";
 
 type Props = {
-  criticalOpen: boolean;
-  onToggleCritical: () => void;
   onSOS: () => void;
 };
 
@@ -11,9 +9,8 @@ export default function AppointmentsPage(props: Props) {
   return (
     <>
       <HeaderRow title="Appointments" onSOS={props.onSOS} />
+      
       <div className="grid">
-        <CriticalMedicalInfo open={props.criticalOpen} onToggle={props.onToggleCritical} />
-
         <section className="card wide" aria-label="Appointments list">
           <div className="cardhead static">
             <span>Upcoming Appointments</span>

@@ -1,204 +1,228 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HeaderRow, CriticalMedicalInfo } from "../components/uiPieces";
+import { HeaderRow } from "../components/uiPieces";
 
 type Props = {
-  criticalOpen: boolean;
-  onToggleCritical: () => void;
   onSOS: () => void;
 };
 
 type Task = {
   id: string;
   title: string;
-  detail: string;
-  due: string;
-  status: "today" | "upcoming" | "completed";
+  note: string;
+  dueLabel: string;
+  section: "today" | "upcoming" | "completed";
 };
 
-const TASKS: Task[] = [
-  {
-    id: "check-bp",
-    title: "Check blood pressure",
-    detail: "Record results using home monitor",
-    due: "Due today at 11:30 AM",
-    status: "today",
-  },
-  {
-    id: "drink-water",
-    title: "Drink 8 glasses of water",
-    detail: "Stay hydrated throughout the day",
-    due: "Due today at 8:00 PM",
-    status: "today",
-  },
-  {
-    id: "call-pharmacy",
-    title: "Call pharmacy for refill",
-    detail: "Lisinopril 10mg refill due soon",
-    due: "Due Fri",
-    status: "upcoming",
-  },
-  {
-    id: "review-instructions",
-    title: "Review medication label",
-    detail: "Confirm evening dosage instructions",
-    due: "Due Sat",
-    status: "upcoming",
-  },
-  {
-    id: "bp-completed",
-    title: "Take morning vitamins",
-    detail: "Completed at 7:10 AM",
-    due: "Completed",
-    status: "completed",
-  },
-];
+export default function TasksPage(props: Props) {
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState<"all" | "today" | "upcoming" | "completed">("all");
 
-function TaskCard(props: {
+  const tasks = useMemo<Task[]>(
+    () => [
+      {
+        id: "t1",
+        title: "Check blood pressure",
+        note: "Use the provided cuff. Write down systolic/diastolic.",
+        dueLabel: "Due today • 8:30 PM",
+        section: "today",
+      },
+      {
+        id: "t2",
+        title: "Drink 8 glasses of water",
+        note: "Spread throughout the day",
+        dueLabel: "Due today • 11:30 PM",
+        section: "today",
+      },
+      {
+        id: "t3",
+        title: "Take afternoon walk",
+        note: "15 minutes minimum",
+        dueLabel: "Due today • 3:15 PM",
+        section: "today",
+      },
+      {
+        id: "t4",
+        title: "Call pharmacy for refill",
+        note: "Ask about pickup time",
+        dueLabel: "Due Feb 27",
+        section: "upcoming",
+      },
+      {
+        id: "t5",
+        title: "Schedule annual checkup",
+        note: "Coordinate with caregiver",
+        dueLabel: "Due Feb 29",
+        section: "upcoming",
+      },
+      {
+        id: "t6",
+        title: "Review medication list",
+        note: "Confirm dosage changes",
+        dueLabel: "Due Mar 1",
+        section: "upcoming",
+      },
+      {
+        id: "t7",
+        title: "Take morning vitamins",
+        note: "Completed at 7:10 AM",
+        dueLabel: "Completed • 7:10 AM",
+        section: "completed",
+      },
+    ],
+    []
+  );
+
+  const shown = useMemo(() => {
+    if (filter === "all") return tasks;
+    return tasks.filter((t) => t.section === filter);
+  }, [tasks, filter]);
+
+  const today = shown.filter((t) => t.section === "today");
+  const upcoming = shown.filter((t) => t.section === "upcoming");
+  const completed = shown.filter((t) => t.section === "completed");
+
+  return (
+    <>
+      <HeaderRow title="Tasks" onSOS={props.onSOS} />
+
+      <div className="pageRow">
+        {/* MAIN COLUMN */}
+        <div className="pageMain" aria-label="Tasks main content">
+          <h2 className="sectionTitle">Today&apos;s Tasks</h2>
+
+          {/* TODAY */}
+          <div className="taskSectionHeader">Today</div>
+          <div className="taskStack" role="list" aria-label="Today tasks list">
+            {today.map((t) => (
+              <TaskRow
+                key={t.id}
+                task={t}
+                onOpen={() => navigate(`/tasks/${t.id}`)}
+                primaryLabel="Mark as Complete"
+                secondaryLabel="Snooze"
+              />
+            ))}
+            {today.length === 0 && <EmptyRow label="No tasks in this section." />}
+          </div>
+
+          {/* UPCOMING */}
+          <div className="taskSectionHeader">Upcoming</div>
+          <div className="taskStack" role="list" aria-label="Upcoming tasks list">
+            {upcoming.map((t) => (
+              <TaskRow
+                key={t.id}
+                task={t}
+                onOpen={() => navigate(`/tasks/${t.id}`)}
+                primaryLabel="Mark as Complete"
+                secondaryLabel="Snooze"
+              />
+            ))}
+            {upcoming.length === 0 && <EmptyRow label="No tasks in this section." />}
+          </div>
+
+          {/* COMPLETED */}
+          <div className="taskSectionHeader">Completed</div>
+          <div className="taskStack" role="list" aria-label="Completed tasks list">
+            {completed.map((t) => (
+              <CompletedRow key={t.id} task={t} onOpen={() => navigate(`/tasks/${t.id}`)} />
+            ))}
+            {completed.length === 0 && <EmptyRow label="No tasks in this section." />}
+          </div>
+        </div>
+
+        {/* RIGHT PANEL */}
+        <aside className="pageSide" aria-label="Task Filters panel">
+          <div className="sideHeader">
+            <div className="sideTitle">Task Filters</div>
+          </div>
+
+          <div className="sideCard">
+            <div className="sideCardTitle">All Tasks</div>
+            <div className="sideNav" role="list">
+              <SideItem label="All Tasks" active={filter === "all"} onClick={() => setFilter("all")} />
+              <SideItem label="Today" active={filter === "today"} onClick={() => setFilter("today")} />
+              <SideItem label="Upcoming" active={filter === "upcoming"} onClick={() => setFilter("upcoming")} />
+              <SideItem label="Completed" active={filter === "completed"} onClick={() => setFilter("completed")} />
+            </div>
+          </div>
+
+          <div className="sideCard">
+            <div className="sideCardTitle">Summary</div>
+            <div className="sideMeta">
+              <div className="sideMetaRow">
+                <span>5 tasks remaining</span>
+              </div>
+              <div className="sideMetaRow">
+                <span>2 completed today</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="sideCard">
+            <div className="sideCardTitle">Availability</div>
+            <div className="sideMeta">
+              <div className="availabilityGood">Available now</div>
+              <div className="sideMetaRow">Low-stress tasks recommended</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </>
+  );
+}
+
+function TaskRow(props: {
   task: Task;
   onOpen: () => void;
-  rightButtonLabel: string;
+  primaryLabel: string;
+  secondaryLabel: string;
 }) {
   return (
-    <div className="task-card" tabIndex={0} aria-label={`${props.task.title}. ${props.task.due}`}>
-      <div className="task-left">
-        <div className="task-title-row">
-          <button className="task-open" onClick={props.onOpen} aria-label={`Open ${props.task.title}`}>
-            {props.task.title}
-          </button>
-        </div>
-        <div className="task-sub">{props.task.detail}</div>
-        <div className="task-due">{props.task.due}</div>
-      </div>
+    <div className="taskRow" role="listitem">
+      <button className="taskBody" onClick={props.onOpen} aria-label={`Open task: ${props.task.title}`}>
+        <div className="taskTitle">{props.task.title}</div>
+        <div className="taskNote">{props.task.note}</div>
+        <div className="taskDue">{props.task.dueLabel}</div>
+      </button>
 
-      <div className="task-actions">
-        <button className="primary" aria-label={props.rightButtonLabel}>
-          {props.rightButtonLabel}
+      <div className="taskActions" aria-label="Task actions">
+        <button className="btnPrimary" onClick={props.onOpen}>
+          {props.primaryLabel}
         </button>
-        <button className="secondary" aria-label="Snooze">
-          Snooze
+        <button className="btnGhost" onClick={props.onOpen}>
+          {props.secondaryLabel}
         </button>
       </div>
     </div>
   );
 }
 
-export default function TasksPage(props: Props) {
-  const nav = useNavigate();
-
-  const today = TASKS.filter((t) => t.status === "today");
-  const upcoming = TASKS.filter((t) => t.status === "upcoming");
-  const completed = TASKS.filter((t) => t.status === "completed");
-
+function CompletedRow(props: { task: Task; onOpen: () => void }) {
   return (
-    <>
-      <HeaderRow title="Tasks" onSOS={props.onSOS} />
+    <div className="taskRow completed" role="listitem">
+      <button className="taskBody" onClick={props.onOpen} aria-label={`Open task: ${props.task.title}`}>
+        <div className="taskTitle">{props.task.title}</div>
+        <div className="taskDue">{props.task.dueLabel}</div>
+      </button>
 
-      <div className="tasks-layout">
-        <div className="tasks-main">
-          <div className="tasks-subtitle">Today's Tasks</div>
-
-          <CriticalMedicalInfo open={props.criticalOpen} onToggle={props.onToggleCritical} />
-
-          <section className="tasks-section" aria-label="Today">
-            <div className="tasks-section-title">Today</div>
-            {today.map((t) => (
-              <TaskCard
-                key={t.id}
-                task={t}
-                onOpen={() => nav(`/tasks/${t.id}`)}
-                rightButtonLabel="Mark as Complete"
-              />
-            ))}
-          </section>
-
-          <section className="tasks-section" aria-label="Upcoming">
-            <div className="tasks-section-title">Upcoming</div>
-            {upcoming.map((t) => (
-              <TaskCard
-                key={t.id}
-                task={t}
-                onOpen={() => nav(`/tasks/${t.id}`)}
-                rightButtonLabel="Mark as Complete"
-              />
-            ))}
-          </section>
-
-          <section className="tasks-section" aria-label="Completed">
-            <div className="tasks-section-title">Completed</div>
-            {completed.map((t) => (
-              <div key={t.id} className="task-card completed" tabIndex={0}>
-                <div className="task-left">
-                  <div className="task-title">{t.title}</div>
-                  <div className="task-sub">{t.detail}</div>
-                </div>
-                <div className="task-actions">
-                  <button
-                    className="secondary"
-                    onClick={() => nav(`/tasks/${t.id}`)}
-                    aria-label={`View details for ${t.title}`}
-                  >
-                    View Details
-                  </button>
-                </div>
-              </div>
-            ))}
-          </section>
-        </div>
-
-        <aside className="tasks-side" aria-label="Tasks side panel">
-          <section className="card" aria-label="Task Filters">
-            <div className="cardhead static">
-              <span>Task Filters</span>
-            </div>
-            <div className="cardbody">
-              <div className="filter-item active" tabIndex={0} aria-label="My Tasks selected">
-                My Tasks
-              </div>
-              <div className="filter-item" tabIndex={0} aria-label="Today">
-                Today
-              </div>
-              <div className="filter-item" tabIndex={0} aria-label="Upcoming">
-                Upcoming
-              </div>
-              <div className="filter-item" tabIndex={0} aria-label="Completed">
-                Completed
-              </div>
-            </div>
-          </section>
-
-          <section className="card" aria-label="Summary">
-            <div className="cardhead static">
-              <span>Summary</span>
-            </div>
-            <div className="cardbody">
-              <div className="summary-row">
-                <span>Today</span>
-                <strong>{today.length}</strong>
-              </div>
-              <div className="summary-row">
-                <span>Upcoming</span>
-                <strong>{upcoming.length}</strong>
-              </div>
-              <div className="summary-row">
-                <span>Completed</span>
-                <strong>{completed.length}</strong>
-              </div>
-            </div>
-          </section>
-
-          <section className="card" aria-label="Accessibility">
-            <div className="cardhead static">
-              <span>Accessibility</span>
-            </div>
-            <div className="cardbody">
-              <div className="helper-text">
-                High contrast enabled. Use Tab to move, Enter to activate buttons.
-              </div>
-            </div>
-          </section>
-        </aside>
+      <div className="taskActions">
+        <button className="btnSubtle" onClick={props.onOpen}>
+          View Details
+        </button>
       </div>
-    </>
+    </div>
+  );
+}
+
+function EmptyRow(props: { label: string }) {
+  return <div className="emptyRow">{props.label}</div>;
+}
+
+function SideItem(props: { label: string; active: boolean; onClick: () => void }) {
+  return (
+    <button className={props.active ? "sideItem active" : "sideItem"} onClick={props.onClick}>
+      {props.label}
+    </button>
   );
 }

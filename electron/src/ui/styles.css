@@ -216,136 +216,6 @@ button { font: inherit; }
   font-size: 13px;
 }
 
-.tasks-layout {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 16px;
-}
-
-.tasks-main {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.tasks-side {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.tasks-subtitle {
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-.tasks-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.tasks-section-title {
-  font-size: 14px;
-  font-weight: 700;
-  opacity: 0.9;
-}
-
-.task-card {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 10px;
-}
-
-.task-card.completed {
-  opacity: 0.9;
-}
-
-.task-left {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-
-.task-title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.task-open {
-  background: transparent;
-  border: none;
-  padding: 0;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.task-title {
-  font-weight: 700;
-}
-
-.task-sub {
-  font-size: 13px;
-  opacity: 0.85;
-}
-
-.task-due {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.task-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: stretch;
-  min-width: 160px;
-}
-
-.widebtn {
-  width: 100%;
-}
-
-.filter-item {
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.filter-item.active {
-  font-weight: 700;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-}
-
-.note-box {
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.history-row {
-  padding: 8px 0;
-}
-
-.history-label {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.history-value {
-  font-size: 13px;
-  font-weight: 600;
-}
-
 /* Screen-reader only utility */
 .sr-only{
   position: absolute;
@@ -388,4 +258,240 @@ button { font: inherit; }
 }
 .app.hc .primary{
   color: #001a08;
+}
+
+/* ---------- Tasks page layout (Figma-style) ---------- */
+.pageRow {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 18px;
+  align-items: start;
+}
+
+.pageMain {
+  min-width: 0;
+}
+
+.pageSide {
+  min-width: 0;
+}
+
+.sectionTitle {
+  margin: 6px 0 10px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.taskSectionHeader {
+  margin: 14px 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+
+.taskStack {
+  display: grid;
+  gap: 10px;
+}
+
+/* Critical red card */
+.criticalCard {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(1200px 300px at 30% 10%, rgba(255, 0, 0, 0.18), rgba(0, 0, 0, 0)),
+    rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.criticalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 10px;
+}
+
+.criticalTitle {
+  font-weight: 700;
+}
+
+.criticalSub {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.sosBtn {
+  background: rgba(255, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 700;
+}
+
+.criticalBody {
+  padding: 0 14px 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.criticalBlock {
+  display: grid;
+  gap: 4px;
+}
+
+.criticalLabel {
+  font-size: 11px;
+  opacity: 0.75;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.criticalValue {
+  font-size: 13px;
+}
+
+.criticalList {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.criticalDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 2px 0;
+}
+
+.criticalLink {
+  display: inline-block;
+  margin-top: 2px;
+  text-decoration: underline;
+}
+
+/* Task rows */
+.taskRow {
+  display: grid;
+  grid-template-columns: 1fr 190px;
+  gap: 12px;
+  align-items: stretch;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.taskRow.completed {
+  opacity: 0.85;
+}
+
+.taskBody {
+  text-align: left;
+  padding: 12px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.taskTitle {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.taskNote {
+  font-size: 12px;
+  opacity: 0.78;
+  margin-bottom: 6px;
+}
+
+.taskDue {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.taskActions {
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btnPrimary {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 120, 0.35);
+  background: rgba(0, 255, 120, 0.18);
+  font-weight: 700;
+}
+
+.btnGhost {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.btnSubtle {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.emptyRow {
+  padding: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  opacity: 0.7;
+}
+
+/* Right panel */
+.sideHeader {
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.sideTitle {
+  font-weight: 700;
+}
+
+.sideCard {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.sideCardTitle {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.sideNav {
+  display: grid;
+  gap: 8px;
+}
+
+.sideItem {
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.sideItem.active {
+  border-color: rgba(80, 140, 255, 0.6);
+  background: rgba(80, 140, 255, 0.18);
+}
+
+.sideMeta {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.availabilityGood {
+  font-weight: 700;
+  opacity: 1;
 }

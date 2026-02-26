@@ -133,8 +133,6 @@ export default function App() {
               path="/medications"
               element={
                 <MedicationsPage
-                  criticalOpen={criticalOpen}
-                  onToggleCritical={() => setCriticalOpen((v) => !v)}
                   onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
                 />
               }
@@ -157,8 +155,24 @@ export default function App() {
               path="/appointments"
               element={
                 <AppointmentsPage
-                  criticalOpen={criticalOpen}
-                  onToggleCritical={() => setCriticalOpen((v) => !v)}
+                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
+                />
+              }
+            />
+
+            <Route
+              path="/tasks"
+              element={
+                <TasksPage
+                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
+                />
+              }
+            />
+
+            <Route
+              path="/tasks/:taskId"
+              element={
+                <TaskDetailsPage
                   onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
                 />
               }
@@ -183,26 +197,6 @@ export default function App() {
                     <p>Page not found.</p>
                   </div>
                 </>
-              }
-            />
-
-            <Route
-              path="/tasks"
-              element={
-                <TasksPage
-                  criticalOpen={criticalOpen}
-                  onToggleCritical={() => setCriticalOpen((v) => !v)}
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
-              }
-            />
-
-            <Route
-              path="/tasks/:taskId"
-              element={
-                <TaskDetailsPage
-                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
-                />
               }
             />
 
