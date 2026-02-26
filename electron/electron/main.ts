@@ -62,7 +62,7 @@ function createMenu() {
           label: "Refresh",
           accelerator: "CommandOrControl+R",
           click: () => {
-            mainWindow?.webContents.send("cc:command", { type: "refresh" });
+            mainWindow?.webContents.reload();
           }
         },
         {
