@@ -129,10 +129,6 @@ export default function LoginPage(props: Props) {
               Create an account
             </button>
           </div>
-
-          <button type="button" className="authLinkBtn small" onClick={props.onSOS}>
-            Accessibility Options
-          </button>
         </form>
       </div>
     </section>
