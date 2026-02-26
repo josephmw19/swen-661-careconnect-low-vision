@@ -495,3 +495,192 @@ button { font: inherit; }
   font-weight: 700;
   opacity: 1;
 }
+
+/* ---------- Appointments page (Figma-style list) ---------- */
+.apptStack {
+  display: grid;
+  gap: 12px;
+}
+
+.apptRow {
+  display: grid;
+  grid-template-columns: 1fr 170px;
+  gap: 12px;
+  align-items: stretch;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.apptBody {
+  text-align: left;
+  padding: 14px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.apptTitle {
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.apptMeta {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.apptLine {
+  opacity: 0.9;
+}
+
+.apptActions {
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.apptBtn {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(80, 140, 255, 0.55);
+  background: rgba(80, 140, 255, 0.18);
+  font-weight: 700;
+}
+
+/* ---------- Appointment Details (Figma-style) ---------- */
+.detailsTop {
+  display: flex;
+  justify-content: flex-start;
+  margin: 8px 0 8px;
+}
+
+.detailsBack {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.detailsSubtitle {
+  font-size: 14px;
+  opacity: 0.85;
+  margin: 0 0 12px;
+}
+
+.detailsStack {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.detailsCard .detailsCardHead {
+  padding: 14px 14px 10px;
+  font-weight: 800;
+  opacity: 0.95;
+}
+
+.detailsCard .detailsCardBody {
+  padding: 0 14px 14px;
+}
+
+.detailsTitle {
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.detailsTitleSmall {
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.detailsLine {
+  font-size: 13px;
+  opacity: 0.9;
+  margin: 4px 0;
+}
+
+.detailsMeta {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.detailsMetaRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.detailsMetaDot {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.detailsBullets {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  opacity: 0.92;
+}
+
+.detailsActions {
+  display: grid;
+  gap: 10px;
+}
+
+.btnBlue {
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(80, 140, 255, 0.55);
+  background: rgba(80, 140, 255, 0.22);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.btnDark {
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.detailsHistory {
+  display: grid;
+  gap: 10px;
+}
+
+.detailsHistoryRow {
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detailsHistoryRow:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.detailsHistoryLabel {
+  font-size: 12px;
+  opacity: 0.78;
+}
+
+.detailsHistoryValue {
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 4px;
+}
