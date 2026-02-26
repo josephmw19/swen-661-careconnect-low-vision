@@ -25,6 +25,65 @@ html, body {
 }
 button { font: inherit; }
 
+/* --- Global emphasis: headings + buttons --- */
+h1, h2, h3, h4, h5, h6{
+  font-weight: 900;
+}
+
+button{
+  font-weight: 800;
+}
+
+/* Button-like classes (some of yours are buttons already, but this ensures consistency) */
+.toolbtn,
+.navitem,
+.primary,
+.secondary,
+.toggle,
+.pill,
+.sos,
+.sosBtn,
+.btnPrimary,
+.btnGhost,
+.btnSubtle,
+.apptBtn,
+.btnBlue,
+.btnDark,
+.detailsBack,
+.roleContinue,
+.navPrimary,
+.navLink,
+.authPrimaryBtn,
+.authEye,
+.authLinkBtn,
+.roleLink,
+.setToggle,
+.segBtn,
+.setActionBtn,
+.setRowBtn,
+.setSignOut{
+  font-weight: 800;
+}
+
+/* Text headings you use as divs/spans */
+.title,
+.appname,
+.cardhead,
+.settingsCardTitle,
+.sideTitle,
+.sideCardTitle,
+.sectionTitle,
+.taskSectionHeader,
+.taskTitle,
+.apptTitle,
+.detailsTitle,
+.detailsTitleSmall,
+.authTitle,
+.roleName,
+.landingBrand{
+  font-weight: 900;
+}
+
 .skip-link{
   position: absolute;
   left: -999px;
