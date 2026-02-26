@@ -223,6 +223,8 @@ export function TaskItem(props: { title: string; status: string }) {
 }
 
 export function NextMedication() {
+  const [status, setStatus] = React.useState("Due in 15 minutes");
+
   return (
     <section className="card" aria-label="Next Medication">
       <div className="cardhead static">
@@ -232,11 +234,24 @@ export function NextMedication() {
         <div className="medname">Lisinopril 10mg</div>
         <div className="medmeta">Take 1 tablet by mouth</div>
         <div className="medmeta">Once daily with breakfast</div>
-        <div className="medstatus">Due in 15 minutes</div>
+        <div className="medstatus">{status}</div>
 
         <div className="actions">
-          <button className="primary" aria-label="Mark as Taken">Mark as Taken</button>
-          <button className="secondary" aria-label="Snooze 10 minutes">Snooze 10 min</button>
+          <button
+            className="primary"
+            aria-label="Mark as Taken"
+            onClick={() => setStatus("Taken just now")}
+          >
+            Mark as Taken
+          </button>
+
+          <button
+            className="secondary"
+            aria-label="Snooze 10 minutes"
+            onClick={() => setStatus("Snoozed 10 minutes")}
+          >
+            Snooze 10 min
+          </button>
         </div>
       </div>
     </section>
@@ -265,6 +280,7 @@ export function Alerts() {
 
 export function MedicationsList() {
   const navigate = useNavigate();
+
   const meds = [
     {
       id: "m1",
@@ -316,46 +332,100 @@ export function MedicationsList() {
     },
   ] as const;
 
+  const [taken, setTaken] = React.useState<Record<string, boolean>>({});
+  const [snoozedUntil, setSnoozedUntil] = React.useState<Record<string, number>>({});
+
+  const now = Date.now();
+
+  const formatTime = (ms: number) =>
+    new Date(ms).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
   return (
     <section className="card wide" aria-label="Medications list">
       <div className="cardbody">
         <div className="medStack" role="list" aria-label="Medication rows">
-          {meds.map((m) => (
-            <div
-              key={m.id}
-              className="medRowNew"
-              role="listitem"
-              onClick={() => navigate(`/medications/${m.id}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="medLeft">
-                <div className="medNameNew">{m.name}</div>
-                {m.details.map((d) => (
-                  <div key={d} className="medLine">
-                    {d}
+          {meds.map((m) => {
+            const isTaken = !!taken[m.id];
+            const until = snoozedUntil[m.id];
+            const isSnoozed = typeof until === "number" && until > now;
+
+            const computedStatus = isTaken
+              ? "Taken just now"
+              : isSnoozed
+                ? `Snoozed until ${formatTime(until)}`
+                : m.status;
+
+            const computedTone = isTaken ? "ok" : isSnoozed ? "info" : m.statusTone;
+
+            return (
+              <div
+                key={m.id}
+                className="medRowNew"
+                role="listitem"
+                onClick={() => navigate(`/medications/${m.id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="medLeft">
+                  <div className="medNameNew">{m.name}</div>
+                  {m.details.map((d) => (
+                    <div key={d} className="medLine">
+                      {d}
+                    </div>
+                  ))}
+                  <div className={`medStatusNew ${computedTone}`} aria-label={`Status: ${computedStatus}`}>
+                    {computedStatus}
                   </div>
-                ))}
-                <div className={`medStatusNew ${m.statusTone}`} aria-label={`Status: ${m.status}`}>
-                  {m.status}
+                </div>
+
+                <div className="medRight" aria-label="Medication actions">
+                  {m.primary && (
+                    <>
+                      <button
+                        className="btnPrimary"
+                        aria-label={`Mark ${m.name} as taken`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setTaken((prev) => ({ ...prev, [m.id]: true }));
+                          setSnoozedUntil((prev) => {
+                            const copy = { ...prev };
+                            delete copy[m.id];
+                            return copy;
+                          });
+                        }}
+                      >
+                        Mark as Taken
+                      </button>
+
+                      <button
+                        className="btnSubtle"
+                        aria-label={`Snooze ${m.name} for 10 minutes`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setSnoozedUntil((prev) => ({ ...prev, [m.id]: Date.now() + 10 * 60 * 1000 }));
+                        }}
+                      >
+                        Snooze 10 min
+                      </button>
+                    </>
+                  )}
+
+                  <button
+                    className="btnGhost"
+                    aria-label={`View details for ${m.name}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      navigate(`/medications/${m.id}`);
+                    }}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
-
-              <div className="medRight" aria-label="Medication actions">
-                {m.primary && (
-                  <button className="btnPrimary" aria-label={`Mark ${m.name} as taken`}>
-                    Mark as Taken
-                  </button>
-                )}
-                <button
-                  className="btnGhost"
-                  aria-label={`View details for ${m.name}`}
-                  onClick={() => navigate(`/medications/${m.id}`)}
-                >
-                  View Details
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

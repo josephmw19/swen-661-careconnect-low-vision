@@ -17,7 +17,21 @@ type Task = {
 export default function TasksPage(props: Props) {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<"all" | "today" | "upcoming" | "completed">("all");
+  const [completedMap, setCompletedMap] = useState<Record<string, boolean>>({});
+  const [snoozedUntil, setSnoozedUntil] = useState<Record<string, number>>({});
 
+  const handleComplete = (id: string) => {
+    setCompletedMap((prev) => ({ ...prev, [id]: true }));
+    setSnoozedUntil((prev) => {
+      const copy = { ...prev };
+      delete copy[id];
+      return copy;
+    });
+  };
+
+  const handleSnooze = (id: string, minutes = 10) => {
+    setSnoozedUntil((prev) => ({ ...prev, [id]: Date.now() + minutes * 60 * 1000 }));
+  };
   const tasks = useMemo<Task[]>(
     () => [
       {
@@ -73,10 +87,30 @@ export default function TasksPage(props: Props) {
     []
   );
 
+  const computedTasks = useMemo(() => {
+    const now = Date.now();
+
+    return tasks.map((t) => {
+      const isCompleted = !!completedMap[t.id] || t.section === "completed";
+      const until = snoozedUntil[t.id];
+      const isSnoozed = typeof until === "number" && until > now;
+
+      const computedSection: Task["section"] = isCompleted ? "completed" : t.section;
+
+      const computedDueLabel = isCompleted
+        ? "Completed • just now"
+        : isSnoozed
+          ? `Snoozed • until ${new Date(until).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`
+          : t.dueLabel;
+
+      return { ...t, section: computedSection, dueLabel: computedDueLabel };
+    });
+  }, [tasks, completedMap, snoozedUntil]);
+
   const shown = useMemo(() => {
-    if (filter === "all") return tasks;
-    return tasks.filter((t) => t.section === filter);
-  }, [tasks, filter]);
+    if (filter === "all") return computedTasks;
+    return computedTasks.filter((t) => t.section === filter);
+  }, [computedTasks, filter]);
 
   const today = shown.filter((t) => t.section === "today");
   const upcoming = shown.filter((t) => t.section === "upcoming");
@@ -99,6 +133,8 @@ export default function TasksPage(props: Props) {
                 key={t.id}
                 task={t}
                 onOpen={() => navigate(`/tasks/${t.id}`)}
+                onComplete={() => handleComplete(t.id)}
+                onSnooze={() => handleSnooze(t.id, 10)}
                 primaryLabel="Mark as Complete"
                 secondaryLabel="Snooze"
               />
@@ -114,6 +150,8 @@ export default function TasksPage(props: Props) {
                 key={t.id}
                 task={t}
                 onOpen={() => navigate(`/tasks/${t.id}`)}
+                onComplete={() => handleComplete(t.id)}
+                onSnooze={() => handleSnooze(t.id, 10)}
                 primaryLabel="Mark as Complete"
                 secondaryLabel="Snooze"
               />
@@ -175,6 +213,8 @@ export default function TasksPage(props: Props) {
 function TaskRow(props: {
   task: Task;
   onOpen: () => void;
+  onComplete: () => void;
+  onSnooze: () => void;
   primaryLabel: string;
   secondaryLabel: string;
 }) {
@@ -187,10 +227,25 @@ function TaskRow(props: {
       </button>
 
       <div className="taskActions" aria-label="Task actions">
-        <button className="btnPrimary" onClick={props.onOpen}>
+        <button
+          className="btnPrimary"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            props.onComplete();
+          }}
+        >
           {props.primaryLabel}
         </button>
-        <button className="btnGhost" onClick={props.onOpen}>
+
+        <button
+          className="btnGhost"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            props.onSnooze();
+          }}
+        >
           {props.secondaryLabel}
         </button>
       </div>
