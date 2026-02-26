@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   onLogin: () => void;
@@ -8,6 +9,8 @@ type Props = {
 };
 
 export default function LoginPage(props: Props) {
+  const navigate = useNavigate();
+
   const emailId = useId();
   const passId = useId();
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -30,6 +33,8 @@ export default function LoginPage(props: Props) {
 
   return (
     <section className="authShell" aria-label="Sign in page">
+      {/* Back button */}
+
       {/* Brand */}
       <div className="authBrand" aria-label="CareConnect brand">
         <div className="authLogo" aria-hidden="true">
@@ -40,10 +45,22 @@ export default function LoginPage(props: Props) {
 
       {/* Card */}
       <div className="authCard" role="region" aria-label="Welcome back sign in form">
+        <div className="detailsTop">
+          <button
+            type="button"
+            className="detailsBack"
+            onClick={() => navigate("/role")}
+            aria-label="Back to role selection"
+          >
+            ← Back
+          </button>
+        </div>
+
         <h1 className="authTitle">Welcome Back</h1>
         <p className="authSub">Sign in to continue managing your care.</p>
 
         <form className="authForm" onSubmit={onSubmit}>
+          {/* rest of your form unchanged */}
           <div className="authField">
             <label className="authLabel" htmlFor={emailId}>
               Email Address

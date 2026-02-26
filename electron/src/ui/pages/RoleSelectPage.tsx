@@ -18,6 +18,19 @@ export default function RoleSelectPage() {
   return (
     <div className="authShell">
       <div className="authCard">
+
+        {/* Back Arrow */}
+        <div className="detailsTop">
+          <button
+            type="button"
+            className="detailsBack"
+            onClick={() => navigate("/landing")}
+            aria-label="Back to landing page"
+          >
+            ← Back
+          </button>
+        </div>
+
         <h1 className="authTitle">Select Your Role</h1>
         <p className="authSub">
           Choose how you&apos;ll be using CareConnect. This will customize your
@@ -72,15 +85,6 @@ export default function RoleSelectPage() {
         <div className="roleFootnote">
           You can change your role at any time in Settings
         </div>
-
-        <button
-          type="button"
-          className="roleLink"
-          onClick={() => navigate("/settings")}
-          aria-label="Open accessibility settings"
-        >
-          ♿ Accessibility Settings
-        </button>
       </div>
     </div>
   );

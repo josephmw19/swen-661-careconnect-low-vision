@@ -1,3 +1,4 @@
+import ScrollToTop from "./components/ScrolltoTop";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { cc } from "./cc";
@@ -106,6 +107,8 @@ export default function App() {
       className={highContrast ? "app hc" : "app"}
       aria-label="CareConnect Desktop Application"
     >
+      <ScrollToTop containerRef={mainRef} />
+
       {/* Skip link for keyboard-only users */}
       <a className="skip-link" href="#main">
         Skip to main content
