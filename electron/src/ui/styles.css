@@ -216,6 +216,136 @@ button { font: inherit; }
   font-size: 13px;
 }
 
+.tasks-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+}
+
+.tasks-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tasks-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tasks-subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.tasks-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tasks-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.task-card.completed {
+  opacity: 0.9;
+}
+
+.task-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.task-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-open {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.task-title {
+  font-weight: 700;
+}
+
+.task-sub {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.task-due {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  min-width: 160px;
+}
+
+.widebtn {
+  width: 100%;
+}
+
+.filter-item {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.filter-item.active {
+  font-weight: 700;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.note-box {
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.history-row {
+  padding: 8px 0;
+}
+
+.history-label {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.history-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+
 /* Screen-reader only utility */
 .sr-only{
   position: absolute;
