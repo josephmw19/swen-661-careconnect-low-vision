@@ -1034,11 +1034,7 @@ button { font: inherit; }
 /* ---------- Auth shell (Role Select, Login, Create, Reset) ---------- */
 
 .authShell{
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 28px;
-  background: radial-gradient(circle at top, #111, #000);
+  width: 100%;
 }
 
 .authCard{
@@ -1157,16 +1153,19 @@ button { font: inherit; }
   text-decoration: underline;
 }
 
+/* ---------- Auth routes: full-bleed scroll container ---------- */
 .main.authMain{
   padding: 0;
+  overflow: auto;
 }
 
-/* ---------- Auth pages (Landing, Role, Login, Create, Reset) ---------- */
-.main.authMain{
+/* For auth pages that need centered content, center inside the page, not the main shell */
+.main.authMain .authShell{
+  min-height: 100%;
+  display: grid;
+  place-items: center;
   padding: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: radial-gradient(circle at top, #111, #000);
 }
 
 .authShell{
