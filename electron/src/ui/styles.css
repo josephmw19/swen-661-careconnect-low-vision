@@ -9,6 +9,7 @@
   --focus: #18a0fb;
   --primary: #18a34a;
   --danger: #dc2626;
+  --baseFont: 20px;
 }
 
 *{ box-sizing: border-box; }
@@ -20,7 +21,7 @@ html, body {
   color: var(--text);
 
   /* LV baseline */
-  font-size: 20px;
+  font-size: var(--baseFont);
   line-height: 1.6;
 }
 button { font: inherit; }
@@ -112,7 +113,7 @@ button{
 .menubar-placeholder{
   display: flex;
   gap: 18px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   color: var(--muted);
   margin-bottom: 10px;
 }
@@ -224,7 +225,7 @@ button{
   margin-bottom: 10px;
 }
 .listtitle{ font-weight: 700; }
-.listmeta{ color: var(--muted); margin-top: 4px; font-size: 18px; opacity: 0.85; }
+.listmeta{ color: var(--muted); margin-top: 4px; font-size: var(--baseFont); opacity: 0.85; }
 
 .medname{ font-size: 20px; font-weight: 800; margin-bottom: 6px; }
 .medmeta{ color: var(--muted); margin-top: 2px; }
@@ -284,7 +285,7 @@ button{
   background: #111;
   border-top: 1px solid var(--border);
   color: var(--muted);
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 /* Screen-reader only utility */
@@ -301,7 +302,7 @@ button{
 }
 
 .helper-text{
-  font-size: 18px;
+  font-size: var(--baseFont);
   line-height: 1.5;
   color: var(--text);
   margin: 0 0 12px 0;
@@ -349,13 +350,13 @@ button{
 
 .sectionTitle {
   margin: 6px 0 10px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
 .taskSectionHeader {
   margin: 14px 0 8px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   letter-spacing: 0.04em;
   opacity: 0.75;
   text-transform: uppercase;
@@ -386,7 +387,7 @@ button{
 }
 
 .criticalSub {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.8;
   margin-top: 2px;
 }
@@ -411,14 +412,14 @@ button{
 }
 
 .criticalLabel {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.75;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .criticalValue {
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .criticalList {
@@ -468,13 +469,13 @@ button{
 }
 
 .taskNote {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.78;
   margin-bottom: 6px;
 }
 
 .taskDue {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
@@ -558,7 +559,7 @@ button{
 .sideMeta {
   display: grid;
   gap: 8px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
@@ -600,7 +601,7 @@ button{
 .apptMeta {
   display: grid;
   gap: 6px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.9;
 }
 
@@ -642,7 +643,7 @@ button{
 }
 
 .detailsSubtitle {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
   margin: 0 0 12px;
 }
@@ -670,20 +671,20 @@ button{
 }
 
 .detailsTitleSmall {
-  font-size: 18px;
+  font-size: var(--baseFont);
   font-weight: 900;
   margin-bottom: 8px;
 }
 
 .detailsLine {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.9;
   margin: 4px 0;
 }
 
 .detailsMeta {
   margin-top: 10px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
@@ -694,7 +695,7 @@ button{
 }
 
 .detailsMetaDot {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.8;
 }
 
@@ -703,7 +704,7 @@ button{
   padding-left: 18px;
   display: grid;
   gap: 8px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.92;
 }
 
@@ -746,12 +747,12 @@ button{
 }
 
 .detailsHistoryLabel {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.78;
 }
 
 .detailsHistoryValue {
-  font-size: 18px;
+  font-size: var(--baseFont);
   font-weight: 700;
   margin-top: 4px;
 }
@@ -784,14 +785,14 @@ button{
 }
 
 .medLine {
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.8;
   margin-top: 2px;
 }
 
 .medStatusNew {
   margin-top: 8px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   font-weight: 700;
   opacity: 0.95;
 }
@@ -825,7 +826,7 @@ button{
 
 .refillNote{
   margin-top: 6px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
@@ -858,7 +859,7 @@ button{
 
 .settingsSubtitle{
   margin: 0 0 14px 0;
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
@@ -902,11 +903,11 @@ button{
 
 .setLabel{
   font-weight: 900;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .setDesc{
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.78;
 }
 
@@ -1014,7 +1015,7 @@ button{
   border: 0;
   color: var(--muted);
   font-weight: 600;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .navPrimary {
@@ -1024,7 +1025,7 @@ button{
   border: 1px solid rgba(80,140,255,0.5);
   color: var(--text);
   font-weight: 700;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .landingHero {
@@ -1067,7 +1068,7 @@ button{
 .sectionSub {
   opacity: 0.8;
   margin-bottom: 32px;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .featureGrid {
@@ -1084,7 +1085,7 @@ button{
   border-radius: 12px;
   padding: 18px;
   text-align: left;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .badge {
@@ -1095,7 +1096,7 @@ button{
   border: 1px solid rgba(0,255,120,0.4);
   color: #34d399;
   font-weight: 700;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .landingFooter {
@@ -1103,7 +1104,7 @@ button{
   justify-content: space-between;
   padding: 18px 28px;
   border-top: 1px solid rgba(255,255,255,0.08);
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
 }
 
@@ -1133,7 +1134,7 @@ button{
   max-width: 620px;
   color: var(--muted);
   line-height: 1.5;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .roleGrid{
@@ -1154,7 +1155,7 @@ button{
   border-radius: 14px;
   padding: 18px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .roleCard:hover{
@@ -1186,7 +1187,7 @@ button{
 }
 
 .roleDesc{
-  font-size: 18px;
+  font-size: var(--baseFont);
   color: var(--muted);
   line-height: 1.4;
 }
@@ -1205,7 +1206,7 @@ button{
   color: var(--text);
   font-weight: 800;
   min-width: 160px;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .roleContinue:hover{
@@ -1219,7 +1220,7 @@ button{
 
 .roleFootnote{
   margin-top: 14px;
-  font-size: 18px;
+  font-size: var(--baseFont);
   color: var(--muted);
   opacity: 0.85;
 }
@@ -1231,7 +1232,7 @@ button{
   color: #7dd3fc;
   font-weight: 700;
   text-decoration: underline;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 /* ---------- Auth routes: full-bleed scroll container ---------- */
@@ -1262,7 +1263,7 @@ button{
   align-items: center;
   gap: 10px;
   opacity: 0.95;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authLogo{
@@ -1273,13 +1274,13 @@ button{
   place-items: center;
   background: rgba(80,140,255,0.20);
   border: 1px solid rgba(80,140,255,0.35);
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authBrandName{
   font-weight: 800;
   letter-spacing: 0.2px;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authCard{
@@ -1301,7 +1302,7 @@ button{
   margin: 8px 0 18px;
   text-align: center;
   opacity: 0.82;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authForm{
@@ -1315,7 +1316,7 @@ button{
 }
 
 .authLabel{
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.85;
   font-weight: 700;
 }
@@ -1350,7 +1351,7 @@ button{
   background: rgba(255,255,255,0.04);
   color: var(--text);
   font-weight: 700;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authPrimaryBtn{
@@ -1365,7 +1366,7 @@ button{
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authPrimaryBtn:disabled{
@@ -1385,15 +1386,15 @@ button{
   padding: 0;
   text-decoration: underline;
   justify-self: center;
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authLinkBtn.strong{
-  font-size: 18px;
+  font-size: var(--baseFont);
 }
 
 .authLinkBtn.small{
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.9;
 }
 
@@ -1410,6 +1411,6 @@ button{
 }
 
 .authMuted{
-  font-size: 18px;
+  font-size: var(--baseFont);
   opacity: 0.78;
 }
