@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export function TopBar(props: {
   readAloud: boolean;
@@ -263,38 +264,99 @@ export function Alerts() {
 }
 
 export function MedicationsList() {
+  const navigate = useNavigate();
   const meds = [
-    { name: "Lisinopril 10mg", status: "Due now", primary: true },
-    { name: "Metformin 500mg", status: "Taken today at 8:15 AM" },
-    { name: "Atorvastatin 20mg", status: "Scheduled for 9:00 PM" },
-    { name: "Levothyroxine 75mcg", status: "Taken today at 7:00 AM" },
-    { name: "Omeprazole 20mg", status: "Taken today at 7:05 AM" },
-    { name: "Aspirin 81mg", status: "Taken today at 8:20 AM" }
-  ];
+    {
+      id: "m1",
+      name: "Lisinopril 10mg",
+      details: ["1 tablet by mouth", "Once daily with breakfast"],
+      status: "Due now",
+      statusTone: "warn",
+      primary: true,
+    },
+    {
+      id: "m2",
+      name: "Metformin 500mg",
+      details: ["1 tablet with breakfast", "Once daily"],
+      status: "Taken today at 8:15 AM",
+      statusTone: "ok",
+      primary: false,
+    },
+    {
+      id: "m3",
+      name: "Atorvastatin 20mg",
+      details: ["1 tablet by mouth", "Once daily at bedtime"],
+      status: "Scheduled for 9:00 PM",
+      statusTone: "info",
+      primary: false,
+    },
+    {
+      id: "m4",
+      name: "Levothyroxine 75mcg",
+      details: ["1 tablet by mouth", "Once daily before breakfast"],
+      status: "Taken today at 7:00 AM",
+      statusTone: "ok",
+      primary: false,
+    },
+    {
+      id: "m5",
+      name: "Omeprazole 20mg",
+      details: ["1 capsule by mouth", "Once daily before breakfast"],
+      status: "Taken today at 7:05 AM",
+      statusTone: "ok",
+      primary: false,
+    },
+    {
+      id: "m6",
+      name: "Aspirin 81mg",
+      details: ["1 tablet by mouth", "Once daily with breakfast"],
+      status: "Taken today at 8:20 AM",
+      statusTone: "ok",
+      primary: false,
+    },
+  ] as const;
 
   return (
     <section className="card wide" aria-label="Medications list">
-      <div className="cardhead static">
-        <span>Today's Medications</span>
-      </div>
       <div className="cardbody">
-        {meds.map((m) => (
-          <div key={m.name} className="medrow" tabIndex={0} aria-label={`${m.name}. ${m.status}`}>
-            <div>
-              <div className="medname">{m.name}</div>
-              <div className="medmeta">1 tablet by mouth</div>
-              <div className="medmeta">Once daily</div>
-              <div className="medstatus">{m.status}</div>
+        <div className="medStack" role="list" aria-label="Medication rows">
+          {meds.map((m) => (
+            <div
+              key={m.id}
+              className="medRowNew"
+              role="listitem"
+              onClick={() => navigate(`/medications/${m.id}`)}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="medLeft">
+                <div className="medNameNew">{m.name}</div>
+                {m.details.map((d) => (
+                  <div key={d} className="medLine">
+                    {d}
+                  </div>
+                ))}
+                <div className={`medStatusNew ${m.statusTone}`} aria-label={`Status: ${m.status}`}>
+                  {m.status}
+                </div>
+              </div>
+
+              <div className="medRight" aria-label="Medication actions">
+                {m.primary && (
+                  <button className="btnPrimary" aria-label={`Mark ${m.name} as taken`}>
+                    Mark as Taken
+                  </button>
+                )}
+                <button
+                  className="btnGhost"
+                  aria-label={`View details for ${m.name}`}
+                  onClick={() => navigate(`/medications/${m.id}`)}
+                >
+                  View Details
+                </button>
+              </div>
             </div>
-            <div className="actions right">
-              {m.primary ? (
-                <button className="primary" aria-label={`Mark ${m.name} as taken`}>Mark as Taken</button>
-              ) : (
-                <button className="secondary" aria-label={`View details for ${m.name}`}>View Details</button>
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

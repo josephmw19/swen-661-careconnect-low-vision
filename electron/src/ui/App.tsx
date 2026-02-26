@@ -12,8 +12,10 @@ import CreateAccountPage from "./pages/CreateAccountPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import MedicationDetailsPage from "./pages/MedicationDetailsPage";
 import TasksPage from "./pages/TasksPage";
-import AppointmentsPage from "./pages/AppointmentsPage";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
+import AppointmentsPage from "./pages/AppointmentsPage";
+import AppointmentDetailsPage from "./pages/AppointmentDetailsPage";
+
 
 type Command =
   | { type: "refresh" }
@@ -139,6 +141,15 @@ export default function App() {
             />
 
             <Route
+              path="/medications/:medId"
+              element={
+                <MedicationDetailsPage
+                  onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
+                />
+              }
+            />
+
+            <Route
               path="/settings"
               element={
                 <SettingsPage
@@ -158,6 +169,11 @@ export default function App() {
                   onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")}
                 />
               }
+            />
+
+            <Route
+              path="/appointments/:appointmentId"
+              element={<AppointmentDetailsPage onSOS={async () => cc().showNativeDialog("SOS triggered (demo).")} />}
             />
 
             <Route

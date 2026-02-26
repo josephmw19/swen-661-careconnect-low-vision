@@ -88,8 +88,8 @@ button { font: inherit; }
 }
 
 .main{ flex: 1; padding: 18px; overflow: auto; outline: none; }
-.headerrow{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; }
-.title{ margin: 0; font-size: 28px; }
+.headerrow{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; }
+.title{ margin: 0; font-size: 26px; }
 
 .sos{
   background: var(--danger);
@@ -102,8 +102,8 @@ button { font: inherit; }
 
 .grid{
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 18px;
   align-items: start;
 }
 @media (max-width: 1200px){
@@ -112,8 +112,8 @@ button { font: inherit; }
 }
 
 .card{
-  background: var(--panel);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   overflow: hidden;
 }
@@ -125,8 +125,9 @@ button { font: inherit; }
   align-items: center;
   gap: 10px;
   padding: 14px 14px;
-  background: #101010;
+  background: rgba(0,0,0,0.25);
   border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   color: var(--text);
   font-weight: 700;
   cursor: pointer;
@@ -135,25 +136,26 @@ button { font: inherit; }
 .cardbody{ padding: 14px; }
 
 .critical{
-  background: #1b0f10;
-  border-color: #3a1b1c;
+  background: radial-gradient(1200px 300px at 30% 10%, rgba(255,0,0,0.18), rgba(0,0,0,0)),
+    rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
 }
 .infoBlock{ margin-bottom: 12px; }
 .label{ color: var(--muted); font-weight: 700; margin-bottom: 6px; }
 .value{ color: var(--text); margin: 2px 0; }
 .bullets{ margin: 0 0 0 18px; padding: 0; }
-.divider{ height: 1px; background: #3a1b1c; margin: 12px 0; }
+.divider{ height: 1px; background: rgba(255,255,255,0.10); margin: 12px 0; }
 .linklike{ color: #7dd3fc; text-decoration: underline; }
 
 .listitem, .alertitem, .medrow{
-  background: var(--panel2);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: 12px;
   padding: 12px;
   margin-bottom: 10px;
 }
 .listtitle{ font-weight: 700; }
-.listmeta{ color: var(--muted); margin-top: 4px; }
+.listmeta{ color: var(--muted); margin-top: 4px; font-size: 13px; opacity: 0.85; }
 
 .medname{ font-size: 18px; font-weight: 800; margin-bottom: 6px; }
 .medmeta{ color: var(--muted); margin-top: 2px; }
@@ -238,8 +240,8 @@ button { font: inherit; }
 
 /* Make Critical header stand out more */
 .critical .cardhead{
-  background: #230f11;
-  border-bottom: 1px solid #3a1b1c;
+  background: rgba(255,0,0,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
 }
 
 /* Demo high-contrast mode (toggle by adding .hc on .app) */
@@ -683,4 +685,98 @@ button { font: inherit; }
   font-size: 13px;
   font-weight: 700;
   margin-top: 4px;
+}
+/* ---------- Medications page (Figma-style list) ---------- */
+.medStack {
+  display: grid;
+  gap: 12px;
+}
+
+.medRowNew {
+  display: grid;
+  grid-template-columns: 1fr 170px;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.medLeft {
+  min-width: 0;
+}
+
+.medNameNew {
+  font-weight: 800;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.medLine {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.medStatusNew {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+/* status tones */
+.medStatusNew.warn { color: #fbbf24; }
+.medStatusNew.ok { color: #34d399; }
+.medStatusNew.info { color: #93c5fd; }
+
+.medRight {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.medRowNew + .medRowNew {
+  margin-top: 6px;
+}
+
+/* ---------- Medication Details (Figma-style) ---------- */
+.medDetailsRow{
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 18px;
+  align-items: start;
+}
+
+.medActionsCol{
+  min-width: 0;
+}
+
+.refillNote{
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.medHistoryRow{
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.historyDot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.historyDot.ok{ background: rgba(52, 211, 153, 0.55); }
+.historyDot.warn{ background: rgba(251, 191, 36, 0.55); }
+.historyDot.info{ background: rgba(147, 197, 253, 0.55); }
+
+@media (max-width: 1100px){
+  .medDetailsRow{ grid-template-columns: 1fr; }
 }
