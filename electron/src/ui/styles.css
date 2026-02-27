@@ -1108,6 +1108,65 @@ button{
   opacity: 0.85;
 }
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999;
+}
+
+.modalCard {
+  width: min(720px, 100%);
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.modalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.shortcutGrid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.shortcutRow {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.shortcutKeys {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-weight: 700;
+}
+
+.shortcutNote {
+  margin-top: 12px;
+  opacity: 0.9;
+  font-size: 14px;
+}
+
 /* ---------- Auth shell (Role Select, Login, Create, Reset) ---------- */
 
 .authShell{

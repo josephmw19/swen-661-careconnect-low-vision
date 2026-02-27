@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { HeaderRow } from "../components/uiPieces";
 import { useNavigate } from "react-router-dom";
 
@@ -73,6 +73,23 @@ function ToggleRow(props: {
 
 export default function SettingsPage(props: Props) {
   const navigate = useNavigate();
+  const [shortcutOpen, setShortcutOpen] = useState(false);
+
+  const shortcuts = useMemo(
+    () => [
+      { keys: "⌘ + 1", action: "Go to Dashboard" },
+      { keys: "⌘ + 2", action: "Go to Medications" },
+      { keys: "⌘ + 3", action: "Go to Tasks" },
+      { keys: "⌘ + 4", action: "Go to Appointments" },
+      { keys: "⌘ + 5", action: "Go to Settings" },
+      { keys: "⌘ + R", action: "Refresh" },
+      { keys: "⌘ + Shift + C", action: "Toggle Critical Alerts" },
+      { keys: "⌘ + Shift + V", action: "Toggle Voice Commands" },
+      { keys: "⌘ + Shift + A", action: "Toggle Read Aloud" },
+      { keys: "Esc", action: "Close dialogs" },
+    ],
+    []
+  );
 
   const [textSize, setTextSize] = useState<"Large" | "Extra Large" | "Maximum">("Large");
   const [lineSpacing, setLineSpacing] = useState<"Normal" | "Relaxed" | "Maximum">("Normal");
@@ -93,6 +110,17 @@ export default function SettingsPage(props: Props) {
     () => "Adjust display, interaction, and accessibility preferences.",
     []
   );
+
+  useEffect(() => {
+    if (!shortcutOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShortcutOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [shortcutOpen]);
 
   return (
     <div className="settingsWrap">
@@ -248,8 +276,12 @@ export default function SettingsPage(props: Props) {
               <div className="setDesc">View keyboard shortcuts.</div>
             </div>
 
-            <button type="button" className="setActionBtn" onClick={props.onSOS}>
-              View Shortcut Reference ↗
+            <button
+              type="button"
+              className="setActionBtn"
+              onClick={() => setShortcutOpen(true)}
+            >
+              View Shortcut Reference
             </button>
           </div>
         </div>
@@ -280,6 +312,49 @@ export default function SettingsPage(props: Props) {
           </button>
         </div>
       </section>
+
+      {shortcutOpen ? (
+        <div
+          className="modalOverlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Keyboard shortcut reference"
+          onClick={() => setShortcutOpen(false)}
+        >
+          <div className="modalCard" onClick={(e) => e.stopPropagation()}>
+            <div className="modalHead">
+              <div className="modalTitle">Keyboard Shortcuts</div>
+              <button
+                type="button"
+                className="modalClose"
+                onClick={() => setShortcutOpen(false)}
+                aria-label="Close shortcut reference"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="modalBody">
+              <div className="shortcutGrid" role="list">
+                {shortcuts.map((s) => (
+                  <div
+                    key={`${s.keys}-${s.action}`}
+                    className="shortcutRow"
+                    role="listitem"
+                  >
+                    <div className="shortcutKeys">{s.keys}</div>
+                    <div className="shortcutAction">{s.action}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="shortcutNote">
+                Tip: Shortcuts work anywhere in the app unless you are typing in a text field.
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
