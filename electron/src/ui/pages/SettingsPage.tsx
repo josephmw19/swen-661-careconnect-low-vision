@@ -93,7 +93,7 @@ export default function SettingsPage(props: Props) {
 
   const [textSize, setTextSize] = useState<"Large" | "Extra Large" | "Maximum">("Large");
   const [lineSpacing, setLineSpacing] = useState<"Normal" | "Relaxed" | "Maximum">("Normal");
-  const [density, setDensity] = useState<"Slow" | "Normal" | "Fast">("Normal");
+  const [speechSpeed, setSpeechSpeed] = useState<"Slow" | "Normal" | "Fast">("Normal");
 
   const [highContrast, setHighContrast] = useState(true);
   const [dyslexicFont, setDyslexicFont] = useState(false);
@@ -105,6 +105,7 @@ export default function SettingsPage(props: Props) {
 
   const [tabNav, setTabNav] = useState(true);
   const [stickyKeys, setStickyKeys] = useState(false);
+  const [uiDensity, setUiDensity] = useState<"Comfortable" | "Balanced" | "Compact">("Balanced");
 
   const subtitle = useMemo(
     () => "Adjust display, interaction, and accessibility preferences.",
@@ -151,8 +152,8 @@ export default function SettingsPage(props: Props) {
           <Segmented
             label="Interface Density"
             options={["Comfortable", "Balanced", "Compact"]}
-            value={"Balanced"}
-            onChange={() => {}}
+            value={uiDensity}
+            onChange={(v) => setUiDensity(v as any)}
           />
 
           <ToggleRow
@@ -239,8 +240,8 @@ export default function SettingsPage(props: Props) {
           <Segmented
             label="Speech Speed"
             options={["Slow", "Normal", "Fast"]}
-            value={density}
-            onChange={(v) => setDensity(v as any)}
+            value={speechSpeed}
+            onChange={(v) => setSpeechSpeed(v as any)}
           />
         </div>
       </section>
