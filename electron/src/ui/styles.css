@@ -107,6 +107,47 @@ button{
 
 .body{ flex: 1; display: flex; min-height: 0; }
 
+/* ---------- Quick Actions Bar (replaces removed in-app menu bar) ---------- */
+.quickActions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #111;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Keep buttons together and allow wrap on smaller widths */
+.quickActions .toolbar{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Reuse your global button weight, but give these a consistent desktop look */
+.toolbtn{
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.toolbtn:hover{
+  border-color: rgba(80,140,255,0.45);
+  background: rgba(80,140,255,0.12);
+}
+
+.toolbtn:active{
+  transform: translateY(1px);
+}
+
+/* Optional: show "on" state for toggles if you add className later */
+.toolbtn.on{
+  border-color: rgba(0,255,120,0.35);
+  background: rgba(0,255,120,0.14);
+}
+
 .sidebar{
   width: 240px;
   background: #111;

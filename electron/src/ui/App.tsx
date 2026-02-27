@@ -2,7 +2,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { cc } from "./cc";
-import { Sidebar, StatusBar } from "./components/uiPieces";
+import { QuickActionsBar, Sidebar, StatusBar } from "./components/uiPieces";
 import DashboardPage from "./pages/DashboardPage";
 import MedicationsPage from "./pages/MedicationsPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -113,6 +113,17 @@ export default function App() {
       <a className="skip-link" href="#main">
         Skip to main content
       </a>
+
+      {!isAuthRoute && (
+        <QuickActionsBar
+          readAloud={readAloud}
+          voiceCommands={voiceCommands}
+          onToggleRead={() => setReadAloud((v) => !v)}
+          onToggleVoice={() => setVoiceCommands((v) => !v)}
+          onRefresh={() => window.location.reload()}
+          onOpenSettings={() => navigate("/settings")}
+        />
+      )}
 
       <div className="body">
         {!isAuthRoute && (

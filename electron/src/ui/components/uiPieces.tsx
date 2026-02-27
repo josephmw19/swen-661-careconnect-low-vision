@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export function TopBar(props: {
+export function QuickActionsBar(props: {
   readAloud: boolean;
   voiceCommands: boolean;
   onToggleRead: () => void;
@@ -10,32 +10,38 @@ export function TopBar(props: {
   onOpenSettings: () => void;
 }) {
   return (
-    <div className="topbar" role="banner" aria-label="Global Toolbar">
-      <div className="menubar-placeholder" aria-hidden="true">
-        <span>File</span><span>Edit</span><span>View</span><span>Navigate</span><span>Help</span>
-      </div>
-
-      <div className="toolbar" aria-label="Quick Actions Toolbar">
+    <div className="quickActions" role="banner" aria-label="Quick Actions Toolbar">
+      <div className="toolbar" aria-label="Quick Actions">
         <button
-          className="toolbtn"
+          type="button"
+          className={props.readAloud ? "toolbtn on" : "toolbtn"}
           aria-pressed={props.readAloud}
-          aria-label="Read Aloud toggle"
+          aria-label="Toggle Read Aloud"
           onClick={props.onToggleRead}
         >
           Read Aloud
         </button>
+
         <button
-          className="toolbtn"
+          type="button"
+          className={props.voiceCommands ? "toolbtn on" : "toolbtn"}
           aria-pressed={props.voiceCommands}
-          aria-label="Voice Commands toggle"
+          aria-label="Toggle Voice Commands"
           onClick={props.onToggleVoice}
         >
           Voice Commands
         </button>
-        <button className="toolbtn" aria-label="Refresh" onClick={props.onRefresh}>
+
+        <button type="button" className="toolbtn" aria-label="Refresh" onClick={props.onRefresh}>
           Refresh
         </button>
-        <button className="toolbtn" aria-label="Open Settings" onClick={props.onOpenSettings}>
+
+        <button
+          type="button"
+          className="toolbtn"
+          aria-label="Open Settings"
+          onClick={props.onOpenSettings}
+        >
           Open Settings
         </button>
       </div>
