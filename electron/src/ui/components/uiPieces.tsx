@@ -384,38 +384,34 @@ export function MedicationsList() {
                 </div>
 
                 <div className="medRight" aria-label="Medication actions">
-                  {m.primary && (
-                    <>
-                      <button
-                        className="btnPrimary"
-                        aria-label={`Mark ${m.name} as taken`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setTaken((prev) => ({ ...prev, [m.id]: true }));
-                          setSnoozedUntil((prev) => {
-                            const copy = { ...prev };
-                            delete copy[m.id];
-                            return copy;
-                          });
-                        }}
-                      >
-                        Mark as Taken
-                      </button>
+                  <button
+                    className="btnPrimary"
+                    aria-label={`Mark ${m.name} as taken`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setTaken((prev) => ({ ...prev, [m.id]: true }));
+                      setSnoozedUntil((prev) => {
+                        const copy = { ...prev };
+                        delete copy[m.id];
+                        return copy;
+                      });
+                    }}
+                  >
+                    Mark as Taken
+                  </button>
 
-                      <button
-                        className="btnSubtle"
-                        aria-label={`Snooze ${m.name} for 10 minutes`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setSnoozedUntil((prev) => ({ ...prev, [m.id]: Date.now() + 10 * 60 * 1000 }));
-                        }}
-                      >
-                        Snooze 10 min
-                      </button>
-                    </>
-                  )}
+                  <button
+                    className="btnSubtle"
+                    aria-label={`Snooze ${m.name} for 10 minutes`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSnoozedUntil((prev) => ({ ...prev, [m.id]: Date.now() + 10 * 60 * 1000 }));
+                    }}
+                  >
+                    Snooze 10 min
+                  </button>
 
                   <button
                     className="btnGhost"
