@@ -105,33 +105,6 @@ button{
 
 .app{ height: 100vh; display: flex; flex-direction: column; }
 
-.topbar{
-  background: #111;
-  border-bottom: 1px solid var(--border);
-  padding: 10px 12px;
-}
-.menubar-placeholder{
-  display: flex;
-  gap: 18px;
-  font-size: var(--baseFont);
-  color: var(--muted);
-  margin-bottom: 10px;
-}
-.toolbar{
-  display: flex;
-  gap: 10px;
-}
-.toolbtn{
-  background: var(--panel);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 10px 12px;
-  border-radius: 10px;
-}
-.toolbtn[aria-pressed="true"]{
-  border-color: var(--focus);
-}
-
 .body{ flex: 1; display: flex; min-height: 0; }
 
 .sidebar{
