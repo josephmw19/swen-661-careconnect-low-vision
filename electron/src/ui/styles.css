@@ -103,6 +103,12 @@ button{
   outline-offset: 2px;
 }
 
+/* Make programmatic/menu focus visible (Electron menu focus often isn't :focus-visible) */
+:focus{
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
 .app{ height: 100vh; display: flex; flex-direction: column; }
 
 .body{ flex: 1; display: flex; min-height: 0; }
