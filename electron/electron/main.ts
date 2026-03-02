@@ -1,7 +1,9 @@
 import { app, BrowserWindow, Menu, dialog, ipcMain } from "electron";
 import path from "node:path";
 
-console.log("MAIN ENTRY RUNNING:", __filename, "BUILD:", new Date().toISOString());
+if (!app.isPackaged) {
+  console.log("MAIN ENTRY RUNNING:", __filename, "BUILD:", new Date().toISOString());
+}
 
 const isDev = !app.isPackaged;
 
