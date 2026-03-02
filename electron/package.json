@@ -9,7 +9,10 @@
     "dev": "concurrently -k \"npm run electron:watch\" \"vite\" \"wait-on http://localhost:5173 && wait-on dist-electron/main.js && electron .\"",
     "build": "vite build && npm run electron:build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings=0"
+    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -17,17 +20,24 @@
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.10.5",
     "@types/react": "^18.3.14",
     "@types/react-dom": "^18.3.1",
     "@types/react-router-dom": "^5.3.3",
+    "@types/testing-library__jest-dom": "^5.14.9",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.1.0",
     "electron": "^33.2.1",
     "esbuild": "^0.27.3",
     "eslint": "^9.18.0",
+    "jsdom": "^28.1.0",
     "typescript": "^5.7.3",
     "vite": "^6.0.7",
+    "vitest": "^4.0.18",
     "wait-on": "^7.2.0"
   }
 }
