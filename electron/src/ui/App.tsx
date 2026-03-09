@@ -103,10 +103,7 @@ export default function App() {
   }, [navigate]);
 
   return (
-    <div
-      className={highContrast ? "app hc" : "app"}
-      aria-label="CareConnect Desktop Application"
-    >
+        <div className={highContrast ? "app hc" : "app"}>
       <ScrollToTop containerRef={mainRef} />
 
       {/* Skip link for keyboard-only users */}

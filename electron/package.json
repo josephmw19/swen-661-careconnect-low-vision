@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "main": "dist-electron/main.js",
   "scripts": {
-  "electron:build": "node scripts/build-electron.mjs",
-  "electron:watch": "node scripts/build-electron.mjs --watch",
-  "dev": "concurrently -k \"npm run electron:watch\" \"vite\" \"wait-on http://localhost:5173 && wait-on dist-electron/main.js && electron .\"",
-  "build": "vite build && npm run electron:build",
-  "preview": "vite preview",
-  "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
-  "test": "jest",
-  "test:watch": "jest --watch",
-  "test:coverage": "jest --coverage",
-  "dist": "npm run build && electron-builder"
+    "electron:build": "node scripts/build-electron.mjs",
+    "electron:watch": "node scripts/build-electron.mjs --watch",
+    "dev": "concurrently -k \"npm run electron:watch\" \"vite\" \"wait-on http://localhost:5173 && wait-on dist-electron/main.js && electron .\"",
+    "build": "vite build && npm run electron:build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "dist": "npm run build && electron-builder"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -21,6 +21,7 @@
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.11.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^18.3.1",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "axe-core": "^4.11.1",
     "concurrently": "^9.1.0",
     "electron": "^33.2.1",
     "electron-builder": "^26.8.1",
