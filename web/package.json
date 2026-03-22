@@ -3,19 +3,20 @@
   "private": true,
   "version": "0.1.0",
   "main": "dist-electron/main.js",
-  "scripts": {
-    "electron:build": "node scripts/build-electron.mjs",
-    "electron:watch": "node scripts/build-electron.mjs --watch",
-    "dev": "concurrently -k \"npm run electron:watch\" \"vite\" \"wait-on http://localhost:5173 && wait-on dist-electron/main.js && electron .\"",
-    "web": "vite",
-    "build": "vite build && npm run electron:build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "dist": "npm run build && electron-builder"
-  },
+"scripts": {
+  "electron:build": "node scripts/build-electron.mjs",
+  "electron:watch": "node scripts/build-electron.mjs --watch",
+  "dev": "concurrently -k \"npm run electron:watch\" \"vite\" \"wait-on http://localhost:5173 && wait-on dist-electron/main.js && electron .\"",
+  "web": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+  "test": "jest",
+  "test:watch": "jest --watch",
+  "test:coverage": "jest --coverage",
+  "e2e": "playwright test",
+  "dist": "npm run build && electron-builder"
+},
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.11.1",
+    "@playwright/test": "^1.58.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
