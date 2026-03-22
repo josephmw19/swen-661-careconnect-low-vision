@@ -32,7 +32,6 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ FIX 1: define isAuthRoute
   const isAuthRoute = useMemo(() => {
     const p = location.pathname;
     return (
@@ -55,8 +54,8 @@ export default function App() {
 
   const sos = async () => cc().showNativeDialog("SOS triggered (demo).");
 
+  // Electron/native command handling
   useEffect(() => {
-    // Handle native menu navigation + commands via preload API
     const api = cc();
 
     const offNav = api.onNavigate((path: string) => {
@@ -66,7 +65,6 @@ export default function App() {
     const offCmd = api.onCommand(async (cmd: Command) => {
       switch (cmd.type) {
         case "refresh":
-          // Refresh is handled by main process via webContents.reload()
           break;
         case "toggleCritical":
           setCriticalOpen((v) => !v);
@@ -102,11 +100,100 @@ export default function App() {
     };
   }, [navigate]);
 
+  // Browser keyboard shortcuts
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName?.toLowerCase();
+
+      const isTypingTarget =
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        target?.isContentEditable;
+
+      if (isTypingTarget) return;
+
+      const meta = e.metaKey || e.ctrlKey;
+      const key = e.key.toLowerCase();
+
+      if (!meta) return;
+
+      switch (key) {
+        case "1":
+          e.preventDefault();
+          navigate("/");
+          break;
+        case "2":
+          e.preventDefault();
+          navigate("/medications");
+          break;
+        case "3":
+          e.preventDefault();
+          navigate("/tasks");
+          break;
+        case "4":
+          e.preventDefault();
+          navigate("/appointments");
+          break;
+        case "5":
+          e.preventDefault();
+          navigate("/settings");
+          break;
+        case "r":
+          if (!e.shiftKey) {
+            e.preventDefault();
+            window.location.reload();
+          } else {
+            e.preventDefault();
+            setReadAloud((v) => !v);
+          }
+          break;
+        case ",":
+          e.preventDefault();
+          navigate("/settings");
+          break;
+        case "c":
+          if (e.shiftKey) {
+            e.preventDefault();
+            setCriticalOpen((v) => !v);
+          }
+          break;
+        case "v":
+          if (e.shiftKey) {
+            e.preventDefault();
+            setVoiceCommands((v) => !v);
+          }
+          break;
+        case "l":
+          e.preventDefault();
+          sidebarRef.current
+            ?.querySelector<HTMLElement>("[data-focus-start='sidebar']")
+            ?.focus();
+          break;
+        case "k":
+          e.preventDefault();
+          mainRef.current?.focus();
+          break;
+        case "s":
+          if (e.altKey) {
+            e.preventDefault();
+            void sos();
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [navigate]);
+
   return (
-        <div className={highContrast ? "app hc" : "app"}>
+    <div className={highContrast ? "app hc" : "app"}>
       <ScrollToTop containerRef={mainRef} />
 
-      {/* Skip link for keyboard-only users */}
       <a className="skip-link" href="#main">
         Skip to main content
       </a>
@@ -141,11 +228,9 @@ export default function App() {
           aria-label="Main Content"
         >
           <Routes>
-            {/* Auth flow */}
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/role" element={<RoleSelectPage />} />
 
-            {/* ✅ FIX 2: pass required props */}
             <Route
               path="/login"
               element={
@@ -178,7 +263,6 @@ export default function App() {
               }
             />
 
-            {/* Main app */}
             <Route
               path="/"
               element={

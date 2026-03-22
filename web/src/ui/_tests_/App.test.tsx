@@ -1,10 +1,9 @@
 import React from "react";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 /**
  * Mock ScrollToTop because jsdom HTMLElement doesn't implement scrollTo().
- * (Your production component is fine in a real browser.)
  */
 jest.mock("../components/ScrollToTop", () => {
   const React = require("react");
@@ -14,7 +13,7 @@ jest.mock("../components/ScrollToTop", () => {
 });
 
 /**
- * We mock cc() to provide an Electron preload API stub.
+ * Mock cc() to provide an Electron preload API stub.
  */
 type Command =
   | { type: "refresh" }
@@ -57,11 +56,18 @@ jest.mock("../components/uiPieces", () => {
     QuickActionsBar: (props: any) => (
       <div data-testid="quick-actions">
         <div data-testid="qa-readAloud">{String(props.readAloud)}</div>
+        <div data-testid="qa-voiceCommands">{String(props.voiceCommands)}</div>
         <button data-testid="qa-toggle-read" onClick={props.onToggleRead}>
           toggle read
         </button>
+        <button data-testid="qa-toggle-voice" onClick={props.onToggleVoice}>
+          toggle voice
+        </button>
         <button data-testid="qa-open-settings" onClick={props.onOpenSettings}>
           open settings
+        </button>
+        <button data-testid="qa-refresh" onClick={props.onRefresh}>
+          refresh
         </button>
       </div>
     ),
@@ -86,7 +92,13 @@ jest.mock("../components/uiPieces", () => {
 /**
  * Mock pages.
  */
-jest.mock("../pages/DashboardPage", () => () => <div data-testid="page">dashboard</div>);
+jest.mock("../pages/DashboardPage", () => (props: any) => (
+  <div data-testid="page">
+    dashboard
+    <div data-testid="critical-open">{String(props.criticalOpen)}</div>
+    <button onClick={props.onToggleCritical}>toggle critical</button>
+  </div>
+));
 jest.mock("../pages/MedicationsPage", () => () => <div data-testid="page">medications</div>);
 jest.mock("../pages/MedicationDetailsPage", () => () => <div data-testid="page">medication-details</div>);
 jest.mock("../pages/TasksPage", () => () => <div data-testid="page">tasks</div>);
@@ -207,5 +219,115 @@ describe("App", () => {
     });
 
     expect(screen.getByTestId("qa-readAloud")).toHaveTextContent("true");
+  });
+
+  test("command: toggleVoice flips QuickActionsBar prop", async () => {
+    renderAt("/");
+
+    expect(screen.getByTestId("qa-voiceCommands")).toHaveTextContent("false");
+
+    await act(async () => {
+      await capturedCommandCb?.({ type: "toggleVoice" });
+    });
+
+    expect(screen.getByTestId("qa-voiceCommands")).toHaveTextContent("true");
+  });
+
+  test("browser shortcut Cmd/Ctrl+2 navigates to medications", () => {
+    renderAt("/");
+
+    expect(screen.getByTestId("page")).toHaveTextContent("dashboard");
+
+    fireEvent.keyDown(window, { key: "2", ctrlKey: true });
+
+    expect(screen.getByTestId("page")).toHaveTextContent("medications");
+  });
+
+  test("browser shortcut Cmd/Ctrl+3 navigates to tasks", () => {
+    renderAt("/");
+
+    fireEvent.keyDown(window, { key: "3", ctrlKey: true });
+
+    expect(screen.getByTestId("page")).toHaveTextContent("tasks");
+  });
+
+  test("browser shortcut Cmd/Ctrl+, navigates to settings", () => {
+    renderAt("/");
+
+    fireEvent.keyDown(window, { key: ",", ctrlKey: true });
+
+    expect(screen.getByTestId("page")).toHaveTextContent("settings");
+  });
+
+  test("browser shortcut Cmd/Ctrl+Shift+C toggles critical medical info", () => {
+    renderAt("/");
+
+    expect(screen.getByTestId("critical-open")).toHaveTextContent("true");
+
+    fireEvent.keyDown(window, { key: "C", ctrlKey: true, shiftKey: true });
+
+    expect(screen.getByTestId("critical-open")).toHaveTextContent("false");
+  });
+
+  test("browser shortcut Cmd/Ctrl+Shift+R toggles read aloud", () => {
+    renderAt("/");
+
+    expect(screen.getByTestId("qa-readAloud")).toHaveTextContent("false");
+
+    fireEvent.keyDown(window, { key: "R", ctrlKey: true, shiftKey: true });
+
+    expect(screen.getByTestId("qa-readAloud")).toHaveTextContent("true");
+  });
+
+  test("browser shortcut Cmd/Ctrl+Shift+V toggles voice commands", () => {
+    renderAt("/");
+
+    expect(screen.getByTestId("qa-voiceCommands")).toHaveTextContent("false");
+
+    fireEvent.keyDown(window, { key: "V", ctrlKey: true, shiftKey: true });
+
+    expect(screen.getByTestId("qa-voiceCommands")).toHaveTextContent("true");
+  });
+
+  test("browser shortcut Cmd/Ctrl+L focuses sidebar start", () => {
+    renderAt("/");
+
+    const focusStartBtn = screen.getByText("Sidebar Focus Start");
+
+    fireEvent.keyDown(window, { key: "l", ctrlKey: true });
+
+    expect(document.activeElement).toBe(focusStartBtn);
+  });
+
+  test("browser shortcut Cmd/Ctrl+K focuses main content", () => {
+    renderAt("/");
+
+    const main = screen.getByLabelText("Main Content");
+
+    fireEvent.keyDown(window, { key: "k", ctrlKey: true });
+
+    expect(document.activeElement).toBe(main);
+  });
+
+  test("browser shortcut Cmd/Ctrl+Alt+S triggers SOS", () => {
+    renderAt("/");
+
+    fireEvent.keyDown(window, { key: "s", ctrlKey: true, altKey: true });
+
+    expect(showNativeDialogMock).toHaveBeenCalledWith("SOS triggered (demo).");
+  });
+
+  test("browser shortcuts do not fire while typing in an input", () => {
+    renderAt("/");
+
+    const input = document.createElement("input");
+    document.body.appendChild(input);
+    input.focus();
+
+    fireEvent.keyDown(input, { key: "2", ctrlKey: true });
+
+    expect(screen.getByTestId("page")).toHaveTextContent("dashboard");
+
+    document.body.removeChild(input);
   });
 });
