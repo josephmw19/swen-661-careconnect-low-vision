@@ -1,216 +1,220 @@
-# CareConnect Desktop (Assignment 8)
+# CareConnect Low Vision Application (SWEN 661 – Week 11 Final)
 
-Electron + React desktop application for **SWEN 661 Assignment 8 — Desktop Implementation & Testing**.  
-The application is designed with a **low-vision accessibility constraint** and emphasizes keyboard-first interaction.
+A responsive healthcare application designed with **low-vision accessibility**, built using **React, Vite, and Electron**.  
+This project demonstrates full implementation, accessibility compliance, automated testing, and deployment.
 
 ---
 
 # Overview
 
-This project implements the **CareConnect desktop application** using **Electron + React**.  
-The application demonstrates desktop UI patterns, keyboard accessibility, native application menus, and automated testing.
+CareConnect is a **low-vision accessible healthcare interface** that supports:
 
-Assignment 8 expands on the early implementation completed in **Week 7** by adding:
+- Medication tracking
+- Task management
+- Appointment scheduling
+- User authentication workflows
 
-- Full desktop UI implementation
-- Keyboard navigation support
-- Automated testing
+The application emphasizes:
+
+- **Keyboard-first interaction**
+- **Accessible UI design**
+- **Responsive layouts**
+- **Automated testing and validation**
+
+This submission represents the **final implementation (Week 11)**, expanding earlier milestones with:
+
+- Full responsive web application
+- Accessibility enhancements
+- Unit, component, and E2E testing
 - Test coverage reporting
-- Desktop application packaging
-
-The application supports **keyboard-first interaction** and accessibility features designed for users with **low vision**.
+- Production deployment (Vercel)
 
 ---
 
-# Implementation Requirements (Completed)
+# Technology Stack
 
-The following desktop implementation requirements were completed:
+- **Frontend:** React + TypeScript
+- **Build Tool:** Vite
+- **Desktop Layer:** Electron
+- **Routing:** React Router
+- **Unit Testing:** Jest
+- **Component Testing:** React Testing Library
+- **E2E Testing:** Playwright
+- **Deployment:** Vercel
 
-- Electron desktop application using **Electron + React**
-- Native desktop **application menus**
-- **Keyboard shortcuts** connected to menu actions
-- Desktop UI patterns including sidebar navigation and toolbar layout
-- IPC communication between the **main process and renderer**
+---
 
-The application includes multiple working screens including:
+# Features
 
-- Landing Page
-- Role Selection
-- Login
+## Navigation & Routing
+- Multi-page navigation using React Router
+- Sidebar-based navigation system
+- Keyboard shortcuts for rapid navigation
+
+## Core Modules
 - Dashboard
 - Medications
 - Tasks
 - Appointments
 - Settings
+- Authentication (Login, Create Account, Reset Password)
 
----
-
-# Native Application Menus
-
-The application implements a **native macOS menu bar** created in the Electron **main process**.
-
-Menus included:
-
-- **File**
-- **Edit**
-- **View**
-- **Navigate**
-- **Help**
-
-Menu items are connected to application behavior and renderer navigation using **Electron IPC communication**.
+## Desktop Integration
+- Electron-based desktop application
+- Native menu integration
+- IPC communication via preload script
 
 ---
 
 # Keyboard Shortcuts
 
-The following keyboard shortcuts are implemented to support **keyboard-first interaction**.
-
 | Shortcut | Action |
 |--------|--------|
-| Cmd/Ctrl + 1 | Navigate to Dashboard |
-| Cmd/Ctrl + 2 | Navigate to Medications |
-| Cmd/Ctrl + , | Open Settings |
-| Cmd/Ctrl + R | Refresh (demo) |
-| Cmd/Ctrl + Shift + C | Toggle Critical Medical Information |
+| Cmd/Ctrl + 1 | Dashboard |
+| Cmd/Ctrl + 2 | Medications |
+| Cmd/Ctrl + 3 | Tasks |
+| Cmd/Ctrl + 4 | Appointments |
+| Cmd/Ctrl + 5 | Settings |
+| Cmd/Ctrl + , | Settings |
+| Cmd/Ctrl + R | Refresh |
+| Cmd/Ctrl + Shift + C | Toggle Critical Info |
 | Cmd/Ctrl + Shift + R | Toggle Read Aloud |
 | Cmd/Ctrl + Shift + V | Toggle Voice Commands |
 | Cmd/Ctrl + L | Focus Sidebar |
-| Cmd/Ctrl + K | Skip to Main Content |
-| Cmd/Ctrl + Alt + S | Trigger SOS (demo) |
+| Cmd/Ctrl + K | Focus Main Content |
+| Cmd/Ctrl + Alt + S | SOS (demo) |
 
 ---
 
 # Accessibility (Low Vision Focus)
 
-Accessibility features were implemented to support **low-vision users** and follow WCAG accessibility guidance.
+The application was designed with accessibility as a primary requirement.
 
-Key accessibility features include:
-
-- Keyboard-first navigation (Tab / Shift + Tab)
-- Skip-to-main-content shortcut
-- Visible focus indicators using `:focus-visible`
-- High contrast text and UI elements
+### Implemented Features
+- Keyboard-only navigation support
+- Skip-to-main-content functionality
+- High contrast UI mode
 - Large, readable typography
-- Accessible labels and ARIA attributes for interactive controls
+- Logical tab order and focus management
+- ARIA labels for assistive technologies
+- Semantic HTML (`main`, `nav`, `button`, etc.)
+
+These features improve usability for users with visual impairments and align with WCAG principles.
+
+---
+
+# Responsive Design
+
+The application supports multiple viewport sizes:
+
+- **Mobile (375px)**
+- **Tablet (768px)**
+- **Desktop (1440px)**
+
+Layouts adapt to maintain usability and readability across all breakpoints.
 
 ---
 
 # Testing
 
-Automated tests were implemented using:
+## Unit & Component Testing
 
-- **Jest**
-- **React Testing Library**
+Implemented using:
 
-Tests verify:
+- Jest
+- React Testing Library
 
-- Page rendering
-- Component behavior
-- Navigation between screens
-- UI interactions
-- Electron preload functionality
+Tests cover:
 
-The project currently includes:
+- Component rendering
+- State updates
+- Navigation behavior
+- Accessibility interactions
 
-- **20 test suites**
-- **115 passing tests**
+### Results
+- **117 tests passing**
+- Multiple test suites covering UI and logic
 
-Run tests with coverage:
-
-```bash
-npm test -- --coverage --no-cache
-```
-
----
-
-# Test Coverage
-
-The application exceeds the assignment requirement of **60% minimum coverage**.
-
-| Metric | Coverage |
-|------|------|
-| Statements | **85.71%** |
-| Branches | **82.59%** |
-| Functions | **74.27%** |
-| Lines | **88.46%** |
-
----
-
-# Project Structure
-
-```
-electron/
-├── main.ts        # Electron main process (menus + window)
-├── preload.ts     # contextBridge API (secure IPC)
-
-src/
-├── ui/
-│   ├── components/    # reusable UI components
-│   ├── pages/         # application screens
-│   ├── _tests_/       # Jest + React Testing Library tests
-│   └── App.tsx
-└── main.tsx
-```
-
----
-
-# Run (Development)
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run the Electron application:
-
-```bash
-npm run dev
-```
-
----
-
-# Run Tests
-
-Execute the test suite with coverage reporting:
+Run tests:
 
 ```bash
 npm test -- --coverage
 ```
 
----
+End-to-End Testing (Playwright)
 
-# Build / Package
+Playwright tests simulate real user behavior.
 
-The application can be packaged for distribution using Electron build tools.
+Covered Scenarios
+	•	Application loads successfully
+	•	Keyboard navigation works
+	•	Page transitions function correctly
 
-Example build command:
+Run E2E tests:
+```bash
+npm run e2e
+```
 
+Test Coverage
+
+The project exceeds the required 75% coverage threshold. Overal coverage is 82%.
+
+Deployment
+
+The application is deployed using Vercel.
+
+Live Application
+
+https://careconnect-lv-team5-7thtczqss-josephmw19s-projects.vercel.app
+
+Notes
+	•	SPA routing configured using Vercel rewrites
+	•	Production build uses Vite
+	•	Fully functional in deployed environment
+
+    electron/
+├── main.ts
+├── preload.ts
+
+web/
+├── src/
+│   ├── ui/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── _tests_/
+│   │   └── App.tsx
+│   └── main.tsx
+├── e2e/
+├── playwright.config.ts
+
+Run (Development)
+
+```bash
+npm install
+npm run dev
+```
+Run Tests
+
+```bash
+npm test -- --coverage
+npm run e2e
+```
+Build
 ```bash
 npm run build
 ```
 
-This produces a packaged desktop application for the target platform (macOS in this case).
+AI Usage Statement
 
----
+AI tools were used during development.
+	•	Tools Used: ChatGPT, GitHub Copilot
+	•	Usage:
+	•	Debugging issues
+	•	Generating test cases
+	•	Assisting with deployment configuration
+	•	Validation:
+All outputs were reviewed, tested, and verified before inclusion.
 
-# Repository
+Conclusion
 
-GitHub Repository:
-
-https://github.com/josephmw19/swen-661-careconnect-low-vision
-
-The repository includes:
-
-- Electron source code
-- React renderer
-- Jest test suite
-- Test coverage report
-- Setup instructions
-
----
-
-# AI Usage Statement
-
-AI tools were used to assist with aspects of design and implementation.  
-All generated output was reviewed, understood, and modified as necessary to meet assignment requirements.
+This project demonstrates a complete, accessible, and tested application built with modern web technologies. The implementation satisfies all requirements for responsiveness, accessibility, testing, and deployment, and reflects production-level development practices.
